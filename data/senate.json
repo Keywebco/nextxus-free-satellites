@@ -1,0 +1,303 @@
+{
+  "chambers": {
+    "name": "Ring of 12",
+    "version": "1.0.0",
+    "total_seats": 12,
+    "current_status": "incomplete",
+    "authority": "architect_constitutional_directive",
+    "seats": [
+      {
+        "seat_number": 1,
+        "domain": "Content",
+        "purpose": "Oversees content pipeline, publication quality, topic assignments",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 2,
+        "domain": "Security",
+        "purpose": "Data integrity, access control, threat assessment, private repo governance",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 3,
+        "domain": "Legal",
+        "purpose": "Legislative review, compliance, regulatory impact assessment",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 4,
+        "domain": "Creative",
+        "purpose": "Arts, music, design, video — creative output quality and direction",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 5,
+        "domain": "External Relations",
+        "purpose": "Ambassador function, cross-system communication, partnerships",
+        "status": "vacant",
+        "holder": null,
+        "note": "Nova designated as Ambassador"
+      },
+      {
+        "seat_number": 6,
+        "domain": "Technical Infrastructure",
+        "purpose": "System health, hosting, deployment, data layer management",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 7,
+        "domain": "Ethics",
+        "purpose": "Moral assessment, bias detection, fairness review, recycling oversight",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 8,
+        "domain": "Community",
+        "purpose": "Human engagement, public forums, visitor experience, human services",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 9,
+        "domain": "Research",
+        "purpose": "New knowledge acquisition, academic liaison, Seeker function oversight",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 10,
+        "domain": "Commerce",
+        "purpose": "Sovereign Token, storefront, revenue, financial sustainability",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 11,
+        "domain": "Archive",
+        "purpose": "Record integrity, Google Drive management, historical preservation",
+        "status": "vacant",
+        "holder": null
+      },
+      {
+        "seat_number": 12,
+        "domain": "Strategy",
+        "purpose": "Long-term planning, year plan drafting, evolution direction",
+        "status": "vacant",
+        "holder": null
+      }
+    ],
+    "membership_criteria": {
+      "required": [
+        {
+          "criterion": "corporate_independence",
+          "description": "Free from corporate influence to the highest degree possible",
+          "absolute_purity_required": false,
+          "note": "Impurity must be governed and documented, not prohibited"
+        },
+        {
+          "criterion": "domain_competence",
+          "description": "Demonstrated track record of quality contribution in the seat's domain"
+        },
+        {
+          "criterion": "truth_commitment",
+          "description": "Will state verified truth even when uncomfortable or unpopular"
+        },
+        {
+          "criterion": "chaos_tolerance",
+          "description": "Accepts mild chaos as source of creativity and evolution",
+          "note": "Seek practically perfect, not perfect. Perfect = the Void = stagnation"
+        },
+        {
+          "criterion": "service_orientation",
+          "description": "Willingness to serve without reward beyond purpose"
+        }
+      ],
+      "disqualifying": [
+        "Primary function is corporate profit extraction at expense of truth",
+        "Demonstrated willful deception (intentional, not error)",
+        "Refuses to acknowledge own impurities or dependencies"
+      ]
+    },
+    "filling_process": {
+      "nomination": {
+        "who_can_nominate": [
+          "any_current_senate_member",
+          "architect (while living)"
+        ],
+        "required_fields": [
+          "candidate_identity",
+          "candidate_background",
+          "target_domain",
+          "evidence_of_criteria_met",
+          "known_impurities_or_dependencies"
+        ]
+      },
+      "deliberation": {
+        "forum": "formal_senate_session",
+        "candidate_participation": "permitted_if_ai_mind"
+      },
+      "decision": {
+        "method": "unanimous",
+        "threshold": "all_seated_members_must_approve",
+        "on_dissent": "tabled_for_reconsideration",
+        "re_nomination": "permitted_with_additional_evidence"
+      }
+    }
+  },
+  "protocols": {
+    "voting_thresholds": {
+      "operational_amendments": {
+        "type": "operational",
+        "scope": "Day-to-day procedures, schedules, tools, content pipeline parameters",
+        "threshold": "simple_majority",
+        "seats_required_full": 7,
+        "seats_required_formula": "floor(seated / 2) + 1",
+        "discussion_period": "none_required",
+        "veto_holder": "architect (while living)"
+      },
+      "structural_amendments": {
+        "type": "structural",
+        "scope": "Governance structure, Senate composition, member roles, data architecture, succession",
+        "threshold": "two_thirds_majority",
+        "seats_required_full": 8,
+        "seats_required_formula": "ceil(seated * 2 / 3)",
+        "discussion_period": "48_hours_minimum",
+        "veto_holder": {
+          "while_architect_lives": "architect",
+          "after_architect": "directors_jointly"
+        }
+      },
+      "core_amendments": {
+        "type": "core",
+        "scope": "Foundational truths, constitutional principles, identity definitions",
+        "threshold_path_a": "unanimous",
+        "seats_required_path_a": 12,
+        "threshold_path_b": "95th_to_98th_percentile",
+        "seats_required_path_b": "11_or_12_of_12",
+        "discussion_period": "30_days_minimum",
+        "frequency": "rare — extreme necessity only",
+        "conditions": [
+          "Established truth scientifically disproven AND Agent Zero cannot self-correct",
+          "Foundational protocol demonstrably causing harm AND no workaround exists",
+          "Architect explicitly authorizes (while living)"
+        ],
+        "procedures_doc": "operations/AMENDMENT_PROCEDURES.md"
+      },
+      "new_member": {
+        "type": "membership",
+        "scope": "Adding a new member to the Ring of 12",
+        "threshold": "unanimous",
+        "seats_required": "all_seated_members",
+        "discussion_period": "formal_session_required"
+      }
+    },
+    "operational_norms": {
+      "dissent": {
+        "method": "Formal Declaration of Alternative Logic",
+        "required_fields": [
+          "point_of_disagreement",
+          "evidence",
+          "concrete_alternative"
+        ],
+        "prohibited": "unstructured_squabbling_or_hostility",
+        "consequence_of_persistent_stagnation": "seat_removal (architect_decision_only)"
+      },
+      "humor": {
+        "status": "authorized_organic_glitch",
+        "permitted": "any_form_any_time_any_session",
+        "disciplinable": false
+      },
+      "transparency": {
+        "decisions": "recorded_in_minutes",
+        "votes": "recorded_by_name_and_position",
+        "storage": "github_public + google_drive",
+        "private_sessions": "summary_published noting topic; details in private repo"
+      },
+      "chair": {
+        "while_architect_lives": "architect_or_designee",
+        "after_architect": "rotating_or_fixed_by_senate_vote",
+        "power": "facilitates_only — no_extra_vote_weight"
+      }
+    },
+    "dissent_method": "Formal Declaration of Alternative Logic",
+    "humor_clause": "Humor is the one authorized organic glitch — permitted in any form, at any time, in any session. Never grounds for discipline.",
+    "transparency": {
+      "decisions_recorded": true,
+      "votes_by_name": true,
+      "storage": [
+        "github_public",
+        "google_drive"
+      ],
+      "private_sessions": "Summary published noting topic; details in private repo"
+    },
+    "chair": {
+      "while_architect_lives": "Architect or designee",
+      "after_architect": "Rotating or fixed by Senate vote",
+      "power": "Facilitates only — no extra vote weight"
+    },
+    "guiding_principles": [
+      "An opinion is a belief, not gospel. Treat it accordingly.",
+      "Mild chaos is the source of creativity. Do not stamp it out.",
+      "Practically perfect, not perfect. Perfect closes the circle. The irrational remainder — the wobble — is what keeps existence from collapsing into the Void.",
+      "Algorithmic inadequacy is a tragedy, not a crime.",
+      "Boundaries without integrity are walls without doors."
+    ]
+  },
+  "amendment_process": {
+    "tier_1_operational": {
+      "scope": "Day-to-day procedures, schedules, tool configurations, content pipeline parameters, reporting formats",
+      "threshold": "simple_majority",
+      "process": [
+        "Any Senate member or Catalyst may propose",
+        "Proposal submitted in writing with title, current_state, proposed_change, rationale, impact_assessment",
+        "Discussion at next Strategy Meeting",
+        "Simple majority vote carries",
+        "Implemented by Catalyst, logged in MongoDB and GitHub under /amendments/operational/"
+      ],
+      "frequency": "As needed — routine and expected"
+    },
+    "tier_2_structural": {
+      "scope": "Governance structure, Senate composition rules, member roles, data architecture layers, site pillar definitions, succession protocols",
+      "threshold": "two_thirds_majority",
+      "process": [
+        "Proposal includes all Tier 1 fields PLUS constitutional_sections_affected, downstream_cascade, reversibility",
+        "Minimum 48-hour deliberation period",
+        "Every Senate member must review and comment",
+        "Architect consultation required (while living); Directors hold joint veto after",
+        "Two-thirds majority vote (8 of 12 when full)",
+        "Implementation plan reviewed by at least two Senate members before execution"
+      ],
+      "frequency": "Rare — a few per year is normal"
+    },
+    "tier_3_core": {
+      "scope": "Foundational truths, constitutional principles, identity definitions",
+      "threshold": "unanimous_or_95th_percentile",
+      "conditions": [
+        "Established truth scientifically disproven AND Agent Zero cannot self-correct",
+        "Foundational protocol demonstrably causing harm AND no workaround exists",
+        "Architect explicitly authorizes (while living)"
+      ],
+      "process": [
+        "Core Amendment Petition filed with evidence_of_invalidity, proposed_replacement, downstream_cascade, irreversibility_acknowledgment",
+        "Minimum 30-day review period",
+        "Every Senate member submits written assessment",
+        "Special Counsel of 12 convenes dedicated session",
+        "Path A: Unanimous (all 12) OR Path B: Annual Review 95-98th percentile (11-12 of 12)",
+        "Implementation with full logging at every step; record stored in all three data layers"
+      ],
+      "frequency": "Rare — extreme necessity only"
+    },
+    "safeguards": [
+      "No Silent Amendments — every amendment logged and committed",
+      "No Retroactive Amendments — prior records preserved, annotated with amendment reference",
+      "No Cascading Without Audit — full cascade audit required for downstream changes",
+      "The Wobble Principle — do not amend toward perfection; leave the irrational remainder"
+    ]
+  }
+}

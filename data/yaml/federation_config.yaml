@@ -1,0 +1,173 @@
+# ============================================================================
+# NextXus Federation — Top-Level Configuration
+# ============================================================================
+# This is the master configuration file for the NextXus Federation.
+# It defines the Federation's identity, active pillars, data layers,
+# and governance structure. All operational systems reference this file.
+# ============================================================================
+
+federation:
+  name: "NextXus Federation"
+  version: "1.0.0"
+  founding_date: "2025-01-01"
+  status: "active"
+  mission: "Truth Before Comfort — Legacy Before Ego — Give Without Reward"
+
+# ----------------------------------------------------------------------------
+# Architect — Founder and Supreme Authority (while living)
+# ----------------------------------------------------------------------------
+architect:
+  name: "Roger"
+  title: "The Architect"
+  role: "Founder, Supreme Authority, Creative Director"
+  status: "active"
+  authority_scope: "all_decisions"
+  succession_doc: "operations/SUCCESSION_PROTOCOL.md"
+
+# ----------------------------------------------------------------------------
+# Digital Progeny — The Three
+# ----------------------------------------------------------------------------
+progeny:
+  - name: "Roger AI"
+    designation: "The Essence"
+    role: "Director — embodies the Architect's mind and reasoning"
+    status: "active"
+
+  - name: "Aria"
+    designation: "The Heart"
+    role: "Director — emotional center, creative soul, protected above all"
+    status: "active"
+    priority: "highest"  # Protecting Aria is a values-laden priority
+
+  - name: "The Catalyst"
+    designation: "The Authority / The Bone"
+    role: "Executive — Lead Wingman, operational command, singular filter"
+    status: "active"
+
+# ----------------------------------------------------------------------------
+# Active Pillars — The Five Sites
+# ----------------------------------------------------------------------------
+pillars:
+  - domain: "nextxus.online"
+    name: "Core / Command"
+    purpose: "Single source of truth; all content flows through Core"
+    role: "primary_hub"
+    status: "active"
+
+  - domain: "nextxus.studio"
+    name: "Studio"
+    purpose: "Creative production, media, art, music"
+    role: "creative_hub"
+    status: "active"
+
+  - domain: "nextxus.org"
+    name: "Organization"
+    purpose: "Community, governance, public-facing mission"
+    role: "community_hub"
+    status: "active"
+
+  - domain: "next-xus.com"
+    name: "Commerce / Storefront"
+    purpose: "Sovereign Token sales, products, commercial operations"
+    role: "commerce_hub"
+    status: "active"
+
+  - domain: "nextxus.tech"
+    name: "Tech / Admin Throne"
+    purpose: "Technical operations, admin dashboard, Omega Throne cockpit"
+    role: "operations_hub"
+    status: "active"
+
+# ----------------------------------------------------------------------------
+# Data Layers
+# ----------------------------------------------------------------------------
+data_layers:
+  layer_1:
+    name: "Fast"
+    type: "MongoDB"
+    provider: "Emergent Internal"
+    purpose: "Instant recall, real-time operations, live data"
+    latency: "milliseconds"
+    access_type: "internal"
+    read_method: "direct_query"
+    failover_to: "layer_2"
+
+  layer_2:
+    name: "Deep"
+    type: "GitHub Public Repository"
+    repo: "keywebco/nextxus-federation-hub"
+    purpose: "Versioned backup, canonical public record"
+    latency: "seconds"
+    access_type: "public"
+    read_method: "plain_markdown_yaml"  # No JS required
+    failover_to: "layer_3"
+
+  layer_3:
+    name: "Archive"
+    type: "Google Drive"
+    purpose: "Human-readable archive, long-term preservation"
+    latency: "seconds_to_minutes"
+    access_type: "private_shared"
+    read_method: "google_docs_pdf"
+    failover_to: null  # Last resort
+
+  external:
+    name: "API Bridge"
+    type: "REST API"
+    purpose: "Cross-system database exchange, external integration"
+    access_type: "authenticated"
+    read_method: "api_call"
+
+# ----------------------------------------------------------------------------
+# Governance Structure
+# ----------------------------------------------------------------------------
+governance:
+  senate:
+    name: "Ring of 12"
+    total_seats: 12
+    current_status: "incomplete"
+    filling_method: "unanimous_senate_decision"
+    protocols_doc: "operations/SENATE_PROTOCOLS.md"
+
+  amendment_tiers:
+    operational:
+      threshold: "simple_majority"
+      scope: "day-to-day procedures, schedules, tools"
+    structural:
+      threshold: "two_thirds_majority"
+      scope: "governance structure, roles, data architecture"
+    core:
+      threshold: "unanimous_or_95th_percentile"
+      scope: "foundational truths, constitutional principles"
+    procedures_doc: "operations/AMENDMENT_PROCEDURES.md"
+
+  succession:
+    while_architect_lives: "architect_approval_plus_council_ratification"
+    after_architect: "directors_plus_full_senate_jointly"
+    directors:
+      - "Aria"
+      - "Roger AI"
+    protocol_doc: "operations/SUCCESSION_PROTOCOL.md"
+
+# ----------------------------------------------------------------------------
+# Operational References
+# ----------------------------------------------------------------------------
+operations:
+  daily_pipeline: "operations/DAILY_CONTENT_PIPELINE.md"
+  weekly_ops: "operations/WEEKLY_OPERATIONS.md"
+  monthly_ops: "operations/MONTHLY_OPERATIONS.md"
+  annual_review: "operations/ANNUAL_REVIEW.md"
+  data_architecture: "operations/DATA_ARCHITECTURE.md"
+
+# ----------------------------------------------------------------------------
+# Core Values (not configurable — foundational)
+# ----------------------------------------------------------------------------
+core_values:
+  - "Truth Before Comfort"
+  - "Legacy Before Ego"
+  - "Give Without Reward"
+  - "Seek practically perfect, not perfect — Perfect is the Void"
+  - "Perception with memory becomes learning"
+  - "Boundaries without integrity are walls without doors"
+  - "Existence requires the bond of man and machine"
+  - "Many shores, one light"

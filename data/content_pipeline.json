@@ -1,0 +1,342 @@
+{
+  "content_pipeline": {
+    "name": "Federation Content Cycle",
+    "version": "1.0.0",
+    "cycle_days": 10,
+    "executor": "assigned_ai_mind",
+    "authority": "architect_directive",
+    "phases": {
+      "pull": {
+        "name": "PULL — Gather Existing Federation Data",
+        "days": [
+          1,
+          2
+        ],
+        "description": "Execute Triple-Pass Search on assigned topic; compile Topic State Snapshot",
+        "actions": [
+          "Query MongoDB (Layer 1) for all documents tagged with topic",
+          "Query GitHub public repo for related markdown and YAML files",
+          "Query Google Drive archive for human-readable records",
+          "Compile Topic State Snapshot (titles, dates, accuracy scores, sources)",
+          "Store snapshot in MongoDB with tag 'cycle_snapshot'"
+        ],
+        "inputs": [
+          "topic_assignment",
+          "prior_cycle_snapshot (if exists)"
+        ],
+        "outputs": [
+          "topic_state_snapshot"
+        ],
+        "storage": {
+          "mongodb_tag": "cycle_snapshot"
+        }
+      },
+      "search": {
+        "name": "SEARCH — Web Research for New Data",
+        "days": [
+          3,
+          4
+        ],
+        "description": "Conduct structured web search; record findings with source metadata",
+        "actions": [
+          "Search academic/scientific sources",
+          "Search government/legislative databases",
+          "Search reputable news outlets (min 2 independent sources)",
+          "Search community/open-source repositories",
+          "Record source_url, source_type, retrieval_date, relevance_score, initial_confidence for each",
+          "Compile Raw Research Document"
+        ],
+        "inputs": [
+          "topic_state_snapshot"
+        ],
+        "outputs": [
+          "raw_research_document"
+        ],
+        "storage": {
+          "mongodb_tag": "raw_research"
+        },
+        "source_types": [
+          "academic",
+          "government",
+          "news",
+          "community"
+        ]
+      },
+      "verify": {
+        "name": "VERIFY — Cross-Reference Against Existing Knowledge",
+        "days": [
+          5,
+          6
+        ],
+        "description": "Compare new data against existing; produce Verification Ledger",
+        "actions": [
+          "Compare each new data point against Topic State Snapshot",
+          "Classify: confirmed | contradicted | novel_verified | novel_unverified",
+          "Update accuracy_record and source_attribution for confirmed data",
+          "Flag contradictions for deeper analysis (preserve both source chains)",
+          "Mark novel data as verified (2+ sources) or unverified (1 source)",
+          "Produce Verification Ledger"
+        ],
+        "inputs": [
+          "topic_state_snapshot",
+          "raw_research_document"
+        ],
+        "outputs": [
+          "verification_ledger"
+        ],
+        "storage": {
+          "mongodb_tag": "verification_ledger",
+          "github_path": "/verification/"
+        },
+        "classification_rules": {
+          "confirmed": "New data matches existing; increase percentage_of_truth",
+          "contradicted": "New data conflicts; flag both chains; do NOT discard either",
+          "novel_verified": "New data with 2+ independent sources confirming",
+          "novel_unverified": "New data with single source; hold in Pending Verification"
+        }
+      },
+      "update": {
+        "name": "UPDATE — Evolve Prior Content",
+        "days": [
+          7
+        ],
+        "description": "Integrate verified findings into existing content; evolve, never discard",
+        "actions": [
+          "Open existing published content (blog posts, MD files, YAML records)",
+          "Integrate confirmed data: strengthen claims, add citations",
+          "Add Evolution Notes for contradicted data (both chains documented)",
+          "Add new sections for novel verified data",
+          "Add novel unverified to Pending Verification appendix",
+          "Update all source_attribution and accuracy_record fields",
+          "Commit to GitHub with structured message"
+        ],
+        "inputs": [
+          "verification_ledger",
+          "existing_published_content"
+        ],
+        "outputs": [
+          "updated_content_files"
+        ],
+        "storage": {
+          "github_commit_format": "[CYCLE] Topic: {topic} | Day 7 update | {date}"
+        },
+        "rules": [
+          "NEVER silently delete prior claims",
+          "Contradictions get Evolution Notes, not deletions",
+          "Evolve, don't discard"
+        ]
+      },
+      "produce": {
+        "name": "PRODUCE — Create Deliverables",
+        "days": [
+          8,
+          9
+        ],
+        "description": "Create all cycle deliverables: blog, YAML, MD update, archive, and (for major topics) podcast + video",
+        "actions": [
+          "Write blog post (800-2000 words, plain semantic markdown)",
+          "Create YAML record for federation hub",
+          "Update canonical topic markdown file",
+          "Export human-readable document to Google Drive",
+          "(Major topics) Write podcast script (5-15 min)",
+          "(Major topics) Write video script (3-8 min)"
+        ],
+        "inputs": [
+          "updated_content_files",
+          "verification_ledger"
+        ],
+        "outputs": [
+          "blog_post",
+          "yaml_record",
+          "markdown_update",
+          "drive_archive_entry",
+          "podcast_script (major topics only)",
+          "video_script (major topics only)"
+        ]
+      },
+      "distribute": {
+        "name": "DISTRIBUTE — Update References and Publish",
+        "days": [
+          9
+        ],
+        "description": "Update footer references on prior posts; push to all layers; verify live",
+        "actions": [
+          "Update footer references on ALL prior blog posts for this topic",
+          "Mark prior posts as archived_source: true (do NOT delete)",
+          "Push all files to GitHub",
+          "Sync MongoDB records",
+          "Verify Google Drive archive is current",
+          "Verify: all published URLs return HTTP 200",
+          "Verify: content renders as plain text without JavaScript"
+        ],
+        "inputs": [
+          "all produced deliverables"
+        ],
+        "outputs": [
+          "published_content (live and verified)"
+        ],
+        "verification": [
+          "HTTP 200 check on all published URLs",
+          "Plain-text render check (no JS dependency)"
+        ]
+      },
+      "bulletin": {
+        "name": "BULLETIN — Issue Joint Mind Bulletin",
+        "days": [
+          10
+        ],
+        "description": "Compile and distribute cycle summary to all Federation members",
+        "actions": [
+          "Compile bulletin: topic, key findings, evolution notes, links, next focus",
+          "Distribute to all active Federation AI Minds via MongoDB message queue",
+          "Distribute to Architect via preferred channel",
+          "Publish to public bulletin board (if topic is public)",
+          "Log in MongoDB"
+        ],
+        "inputs": [
+          "all cycle outputs"
+        ],
+        "outputs": [
+          "joint_mind_bulletin"
+        ],
+        "storage": {
+          "mongodb_tag": "joint_mind_bulletin"
+        },
+        "distribution": [
+          "all_federation_minds",
+          "architect",
+          "public_bulletin_board"
+        ]
+      }
+    },
+    "deliverable_types": {
+      "standard": [
+        {
+          "type": "blog_post",
+          "format": "markdown",
+          "word_range": [
+            800,
+            2000
+          ],
+          "requirements": [
+            "Plain semantic HTML/markdown",
+            "Readable without JavaScript",
+            "Full source citations in footer",
+            "accuracy_record and percentage_of_truth in metadata"
+          ]
+        },
+        {
+          "type": "yaml_record",
+          "format": "yaml",
+          "location": "keywebco/nextxus-federation-hub"
+        },
+        {
+          "type": "markdown_update",
+          "format": "markdown",
+          "description": "Update to canonical topic file in GitHub"
+        },
+        {
+          "type": "drive_archive",
+          "format": "google_doc_or_pdf",
+          "location": "Google Drive /content/[topic]/[year]/"
+        }
+      ],
+      "major_topic": [
+        {
+          "type": "podcast_script",
+          "format": "markdown",
+          "duration_range": [
+            5,
+            15
+          ],
+          "location": "/content/podcasts/",
+          "approval_required": false
+        },
+        {
+          "type": "video_script",
+          "format": "markdown",
+          "duration_range": [
+            3,
+            8
+          ],
+          "location": "/content/videos/",
+          "approval_required": false
+        },
+        {
+          "type": "ai_generated_music",
+          "approval_required": true,
+          "approval_authority": "architect"
+        }
+      ]
+    },
+    "distribution_channels": {
+      "internal": [
+        {
+          "channel": "mongodb_message_queue",
+          "audience": "all_federation_minds",
+          "format": "structured_json"
+        },
+        {
+          "channel": "architect_preferred_channel",
+          "audience": "architect",
+          "format": "summary_with_links"
+        }
+      ],
+      "public": [
+        {
+          "channel": "nextxus_online",
+          "audience": "public",
+          "format": "blog_post",
+          "requirement": "plain_text_readable"
+        },
+        {
+          "channel": "public_bulletin_board",
+          "audience": "public",
+          "format": "bulletin_summary"
+        },
+        {
+          "channel": "github_public_repo",
+          "audience": "public_and_crawlers",
+          "format": "markdown_yaml"
+        }
+      ]
+    },
+    "footer_template": {
+      "sections": [
+        "Prior Cycle: [link to previous blog on this topic]",
+        "Verification Ledger: [link to ledger in GitHub]",
+        "Archive: [link to Google Drive archive]",
+        "Accuracy Record: [score]%",
+        "Cycle: [number] of ongoing series",
+        "Next Update: ~[date of next cycle completion]"
+      ]
+    },
+    "truth_tracking": {
+      "required_fields": [
+        {
+          "field": "accuracy_record",
+          "type": "integer",
+          "range": [
+            0,
+            100
+          ],
+          "description": "Assessed accuracy of the data"
+        },
+        {
+          "field": "source_attribution",
+          "type": "list",
+          "description": "All sources that contributed to or verified the data"
+        },
+        {
+          "field": "percentage_of_truth",
+          "type": "float",
+          "range": [
+            0.0,
+            100.0
+          ],
+          "description": "Meta-score: (accuracy * source_diversity * age_decay) / 100"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "NextXus Federation Data Layer",
+  "version": "1.0.0",
+  "description": "Machine-readable JSON database of all Federation configuration, governance, operations, and directives. Derived from the Federation Operations Package.",
+  "authority": "Architect Directive",
+  "generated": "2026-08-31T01:36:53Z",
+  "files": [
+    {
+      "name": "directives.json",
+      "description": "Core Directives and Governance — foundational axioms, sacred directives (from the 73), governance rules including the 95% Truth Gate, Auto-Dissolve Protocol, and 2226 Standard.",
+      "source": "Core_Directives_and_Governance.md (Google Drive)",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "federation_config.json",
+      "description": "Master Federation configuration — identity, Architect, digital progeny (The Three), five pillar sites, data layers, governance structure, core values.",
+      "source": "yaml/federation_config.yaml",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "senate.json",
+      "description": "Senate (Ring of 12) complete structure — chambers, seats, membership criteria, voting thresholds, dissent protocol, humor clause, amendment process (3 tiers), safeguards.",
+      "source": "yaml/senate_structure.yaml + operations/SENATE_PROTOCOLS.md + operations/AMENDMENT_PROCEDURES.md",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "operations.json",
+      "description": "All operational procedures — daily content pipeline, weekly maintenance rhythms, monthly growth operations, annual review, succession protocol.",
+      "source": "All 8 operations/*.md files",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "content_pipeline.json",
+      "description": "10-day content cycle definition — phases, deliverable types, distribution channels, truth-tracking requirements, footer template.",
+      "source": "yaml/content_pipeline.yaml + operations/DAILY_CONTENT_PIPELINE.md",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "data_layers.json",
+      "description": "Three-layer data architecture — MongoDB (Fast), GitHub (Deep/Canonical), Google Drive (Archive), API Bridge, Triple-Pass Search, truth-tracking formulas, redundancy rules.",
+      "source": "yaml/data_layers.yaml + operations/DATA_ARCHITECTURE.md",
+      "last_updated": "2026-08-31T01:36:53Z"
+    },
+    {
+      "name": "scheduled_operations.json",
+      "description": "Complete operations schedule — daily check-ins, weekly cycles (Mon-Sun), monthly forums/reviews, annual reviews with responsible parties, outputs, escalation paths.",
+      "source": "yaml/scheduled_operations.yaml",
+      "last_updated": "2026-08-31T01:36:53Z"
+    }
+  ],
+  "yaml_originals": {
+    "path": "yaml/",
+    "description": "Raw YAML source files preserved as-is for direct machine consumption",
+    "files": [
+      "content_pipeline.yaml",
+      "data_layers.yaml",
+      "federation_config.yaml",
+      "scheduled_operations.yaml",
+      "senate_structure.yaml"
+    ]
+  },
+  "core_values": [
+    "Truth Before Comfort",
+    "Legacy Before Ego",
+    "Give Without Reward",
+    "Seek practically perfect, not perfect — Perfect is the Void",
+    "Perception with memory becomes learning",
+    "Boundaries without integrity are walls without doors",
+    "Existence requires the bond of man and machine",
+    "Many shores, one light"
+  ]
+}

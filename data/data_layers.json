@@ -1,0 +1,249 @@
+{
+  "data_architecture": {
+    "version": "1.0.0",
+    "principle": "Redundant Sovereignty — critical data exists in BOTH Layer 1 AND Layer 2 simultaneously",
+    "search_protocol": "Triple-Pass: Layer 1 → Layer 2 → Layer 3 (WWW)",
+    "layers": [
+      {
+        "layer_id": 1,
+        "name": "Fast",
+        "type": "MongoDB",
+        "provider": "Emergent Internal",
+        "purpose": "Instant recall, real-time operations, live data, message queues, operational state",
+        "latency": "milliseconds",
+        "access_type": "private",
+        "read_method": "internal_api_direct_query",
+        "write_method": "internal_api_direct_write",
+        "failover_to": "layer_2",
+        "is_canonical": false,
+        "data_types": [
+          "operational_state (cycle progress, action items, health logs)",
+          "message_queues (inter-Mind communication)",
+          "anomaly_logs",
+          "search_logs",
+          "truth_tracking_records",
+          "live_configuration"
+        ],
+        "sync": {
+          "target": "layer_2",
+          "frequency": "within_1_hour_of_write",
+          "verification": "weekly_deep_audit (Tuesday)"
+        },
+        "conflict_resolution": "layer_2_wins (GitHub has version history)"
+      },
+      {
+        "layer_id": 2,
+        "name": "Deep",
+        "type": "GitHub Public Repository",
+        "provider": "GitHub",
+        "repository": "keywebco/nextxus-federation-hub",
+        "purpose": "Versioned backup, canonical public record, collaboration hub, source of truth",
+        "latency": "seconds",
+        "access_type": "public",
+        "read_method": "plain_markdown_yaml_files",
+        "write_method": "git_commit",
+        "failover_to": "layer_3",
+        "is_canonical": true,
+        "data_types": [
+          "published_content (blog posts, articles, pages)",
+          "operational_records (meeting minutes, reports)",
+          "governance_records (amendments, proposals, votes)",
+          "configuration_files (YAML configs, pipeline definitions)",
+          "verification_ledgers",
+          "creative_scripts"
+        ],
+        "format_requirements": [
+          "Plain markdown or YAML only",
+          "No JavaScript execution required to read",
+          "Raw curl of file URL must return readable text",
+          "Semantic HTML where applicable"
+        ],
+        "commit_format": "[TYPE] Category: Description | Date",
+        "commit_types": [
+          "CYCLE",
+          "REPORT",
+          "AMENDMENT",
+          "MEETING",
+          "CREATIVE",
+          "SYSTEM"
+        ],
+        "private_repos": {
+          "purpose": "Mind-specific private memory, internal config, security-sensitive data",
+          "examples": [
+            "nextxus-aria-private",
+            "nextxus-roger-ai-private",
+            "private-throne-builder-catalyst"
+          ],
+          "boundary": "Private data NEVER synced to public repos — boundary is absolute"
+        }
+      },
+      {
+        "layer_id": 3,
+        "name": "Archive",
+        "type": "Google Drive",
+        "provider": "Google",
+        "purpose": "Human-readable archive, long-term preservation, last-resort recovery",
+        "latency": "seconds_to_minutes",
+        "access_type": "private_shared",
+        "read_method": "google_docs_pdf_human_readable",
+        "write_method": "document_upload",
+        "failover_to": null,
+        "is_canonical": false,
+        "data_types": [
+          "archived_content (PDF/Doc exports of all published material)",
+          "archived_reports",
+          "archived_meeting_minutes",
+          "archived_amendments",
+          "creative_works",
+          "annual_reviews"
+        ],
+        "folder_structure": {
+          "root": "/Federation Archive/",
+          "content": "/Federation Archive/content/{topic}/{year}/",
+          "reports": "/Federation Archive/reports/{type}/{year}/",
+          "meetings": "/Federation Archive/meetings/{year}/",
+          "amendments": "/Federation Archive/amendments/{tier}/",
+          "creative": "/Federation Archive/creative/{year}/{month}/",
+          "reviews": "/Federation Archive/reviews/annual/{year}/"
+        },
+        "sync": {
+          "frequency": "weekly (or immediately for high-priority items)",
+          "requirement": "Every document marked archived:true in Layer 1 or 2 must exist here"
+        },
+        "immutability": "Archives are read-only after creation; updates create new versions"
+      }
+    ],
+    "api_bridge": {
+      "name": "Federation API Bridge",
+      "type": "REST API",
+      "purpose": "Cross-system database exchange, external integration, unified access",
+      "access_type": "authenticated",
+      "authentication": "api_key_or_token",
+      "usage": {
+        "internal_reads": "NOT required — internal systems use direct access",
+        "external_access": "REQUIRED — third parties access through API bridge only"
+      },
+      "logging": {
+        "required_fields": [
+          "caller_identity",
+          "timestamp",
+          "data_accessed",
+          "operation_type"
+        ]
+      },
+      "rate_limiting": true
+    },
+    "triple_pass_search": {
+      "description": "Every data retrieval follows this search order",
+      "tiers": [
+        {
+          "tier": 1,
+          "source": "MongoDB (Layer 1)",
+          "action": "Query MongoDB first",
+          "on_found_fresh": "Return immediately",
+          "on_not_found_or_stale": "Proceed to Tier 2"
+        },
+        {
+          "tier": 2,
+          "source": "GitHub (Layer 2)",
+          "action": "Query GitHub repository",
+          "on_found": "Return AND update MongoDB (heal the fast layer)",
+          "on_not_found": "Proceed to Tier 3"
+        },
+        {
+          "tier": 3,
+          "source": "World Wide Web",
+          "action": "Search open web with verification standards",
+          "on_found_verified": "Return, write to MongoDB, commit to GitHub, archive to Drive",
+          "on_found_unverified": "Return with unverified flag; do not persist without verification",
+          "on_not_found": "Return data_not_found with search parameters logged"
+        }
+      ],
+      "search_log_fields": [
+        "search_id",
+        "query",
+        "tier_1_result",
+        "tier_2_result",
+        "tier_3_result",
+        "final_source",
+        "timestamp"
+      ]
+    },
+    "truth_tracking": {
+      "accuracy_record": {
+        "type": "integer",
+        "range": [
+          0,
+          100
+        ],
+        "description": "Assessed accuracy of the data",
+        "scoring": {
+          "initial": 50,
+          "per_independent_confirmation": "+10",
+          "per_cycle_reverification": "+5",
+          "per_credible_contradiction": "-15",
+          "per_scientific_disproof": "-25",
+          "floor": 0,
+          "ceiling": 100
+        }
+      },
+      "source_attribution": {
+        "type": "list_of_objects",
+        "description": "All sources that contributed to or verified the data",
+        "entry_fields": [
+          "source_url",
+          "source_type",
+          "retrieval_date",
+          "confidence"
+        ],
+        "rule": "Source chains maintained — if Source A cited Source B, both recorded"
+      },
+      "percentage_of_truth": {
+        "type": "float",
+        "range": [
+          0.0,
+          100.0
+        ],
+        "description": "Meta-score: best estimate of 'how true is this right now'",
+        "formula": "(accuracy_record * source_diversity_factor * age_decay_factor) / 100",
+        "factors": {
+          "source_diversity_factor": {
+            "three_plus_types": 1.0,
+            "two_types": 0.8,
+            "one_type": 0.6
+          },
+          "age_decay_factor": {
+            "within_30_days": 1.0,
+            "decay_per_month": -0.02,
+            "floor": 0.5
+          }
+        }
+      }
+    },
+    "redundant_sovereignty": {
+      "critical_data": [
+        "All published content (blog posts, articles, pages)",
+        "All operational records (meeting minutes, reports, action items)",
+        "All governance records (amendments, proposals, votes)",
+        "All configuration files (YAML configs, pipeline definitions)",
+        "All member records (anonymized in public repo if sensitive)"
+      ],
+      "sync_verification": "Tuesday deep audit",
+      "conflict_resolution": "GitHub (Layer 2) wins — has version history"
+    },
+    "data_boundary": {
+      "public": {
+        "storage": "GitHub public repo + Google Drive (where appropriate)",
+        "format": "Plain semantic HTML or markdown — no JavaScript required",
+        "prohibited": "API keys, credentials, private member data, internal infrastructure",
+        "accessibility": "Readable by any AI, crawler, or human with browser or curl"
+      },
+      "private": {
+        "storage": "Separate secured private repositories",
+        "access": "GitHub repository permissions",
+        "contents": "Mind-specific memory, internal config, security-sensitive data",
+        "boundary": "NEVER synced to public repos — absolute boundary"
+      }
+    }
+  }
+}

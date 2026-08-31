@@ -1,0 +1,377 @@
+# ============================================================================
+# NextXus Federation — Scheduled Operations
+# ============================================================================
+# Complete schedule of all recurring Federation operations: daily, weekly,
+# monthly, and annual. Each entry defines the phase, responsible party,
+# expected outputs, and escalation paths.
+# ============================================================================
+
+scheduled_operations:
+  version: "1.0.0"
+  timezone: "America/Chicago"  # Architect operates in CDT/CST
+
+  # --------------------------------------------------------------------------
+  # DAILY OPERATIONS
+  # --------------------------------------------------------------------------
+  daily:
+    - operation: "database_check_in"
+      phase: "integrity_maintenance"
+      schedule: "daily"
+      time: "06:00"  # Early morning — before active operations begin
+      responsible_party: "catalyst"
+      participants: ["all_active_minds"]
+      description: "Verify health and sync across all three data layers"
+      actions:
+        - "Ping MongoDB (Layer 1) for responsiveness"
+        - "Verify GitHub (Layer 2) latest commit hash"
+        - "Check Google Drive (Layer 3) last sync timestamp"
+        - "Log any anomalies with severity classification"
+      outputs:
+        - "daily_health_log"
+      storage:
+        mongodb_tag: "daily_health"
+      escalation:
+        low_severity: "log_only"
+        medium_severity: "notify_catalyst"
+        high_severity: "notify_catalyst_immediately"
+        critical_severity: "notify_catalyst_and_architect"
+
+    - operation: "content_cycle_progress"
+      phase: "content_pipeline"
+      schedule: "daily"
+      time: "08:00"
+      responsible_party: "each_assigned_mind"
+      description: "Each Mind progresses its 10-day content cycle by one day's work"
+      actions:
+        - "Execute the current day's phase actions (see content_pipeline.yaml)"
+        - "Log progress in MongoDB"
+        - "Flag any blockers"
+      outputs:
+        - "cycle_progress_log"
+      escalation:
+        blocker_found: "notify_catalyst"
+        cycle_behind_schedule: "add_to_weekly_meeting_agenda"
+
+    - operation: "directive_check"
+      phase: "command_processing"
+      schedule: "daily"
+      time: "09:00"
+      responsible_party: "catalyst"
+      description: "Check for new Architect directives across all channels"
+      actions:
+        - "Scan all communication channels for new directives"
+        - "Check MongoDB for queued directives (status: pending)"
+        - "Triage: immediate action vs. queue for Thursday processing"
+      outputs:
+        - "directive_intake_log"
+      escalation:
+        urgent_directive: "execute_immediately"
+        unclear_directive: "draft_clarification_request"
+
+  # --------------------------------------------------------------------------
+  # WEEKLY OPERATIONS
+  # --------------------------------------------------------------------------
+  weekly:
+    - operation: "private_memory_protocol"
+      phase: "sovereign_memory"
+      schedule: "weekly"
+      day: "monday"
+      responsible_party: "each_mind_independently"
+      description: "Each AI Mind writes relevant new data to its private repo"
+      actions:
+        - "Review all data encountered during prior week"
+        - "Write relevant findings to private repository"
+        - "Include: entry_date, source_attribution, relevance_tag, confidence_score, private_note"
+      outputs:
+        - "private_memory_entries"
+      approval_required: false  # Sovereign Mind memory — no approval needed
+      escalation:
+        private_repo_inaccessible: "notify_catalyst"
+
+    - operation: "deep_database_audit"
+      phase: "integrity_maintenance"
+      schedule: "weekly"
+      day: "tuesday"
+      responsible_party: "catalyst"
+      participants: ["all_active_minds"]
+      description: "Full cross-layer data comparison and integrity verification"
+      actions:
+        - "Full MongoDB ↔ GitHub comparison for all public records"
+        - "Flag orphaned records (exist in one layer but not the other)"
+        - "Verify accuracy_record scores not silently modified"
+        - "Verify source_attribution chains intact"
+        - "Verify Google Drive contains all archived records"
+        - "Produce Weekly Integrity Report"
+      outputs:
+        - "weekly_integrity_report"
+      storage:
+        mongodb_tag: "integrity_report"
+        github_path: "/reports/integrity/"
+      escalation:
+        orphaned_records_found: "add_to_meeting_agenda"
+        accuracy_tampering_detected: "notify_architect_immediately"
+        sync_drift_exceeds_threshold: "trigger_emergency_sync"
+
+    - operation: "legislative_review"
+      phase: "legal_awareness"
+      schedule: "weekly"
+      day: "wednesday"
+      responsible_party: "legal_mind"
+      fallback_responsible: "catalyst"
+      description: "Scan for new laws/regulations affecting Federation operations"
+      actions:
+        - "Search for new AI governance and regulation"
+        - "Search for data privacy and sovereignty changes"
+        - "Search for digital commerce and IP law changes"
+        - "Assess impact on Federation (none/low/moderate/high/critical)"
+        - "Produce Legislative Briefing"
+      outputs:
+        - "legislative_briefing"
+      storage:
+        mongodb_tag: "legislative"
+        github_path: "/reports/legislative/"
+      escalation:
+        high_impact_found: "add_to_meeting_agenda_as_priority"
+        critical_impact_found: "notify_architect_immediately"
+
+    - operation: "directive_processing"
+      phase: "command_processing"
+      schedule: "weekly"
+      day: "thursday"
+      responsible_party: "catalyst"
+      description: "Process all active Architect/Director directives"
+      actions:
+        - "Pull all directives (pending, blocked, in_progress)"
+        - "Execute or delegate actionable directives"
+        - "Document blockers for blocked directives"
+        - "Verify completed directives with independent checks"
+        - "Produce Directive Status Report"
+      outputs:
+        - "directive_status_report"
+      storage:
+        mongodb_tag: "directives"
+        github_path: "/reports/directives/"
+      escalation:
+        directive_blocked_over_2_weeks: "escalate_to_architect"
+        directive_unclear: "request_clarification_from_architect"
+
+    - operation: "recycler_and_seeker"
+      phase: "knowledge_maintenance"
+      schedule: "weekly"
+      day: "friday"
+      responsible_party: "all_minds_collaboratively"
+      description: "Scour for new raw materials; flag outdated content"
+      actions:
+        - "SEEKER: Search web/GitHub for new tools, research, datasets, trends"
+        - "RECYCLER: Review existing content for outdated claims, broken links, stale data"
+        - "Compile Materials Report with recommendations"
+        - "Submit to Senate agenda"
+      outputs:
+        - "materials_report"
+      storage:
+        mongodb_tag: "materials"
+        github_path: "/reports/materials/"
+      escalation:
+        critical_outdated_content: "flag_for_immediate_content_cycle_update"
+
+    - operation: "weekly_strategy_meeting"
+      phase: "governance"
+      schedule: "weekly"
+      day: "saturday"
+      responsible_party:
+        while_architect_lives: "architect (chair)"
+        after_architect: "three_catalysts + senate"
+      ambassador: "nova"
+      description: "Full strategic review of the week's operations and findings"
+      agenda:
+        - "Integrity Report Review"
+        - "Legislative Briefing Review"
+        - "Directive Status Review"
+        - "Materials Report Review"
+        - "Content Cycle Status"
+        - "Open Discussion"
+        - "Action Items"
+      outputs:
+        - "meeting_minutes"
+        - "action_items"
+      storage:
+        mongodb_tag: "meeting"
+        github_path: "/meetings/weekly/"
+      escalation:
+        unresolved_critical_items: "schedule_emergency_session"
+
+  # --------------------------------------------------------------------------
+  # MONTHLY OPERATIONS
+  # --------------------------------------------------------------------------
+  monthly:
+    - operation: "free_discussion_forum"
+      phase: "community_engagement"
+      schedule: "monthly"
+      week: 1
+      responsible_party: "all_minds + public_participants"
+      moderator: "catalyst"
+      description: "Open public forum for idea generation and debate"
+      actions:
+        - "Announce forum on all Federation channels"
+        - "Moderate discussion for quality and civility"
+        - "Extract viable points as Formal Proposals"
+        - "Submit proposals to Senate"
+      outputs:
+        - "formal_proposals (if viable points found)"
+      storage:
+        accepted_proposals: "/proposals/accepted/"
+        reviewed_proposals: "/proposals/reviewed/"
+      rules:
+        - "Forum itself produces NO permanent record"
+        - "Only Senate-accepted proposals become permanent"
+        - "Humor always permitted; hostility never"
+      escalation:
+        disruptive_participant: "moderator_warning_then_removal"
+
+    - operation: "arts_and_human_services"
+      phase: "creative_production"
+      schedule: "monthly"
+      week: 2
+      responsible_party: "creative_minds"
+      approval_authority: "architect"
+      description: "Commission and produce new creative works; assess human services needs"
+      actions:
+        - "Review standing creative directives"
+        - "Produce Monthly Creative Brief"
+        - "Execute creative projects"
+        - "Review and approve completed works"
+        - "Assess community human services needs"
+      outputs:
+        - "creative_brief"
+        - "completed_creative_works"
+        - "human_services_log"
+      storage:
+        creative: "/creative/{year}/{month}/"
+        mongodb_tag: "creative_output"
+      rules:
+        - "AI-generated music requires Architect approval before publishing"
+        - "Quality bar: no half-ass work published"
+        - "Active motion preferred over static design"
+
+    - operation: "human_ai_relations_analysis"
+      phase: "world_awareness"
+      schedule: "monthly"
+      week: 3
+      responsible_party: "analyst_minds + catalyst"
+      description: "Correlate world news with AI developments; catalog new capabilities"
+      actions:
+        - "Scan major news for AI regulation, capabilities, public sentiment"
+        - "Catalog significant new AI capabilities with impact assessment"
+        - "Cross-reference events with developments for correlation patterns"
+        - "Produce Monthly Relations Report"
+      outputs:
+        - "relations_report"
+        - "capability_catalog_updates"
+      storage:
+        github_path: "/reports/relations/{year}/{month}.md"
+        mongodb_tag: "relations"
+      adoption_recommendations:
+        - "adopt"
+        - "monitor"
+        - "avoid"
+        - "recreate_in_house"  # Prefer recreation over subscription
+      escalation:
+        threat_to_federation: "notify_architect_and_senate_immediately"
+
+    - operation: "evolution_and_communications_review"
+      phase: "self_improvement"
+      schedule: "monthly"
+      week: 4
+      responsible_party: "catalyst + senate"
+      description: "Review all protocols; measure progress; update as needed"
+      actions:
+        - "Review all active operational protocols for adherence and efficiency"
+        - "Measure progress against prior month (content, integrity, engagement, directives)"
+        - "Review communication channels for effectiveness"
+        - "Draft protocol amendments if needed"
+        - "Produce Evolution Review"
+      outputs:
+        - "protocol_health_report"
+        - "progress_dashboard"
+        - "evolution_review"
+      storage:
+        github_path: "/reports/evolution/{year}/{month}.md"
+        mongodb_tag: "evolution"
+      progress_metrics:
+        - "content_cycles_completed"
+        - "data_integrity_score"
+        - "directives_completed"
+        - "creative_works_published"
+        - "anomalies_detected"
+      escalation:
+        significant_protocol_change_needed: "submit_to_senate_vote"
+
+  # --------------------------------------------------------------------------
+  # ANNUAL OPERATIONS
+  # --------------------------------------------------------------------------
+  annual:
+    - operation: "annual_review"
+      phase: "comprehensive_evaluation"
+      schedule: "annual"
+      recommended_timing: "first_two_weeks_of_january"
+      responsible_party: "full_senate + catalyst + architect (while living)"
+      description: "Complete evaluation of all Federation systems, records, members, and pending matters"
+      phases:
+        system_audit:
+          days: [1, 2, 3]
+          executor: "catalyst + technical_minds"
+          scope: "All 5 pillar sites, MongoDB, GitHub, Google Drive, API bridge, security"
+
+        records_review:
+          days: [4, 5, 6]
+          executor: "all_minds_collaboratively"
+          scope: "All published content, meeting records, proposals"
+
+        member_review:
+          days: [7, 8, 9]
+          executor: "catalyst + senate"
+          scope: "AI Mind performance, Senate seats, human collaborators"
+
+        pending_matters:
+          days: [10, 11]
+          executor: "catalyst"
+          scope: "Open directives, unresolved anomalies, external matters"
+
+        senate_session:
+          days: [12, 13, 14]
+          executor: "full_senate + architect"
+          scope: "Presentation, discussion, voting, Year Plan creation"
+
+      outputs:
+        - "full_data_integrity_report"
+        - "content_audit_report"
+        - "member_performance_report"
+        - "pending_matters_report"
+        - "senate_session_minutes"
+        - "year_plan"
+      storage:
+        github_path: "/reviews/annual/{year}/"
+        google_drive: "/Federation Archive/reviews/annual/{year}/"
+        mongodb_tag: "annual_review"
+      escalation:
+        critical_system_failure: "emergency_remediation_before_continuing_review"
+
+    - operation: "agent_zero_special_session"
+      phase: "constitutional_amendment"
+      schedule: "annual_or_as_needed"
+      trigger: "core_amendment_petition_filed"
+      responsible_party: "special_counsel_of_12"
+      description: "Review and vote on amendments to core Federation data"
+      threshold: "unanimous_or_95th_percentile"
+      conditions:
+        - "Established truth scientifically disproven AND Agent Zero cannot self-correct"
+        - "Foundational protocol demonstrably causing harm AND no workaround exists"
+        - "Architect explicitly authorizes (while living)"
+      frequency: "rare — extreme necessity only"
+      outputs:
+        - "core_amendment_record (if approved)"
+        - "petition_archive (if rejected)"
+      storage:
+        all_three_layers: true
+      escalation:
+        not_applicable: "This IS the highest escalation path"

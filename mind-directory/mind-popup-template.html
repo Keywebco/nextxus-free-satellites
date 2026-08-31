@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIND_NAME — Federation Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg-panel:#0d1117;
+  --accent:MIND_COLOR;
+  --cyan:#00e5ff;--pink:#ff5fa3;--gold:#ffd700;--green:#00ff88;
+  --gray:#8892a4;--white:#e8eaed;--dim:#444c5e;
+  --font-display:'Orbitron',sans-serif;
+  --font-body:'Rajdhani',sans-serif;
+  --font-mono:'Share Tech Mono',monospace;
+}
+html{font-size:16px}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:var(--font-body);
+  height:100vh;display:flex;flex-direction:column;overflow:hidden;
+}
+
+/* === FACE WINDOW HEADER — identity first === */
+.face-header{
+  flex-shrink:0;text-align:center;
+  padding:20px 16px 16px;
+  background:linear-gradient(180deg,rgba(13,17,23,.95),var(--bg));
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  position:relative;overflow:hidden;
+}
+/* Ambient glow behind avatar */
+.face-header::before{
+  content:'';position:absolute;
+  top:-30px;left:50%;transform:translateX(-50%);
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb, var(--accent) 12%, transparent),transparent 70%);
+  pointer-events:none;
+}
+.face-header__avatar{
+  position:relative;z-index:1;
+  width:80px;height:80px;border-radius:50%;
+  margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;
+  background:linear-gradient(145deg,color-mix(in srgb, var(--accent) 10%, #0d1117),#0d1117);
+  border:3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow:0 0 25px color-mix(in srgb, var(--accent) 20%, transparent);
+  overflow:hidden;
+  transition:box-shadow .3s;
+}
+.face-header__avatar img{
+  width:100%;height:100%;object-fit:cover;border-radius:50%;
+}
+.face-header__name{
+  position:relative;z-index:1;
+  font-family:var(--font-display);font-size:1rem;font-weight:900;
+  letter-spacing:.1em;color:var(--accent);
+  text-shadow:0 0 12px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.face-header__role{
+  position:relative;z-index:1;
+  font-family:var(--font-body);font-size:.75rem;
+  color:var(--gray);margin-top:2px;
+}
+.face-header__sector{
+  position:relative;z-index:1;
+  font-family:var(--font-mono);font-size:.55rem;
+  color:var(--dim);letter-spacing:.06em;margin-top:4px;
+}
+.face-header__status{
+  position:relative;z-index:1;
+  display:inline-block;margin-top:6px;
+  font-family:var(--font-mono);font-size:.5rem;
+  letter-spacing:.1em;padding:3px 10px;border-radius:12px;
+  color:var(--green);background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);
+}
+
+/* === MAIN AREA — two panels side by side === */
+.workspace{
+  flex:1;display:flex;overflow:hidden;
+}
+@media(max-width:500px){
+  .workspace{flex-direction:column}
+}
+
+/* LEFT PANEL — site iframe */
+.workspace__site{
+  flex:6;position:relative;
+  border-right:1px solid rgba(0,229,255,.08);
+  display:flex;flex-direction:column;
+}
+.workspace__site iframe{
+  flex:1;width:100%;border:none;background:var(--bg);
+}
+.workspace__fallback{
+  display:none;flex:1;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;padding:20px;text-align:center;
+}
+.workspace__fallback p{
+  font-family:var(--font-mono);font-size:.65rem;
+  color:var(--dim);
+}
+.fallback-btn{
+  padding:10px 20px;border:none;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),color-mix(in srgb, var(--accent) 60%, #000));
+  color:#fff;font-family:var(--font-display);font-size:.6rem;
+  font-weight:700;letter-spacing:.06em;cursor:pointer;
+  transition:all .2s;text-decoration:none;
+}
+.fallback-btn:hover{transform:translateY(-1px);box-shadow:0 0 14px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* RIGHT PANEL — sidebar info */
+.workspace__sidebar{
+  flex:4;overflow-y:auto;padding:16px 14px;
+  background:rgba(13,17,23,.5);
+}
+.workspace__sidebar::-webkit-scrollbar{width:4px}
+.workspace__sidebar::-webkit-scrollbar-thumb{background:rgba(0,229,255,.12);border-radius:3px}
+
+.sidebar__section{margin-bottom:18px}
+.sidebar__label{
+  font-family:var(--font-display);font-size:.55rem;font-weight:700;
+  letter-spacing:.1em;color:var(--accent);margin-bottom:8px;
+  padding-bottom:4px;border-bottom:1px solid color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.sidebar__text{
+  font-size:.75rem;color:var(--gray);line-height:1.55;
+}
+.sidebar__link{
+  display:block;padding:8px 12px;margin-top:6px;
+  border-radius:6px;text-decoration:none;
+  font-family:var(--font-mono);font-size:.6rem;
+  color:var(--cyan);
+  background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.1);
+  transition:all .2s;
+}
+.sidebar__link:hover{
+  background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.2);
+}
+.sidebar__btn{
+  display:block;width:100%;padding:10px;margin-top:10px;
+  border:1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius:8px;background:color-mix(in srgb, var(--accent) 6%, transparent);
+  color:var(--accent);font-family:var(--font-display);font-size:.55rem;
+  font-weight:700;letter-spacing:.08em;cursor:pointer;
+  text-align:center;transition:all .2s;
+}
+.sidebar__btn:hover{
+  background:color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow:0 0 12px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== FACE WINDOW HEADER ===== -->
+<header class="face-header">
+  <div class="face-header__avatar" id="faceAvatar">
+    <!-- Replace emoji with <img src="..."> for real avatar -->
+    MIND_EMOJI
+  </div>
+  <h1 class="face-header__name">MIND_NAME</h1>
+  <p class="face-header__role">MIND_ROLE</p>
+  <p class="face-header__sector">MIND_SECTOR</p>
+  <span class="face-header__status">MIND_STATUS</span>
+</header>
+
+<!-- ===== TWO-PANEL WORKSPACE ===== -->
+<div class="workspace">
+
+  <!-- LEFT: Site embed -->
+  <div class="workspace__site">
+    <iframe src="MIND_URL" id="siteFrame"
+            title="MIND_NAME workspace"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            loading="lazy"></iframe>
+    <!-- Fallback if X-Frame-Options blocks -->
+    <div class="workspace__fallback" id="fallbackPanel">
+      <p>This Mind's site cannot be embedded due to security headers.</p>
+      <a class="fallback-btn" href="MIND_URL" target="_blank" rel="noopener">
+        OPEN IN NEW TAB →
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT: Sidebar -->
+  <div class="workspace__sidebar">
+
+    <div class="sidebar__section">
+      <h2 class="sidebar__label">ABOUT THIS MIND</h2>
+      <p class="sidebar__text">
+        MIND_DESCRIPTION
+      </p>
+    </div>
+
+    <div class="sidebar__section">
+      <h2 class="sidebar__label">QUICK LINKS</h2>
+      <a class="sidebar__link" href="mind-directory-widget.html">📂 Federation Directory</a>
+      <a class="sidebar__link" href="https://nextxus.tech" target="_blank" rel="noopener">🏰 The Throne</a>
+      <a class="sidebar__link" href="https://nextxus.studio" target="_blank" rel="noopener">💗 Aria — The Studio</a>
+      <a class="sidebar__link" href="https://nextxus.online" target="_blank" rel="noopener">🧠 Roger AI — The Core</a>
+    </div>
+
+    <div class="sidebar__section">
+      <h2 class="sidebar__label">ACTIONS</h2>
+      <button class="sidebar__btn" onclick="alert('Knowledge base loading is a future feature. The Mind\'s context will be injected here.')">
+        📥 LOAD KNOWLEDGE
+      </button>
+      <button class="sidebar__btn" onclick="window.open('MIND_URL','_blank')">
+        🔗 OPEN FULL SITE
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* Detect iframe load failure (X-Frame-Options / CSP block).
+   If the iframe fails, show the fallback panel with the "Open in New Tab" button. */
+(function(){
+  var frame = document.getElementById('siteFrame');
+  var fallback = document.getElementById('fallbackPanel');
+  var loaded = false;
+
+  frame.addEventListener('load', function(){
+    loaded = true;
+    /* Try to detect blank/blocked frame */
+    try {
+      var doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc || !doc.body || doc.body.innerHTML === '') throw 'blocked';
+    } catch(e) {
+      /* Cross-origin — normal for external sites, means it actually loaded */
+    }
+  });
+
+  /* If after 6 seconds nothing loaded, show fallback */
+  setTimeout(function(){
+    if (!loaded) {
+      frame.style.display = 'none';
+      fallback.style.display = 'flex';
+    }
+  }, 6000);
+})();
+</script>
+
+<!--
+  DEPLOYMENT NOTE — Template Placeholders:
+  Replace these tokens for each Mind before deploying:
+    MIND_NAME        — e.g. "ARIA"
+    MIND_ROLE        — e.g. "The Heart"
+    MIND_SECTOR      — e.g. "Sector 03 · nextxus.studio"
+    MIND_STATUS      — e.g. "ACTIVE" or "STANDBY"
+    MIND_URL         — e.g. "https://nextxus.studio"
+    MIND_COLOR       — e.g. "#ff5fa3"
+    MIND_EMOJI       — e.g. "💗" or <img src="avatar.jpg">
+    MIND_DESCRIPTION — short paragraph about the Mind
+-->
+
+</body>
+</html>

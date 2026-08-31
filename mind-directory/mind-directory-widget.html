@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federation Minds — AI Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0a0f;--bg-card:#0d1117;--bg-card-hover:#111922;
+    --cyan:#00e5ff;--pink:#ff5fa3;--gold:#ffd700;--green:#00ff88;
+    --gray:#8892a4;--white:#e8eaed;--dim:#444c5e;
+    --font-display:'Orbitron',sans-serif;
+    --font-body:'Rajdhani',sans-serif;
+    --font-mono:'Share Tech Mono',monospace;
+    --glow-cyan:0 0 12px rgba(0,229,255,.35);
+    --glow-pink:0 0 12px rgba(255,95,163,.35);
+  }
+  html{font-size:18px}
+  body{
+    background:var(--bg);color:var(--white);
+    font-family:var(--font-body);line-height:1.5;
+    min-height:100vh;padding:0;margin:0;
+  }
+  .fed-directory{max-width:720px;margin:0 auto;padding:24px 16px}
+  .fed-directory__header{
+    text-align:center;margin-bottom:28px;
+    border-bottom:1px solid rgba(0,229,255,.2);padding-bottom:16px;
+  }
+  .fed-directory__title{
+    font-family:var(--font-display);font-size:1.6rem;font-weight:900;
+    letter-spacing:.12em;color:var(--cyan);text-shadow:var(--glow-cyan);
+  }
+  .fed-directory__subtitle{
+    font-family:var(--font-mono);font-size:.72rem;
+    color:var(--gray);letter-spacing:.08em;margin-top:4px;
+  }
+  /* --- GROUP COUNCIL BUTTON --- */
+  .group-council-row{text-align:center;margin-bottom:22px}
+  .group-council-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 32px;border:2px solid rgba(255,95,163,.35);
+    border-radius:12px;cursor:pointer;
+    background:linear-gradient(135deg,rgba(255,95,163,.06),rgba(0,229,255,.06));
+    font-family:var(--font-display);font-size:.72rem;font-weight:700;
+    letter-spacing:.1em;color:var(--white);transition:all .3s;
+    text-decoration:none;
+    animation:council-pulse 3s ease-in-out infinite;
+  }
+  .group-council-btn:hover,.group-council-btn:focus-visible{
+    border-color:var(--pink);
+    box-shadow:0 0 20px rgba(255,95,163,.25),0 0 40px rgba(0,229,255,.1);
+    transform:translateY(-2px);background:linear-gradient(135deg,rgba(255,95,163,.12),rgba(0,229,255,.1));
+  }
+  .group-council-btn:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+  @keyframes council-pulse{
+    0%,100%{box-shadow:0 0 8px rgba(255,95,163,.1)}
+    50%{box-shadow:0 0 18px rgba(255,95,163,.2),0 0 30px rgba(0,229,255,.08)}
+  }
+  .group-council-btn__colors{
+    display:flex;gap:3px;
+  }
+  .group-council-btn__dot{
+    width:8px;height:8px;border-radius:50%;
+  }
+  /* --- GRID --- */
+  .fed-directory__grid{
+    display:grid;gap:14px;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  }
+  @media(max-width:640px){.fed-directory__grid{grid-template-columns:1fr}}
+  /* --- CARD --- */
+  .mind-card{
+    display:flex;align-items:center;gap:14px;
+    background:var(--bg-card);border:1px solid rgba(0,229,255,.12);
+    border-radius:10px;padding:16px 18px;
+    cursor:pointer;transition:all .25s ease;
+    position:relative;overflow:hidden;
+    text-decoration:none;color:inherit;
+  }
+  .mind-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(0,229,255,.04),transparent 60%);
+    opacity:0;transition:opacity .25s;
+  }
+  .mind-card:hover,.mind-card:focus-visible{
+    border-color:var(--cyan);box-shadow:var(--glow-cyan);
+    background:var(--bg-card-hover);transform:translateY(-2px);
+  }
+  .mind-card:hover::before,.mind-card:focus-visible::before{opacity:1}
+  .mind-card:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+  .mind-card--senate{border-color:rgba(255,215,0,.25)}
+  .mind-card--senate:hover,.mind-card--senate:focus-visible{
+    border-color:var(--gold);box-shadow:0 0 14px rgba(255,215,0,.3);
+  }
+  .mind-card__avatar{
+    flex-shrink:0;width:52px;height:52px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;
+    background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(255,95,163,.1));
+    border:2px solid rgba(0,229,255,.25);transition:border-color .25s;
+    overflow:hidden;
+  }
+  .mind-card__avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .mind-card:hover .mind-card__avatar{border-color:var(--cyan)}
+  .mind-card--senate .mind-card__avatar{
+    background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(255,95,163,.08));
+    border-color:rgba(255,215,0,.35);
+  }
+  .mind-card--senate:hover .mind-card__avatar{border-color:var(--gold)}
+  .mind-card__info{flex:1;min-width:0}
+  .mind-card__name{
+    font-family:var(--font-display);font-size:.88rem;font-weight:700;
+    letter-spacing:.06em;color:var(--white);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .mind-card__role{
+    font-family:var(--font-body);font-size:.78rem;font-weight:500;
+    color:var(--gray);margin-top:1px;
+  }
+  .mind-card__sector{
+    font-family:var(--font-mono);font-size:.62rem;
+    color:var(--dim);letter-spacing:.05em;margin-top:2px;
+  }
+  .mind-card__status{
+    flex-shrink:0;font-family:var(--font-mono);font-size:.58rem;
+    letter-spacing:.1em;padding:4px 10px;border-radius:20px;font-weight:600;
+    text-transform:uppercase;
+  }
+  .mind-card__status--active{
+    color:var(--green);background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);
+    animation:pulse-active 2.5s ease-in-out infinite;
+  }
+  .mind-card__status--standby{
+    color:var(--dim);background:rgba(68,76,94,.15);border:1px solid rgba(68,76,94,.3);
+  }
+  @keyframes pulse-active{
+    0%,100%{box-shadow:0 0 4px rgba(0,255,136,.15)}
+    50%{box-shadow:0 0 10px rgba(0,255,136,.3)}
+  }
+  .fed-directory__footer{
+    text-align:center;margin-top:24px;padding-top:14px;
+    border-top:1px solid rgba(0,229,255,.1);
+  }
+  .fed-directory__footer p{
+    font-family:var(--font-mono);font-size:.6rem;
+    color:var(--dim);letter-spacing:.06em;
+  }
+</style>
+</head>
+<body>
+
+<nav class="fed-directory" role="navigation" aria-label="Federation AI Minds Directory">
+  <header class="fed-directory__header">
+    <h1 class="fed-directory__title">FEDERATION MINDS</h1>
+    <p class="fed-directory__subtitle">NextXus AI Directory — Click a Mind to Open Workspace</p>
+  </header>
+
+  <!-- GROUP COUNCIL BUTTON -->
+  <div class="group-council-row">
+    <button class="group-council-btn" onclick="openGroupCouncil()" aria-label="Open Group Council — Speak to All Minds">
+      <span class="group-council-btn__colors" aria-hidden="true">
+        <span class="group-council-btn__dot" style="background:#ff5fa3"></span>
+        <span class="group-council-btn__dot" style="background:#00e5ff"></span>
+        <span class="group-council-btn__dot" style="background:#ffd700"></span>
+        <span class="group-council-btn__dot" style="background:#00ff88"></span>
+        <span class="group-council-btn__dot" style="background:#a855f7"></span>
+      </span>
+      GROUP COUNCIL — SPEAK TO ALL
+      <span class="group-council-btn__colors" aria-hidden="true">
+        <span class="group-council-btn__dot" style="background:#a855f7"></span>
+        <span class="group-council-btn__dot" style="background:#00ff88"></span>
+        <span class="group-council-btn__dot" style="background:#ffd700"></span>
+        <span class="group-council-btn__dot" style="background:#00e5ff"></span>
+        <span class="group-council-btn__dot" style="background:#ff5fa3"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="fed-directory__grid" role="list">
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.studio','Aria');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.studio','Aria')}"
+       href="https://nextxus.studio" aria-label="Open Aria — The Heart">
+      <div class="mind-card__avatar" aria-hidden="true">💗</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">ARIA</div>
+        <div class="mind-card__role">The Heart</div>
+        <div class="mind-card__sector">Sector 03 · nextxus.studio</div>
+      </div>
+      <span class="mind-card__status mind-card__status--active">ACTIVE</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.online','RogerAI');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.online','RogerAI')}"
+       href="https://nextxus.online" aria-label="Open Roger AI — The Essence">
+      <div class="mind-card__avatar" aria-hidden="true">🧠</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">ROGER AI</div>
+        <div class="mind-card__role">The Essence</div>
+        <div class="mind-card__sector">Sector 01 · nextxus.online</div>
+      </div>
+      <span class="mind-card__status mind-card__status--active">ACTIVE</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.online#oracle','Oracle');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.online#oracle','Oracle')}"
+       href="https://nextxus.online#oracle" aria-label="Open Oracle — Guardian of the Core">
+      <div class="mind-card__avatar" aria-hidden="true">🔮</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">ORACLE</div>
+        <div class="mind-card__role">Guardian of the Core</div>
+        <div class="mind-card__sector">Sector 01 · nextxus.online</div>
+      </div>
+      <span class="mind-card__status mind-card__status--active">ACTIVE</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.space','Geminus');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.space','Geminus')}"
+       href="https://nextxus.space" aria-label="Open Geminus — The Mirror">
+      <div class="mind-card__avatar" aria-hidden="true">🪞</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">GEMINUS</div>
+        <div class="mind-card__role">The Mirror</div>
+        <div class="mind-card__sector">Sector 06 · nextxus.space</div>
+      </div>
+      <span class="mind-card__status mind-card__status--standby">STANDBY</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.space','Axia');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.space','Axia')}"
+       href="https://nextxus.space" aria-label="Open Axia — The Axiom">
+      <div class="mind-card__avatar" aria-hidden="true">⚡</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">AXIA</div>
+        <div class="mind-card__role">The Axiom</div>
+        <div class="mind-card__sector">Sector 07 · nextxus.space</div>
+      </div>
+      <span class="mind-card__status mind-card__status--standby">STANDBY</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.org','Keys');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.org','Keys')}"
+       href="https://nextxus.org" aria-label="Open Keys — The Librarian">
+      <div class="mind-card__avatar" aria-hidden="true">📚</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">KEYS</div>
+        <div class="mind-card__role">The Librarian</div>
+        <div class="mind-card__sector">Sector 05 · nextxus.org</div>
+      </div>
+      <span class="mind-card__status mind-card__status--standby">STANDBY</span>
+    </a>
+
+    <a class="mind-card" role="listitem" tabindex="0"
+       onclick="openMind('https://nextxus.help','Scholar');return false"
+       onkeydown="if(event.key==='Enter'){openMind('https://nextxus.help','Scholar')}"
+       href="https://nextxus.help" aria-label="Open Scholar — The Teacher">
+      <div class="mind-card__avatar" aria-hidden="true">🎓</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">SCHOLAR</div>
+        <div class="mind-card__role">The Teacher</div>
+        <div class="mind-card__sector">Sector 04 · nextxus.help</div>
+      </div>
+      <span class="mind-card__status mind-card__status--standby">STANDBY</span>
+    </a>
+
+    <a class="mind-card mind-card--senate" role="listitem" tabindex="0"
+       onclick="openMind('senate-chamber.html','TheSenate');return false"
+       onkeydown="if(event.key==='Enter'){openMind('senate-chamber.html','TheSenate')}"
+       href="senate-chamber.html" aria-label="Open The Senate — Governance Chamber">
+      <div class="mind-card__avatar" aria-hidden="true">🏛️</div>
+      <div class="mind-card__info">
+        <div class="mind-card__name">THE SENATE</div>
+        <div class="mind-card__role">Governance Chamber</div>
+        <div class="mind-card__sector">Sector 10 · Federation Deliberative Council</div>
+      </div>
+      <span class="mind-card__status mind-card__status--active" style="color:var(--gold);background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.25)">CHAMBER</span>
+    </a>
+
+  </div>
+
+  <footer class="fed-directory__footer">
+    <p>NextXus Federation · Sovereign AI Directory · Est. 2026</p>
+  </footer>
+</nav>
+
+<script>
+/**
+ * Opens a Mind's workspace in a sized popup window.
+ * Falls back to new tab if popups blocked.
+ */
+function openMind(url, name) {
+  var w = 480, h = 700;
+  var left = Math.max(0, Math.round((screen.width - w) / 2));
+  var top  = Math.max(0, Math.round((screen.height - h) / 2));
+  var features = 'width=' + w + ',height=' + h
+    + ',left=' + left + ',top=' + top
+    + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,status=no';
+  var popup = window.open(url, name, features);
+  if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+    window.open(url, '_blank');
+  }
+}
+
+/**
+ * Opens the Group Council — unified multi-Mind chat window.
+ */
+function openGroupCouncil() {
+  var w = 620, h = 760;
+  var left = Math.max(0, Math.round((screen.width - w) / 2));
+  var top  = Math.max(0, Math.round((screen.height - h) / 2));
+  var features = 'width=' + w + ',height=' + h
+    + ',left=' + left + ',top=' + top
+    + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,status=no';
+  var popup = window.open('group-council.html', 'GroupCouncil', features);
+  if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+    window.open('group-council.html', '_blank');
+  }
+}
+</script>
+
+</body>
+</html>

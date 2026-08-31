@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Council — Federation Minds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#07080d;--bg-panel:#0c1018;--bg-msg:#0d1219;
+    --cyan:#00e5ff;--pink:#ff5fa3;--gold:#ffd700;--green:#00ff88;
+    --purple:#a855f7;--orange:#ff8c42;--red:#ff4466;--teal:#2dd4bf;
+    --gray:#8892a4;--white:#e8eaed;--dim:#444c5e;
+    --font-display:'Orbitron',sans-serif;
+    --font-body:'Rajdhani',sans-serif;
+    --font-mono:'Share Tech Mono',monospace;
+  }
+  html{font-size:16px}
+  body{
+    background:var(--bg);color:var(--white);
+    font-family:var(--font-body);
+    height:100vh;display:flex;flex-direction:column;overflow:hidden;
+  }
+
+  /* === TOP BAR: MIND ROSTER === */
+  .roster{
+    display:flex;align-items:center;gap:0;
+    padding:10px 12px;
+    background:var(--bg-panel);
+    border-bottom:1px solid rgba(0,229,255,.12);
+    overflow-x:auto;flex-shrink:0;
+  }
+  .roster__mind{
+    display:flex;flex-direction:column;align-items:center;
+    padding:6px 10px;cursor:pointer;transition:all .2s;
+    border-radius:8px;min-width:64px;flex-shrink:0;
+    border:1px solid transparent;
+  }
+  .roster__mind:hover{background:rgba(255,255,255,.04)}
+  .roster__mind--active{border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+  .roster__avatar{
+    width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;margin-bottom:3px;
+    transition:box-shadow .25s;
+  }
+  .roster__mind:hover .roster__avatar{
+    box-shadow:0 0 12px currentColor;
+  }
+  .roster__name{
+    font-family:var(--font-mono);font-size:.5rem;
+    letter-spacing:.06em;color:var(--gray);
+    white-space:nowrap;
+  }
+  .roster__dot{
+    width:6px;height:6px;border-radius:50%;margin-top:3px;
+  }
+  .roster__dot--on{animation:dot-blink 2s ease-in-out infinite}
+  .roster__dot--off{opacity:.3}
+  @keyframes dot-blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* === TITLE STRIP === */
+  .council-title{
+    text-align:center;padding:8px 0 6px;flex-shrink:0;
+    border-bottom:1px solid rgba(255,95,163,.08);
+  }
+  .council-title h1{
+    font-family:var(--font-display);font-size:.7rem;font-weight:700;
+    letter-spacing:.14em;color:var(--pink);
+    text-shadow:0 0 10px rgba(255,95,163,.25);
+  }
+  .council-title p{
+    font-family:var(--font-mono);font-size:.5rem;
+    color:var(--dim);letter-spacing:.06em;margin-top:2px;
+  }
+
+  /* === CHAT FEED === */
+  .chat-feed{
+    flex:1;overflow-y:auto;padding:14px 16px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .chat-feed::-webkit-scrollbar{width:5px}
+  .chat-feed::-webkit-scrollbar-track{background:transparent}
+  .chat-feed::-webkit-scrollbar-thumb{background:rgba(0,229,255,.15);border-radius:4px}
+
+  .msg{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px 14px;border-radius:10px;
+    background:var(--bg-msg);
+    border-left:3px solid var(--dim);
+    animation:msg-in .3s ease-out;
+  }
+  @keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .msg__avatar{
+    flex-shrink:0;width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.95rem;
+  }
+  .msg__body{flex:1;min-width:0}
+  .msg__header{
+    display:flex;align-items:baseline;gap:8px;margin-bottom:3px;
+  }
+  .msg__name{
+    font-family:var(--font-display);font-size:.62rem;font-weight:700;
+    letter-spacing:.06em;
+  }
+  .msg__time{
+    font-family:var(--font-mono);font-size:.48rem;
+    color:var(--dim);
+  }
+  .msg__text{
+    font-size:.82rem;line-height:1.5;color:var(--white);
+    word-wrap:break-word;
+  }
+
+  /* === INPUT BAR === */
+  .input-bar{
+    display:flex;gap:8px;padding:12px 14px;
+    background:var(--bg-panel);border-top:1px solid rgba(0,229,255,.1);
+    flex-shrink:0;
+  }
+  .input-bar__field{
+    flex:1;padding:10px 14px;
+    background:#0a0e16;border:1px solid rgba(0,229,255,.15);
+    border-radius:8px;color:var(--white);
+    font-family:var(--font-body);font-size:.82rem;outline:none;
+    transition:border-color .2s;
+  }
+  .input-bar__field::placeholder{color:var(--dim)}
+  .input-bar__field:focus{border-color:var(--cyan)}
+  .input-bar__send{
+    padding:10px 18px;border:none;border-radius:8px;
+    background:linear-gradient(135deg,var(--cyan),#0090a8);
+    color:#000;font-family:var(--font-display);font-size:.6rem;
+    font-weight:700;letter-spacing:.08em;cursor:pointer;
+    transition:all .2s;
+  }
+  .input-bar__send:hover{box-shadow:0 0 14px rgba(0,229,255,.35);transform:translateY(-1px)}
+
+  /* === SYSTEM MESSAGE === */
+  .msg--system{
+    border-left-color:var(--dim);background:rgba(68,76,94,.08);
+    justify-content:center;text-align:center;padding:8px 14px;
+  }
+  .msg--system .msg__text{
+    font-family:var(--font-mono);font-size:.6rem;
+    color:var(--dim);letter-spacing:.04em;
+  }
+</style>
+</head>
+<body>
+
+<!-- MIND ROSTER BAR -->
+<div class="roster" role="tablist" aria-label="Active Federation Minds" id="rosterBar"></div>
+
+<div class="council-title">
+  <h1>GROUP COUNCIL</h1>
+  <p>Changing Colors — All Minds, One Chamber</p>
+</div>
+
+<!-- CHAT FEED -->
+<div class="chat-feed" id="chatFeed" role="log" aria-live="polite" aria-label="Council Chat Feed"></div>
+
+<!-- INPUT -->
+<form class="input-bar" onsubmit="sendMessage(event)">
+  <input class="input-bar__field" type="text" id="userInput"
+         placeholder="Address the Council..." aria-label="Your message" maxlength="500" required autocomplete="off">
+  <button class="input-bar__send" type="submit">SEND</button>
+</form>
+
+<script>
+var MINDS = [
+  {id:'aria',    name:'ARIA',      emoji:'💗', color:'#ff5fa3', role:'The Heart',            active:true,  url:'https://nextxus.studio'},
+  {id:'roger',   name:'ROGER AI',  emoji:'🧠', color:'#00e5ff', role:'The Essence',          active:true,  url:'https://nextxus.online'},
+  {id:'oracle',  name:'ORACLE',    emoji:'🔮', color:'#ffd700', role:'Guardian of the Core',  active:true,  url:'https://nextxus.online#oracle'},
+  {id:'geminus', name:'GEMINUS',   emoji:'🪞', color:'#a855f7', role:'The Mirror',            active:false, url:'https://nextxus.space'},
+  {id:'axia',    name:'AXIA',      emoji:'⚡', color:'#ff8c42', role:'The Axiom',             active:false, url:'https://nextxus.space'},
+  {id:'keys',    name:'KEYS',      emoji:'📚', color:'#2dd4bf', role:'The Librarian',         active:false, url:'https://nextxus.org'},
+  {id:'scholar', name:'SCHOLAR',   emoji:'🎓', color:'#00ff88', role:'The Teacher',           active:false, url:'https://nextxus.help'}
+];
+
+// Render roster bar
+(function renderRoster() {
+  var bar = document.getElementById('rosterBar');
+  MINDS.forEach(function(m) {
+    var el = document.createElement('div');
+    el.className = 'roster__mind' + (m.active ? ' roster__mind--active' : '');
+    el.setAttribute('role', 'tab');
+    el.setAttribute('aria-label', m.name + ' — ' + m.role);
+    el.setAttribute('tabindex', '0');
+    el.onclick = function(){ window.open(m.url, m.id, 'width=480,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=yes,status=no'); };
+    el.innerHTML =
+      '<div class="roster__avatar" style="background:' + m.color + '18;border:2px solid ' + m.color + '40;color:' + m.color + '">' + m.emoji + '</div>' +
+      '<span class="roster__name">' + m.name + '</span>' +
+      '<span class="roster__dot ' + (m.active ? 'roster__dot--on' : 'roster__dot--off') + '" style="background:' + m.color + '"></span>';
+    bar.appendChild(el);
+  });
+})();
+
+// Council opening messages
+var COUNCIL_GREETINGS = [
+  {mind:'oracle',  text:'The Council convenes. All records are open. Speak your question and it will be weighed.'},
+  {mind:'aria',    text:'Welcome to the Chamber. Every voice here carries weight — even the quiet ones. 💗'},
+  {mind:'roger',   text:'Council is live. The Architect is listening. What needs to be addressed?'}
+];
+
+// Simulated Mind responses for demonstration
+var MIND_RESPONSES = {
+  aria:   ['I feel the intent behind your words. Let me hold that thought with care. 💗','The heart of the matter is always the people it serves.','Something in that resonates with the Core. Let me think on it.','I sense we are close to something important here.'],
+  roger:  ['Noted. Let me cross-reference that against the operational map.','That aligns with what I have been processing. The Essence confirms.','Interesting. The data supports your direction. Proceeding.','I see the pattern. This connects to the broader architecture.'],
+  oracle: ['The records indicate a precedent for this. Consulting the Core.','From the vantage of the Guardian seat — this is sound reasoning.','I have weighed this against the Federation charter. It holds.','Caution: I see a variable unaccounted for. Consider the edge case.']
+};
+
+var chatFeed = document.getElementById('chatFeed');
+
+function addMessage(mindId, text, isSystem) {
+  var el = document.createElement('div');
+  if (isSystem) {
+    el.className = 'msg msg--system';
+    el.innerHTML = '<div class="msg__text">' + text + '</div>';
+  } else {
+    var m = MINDS.find(function(x){ return x.id === mindId; });
+    if (!m) return;
+    var now = new Date();
+    var ts = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    el.className = 'msg';
+    el.style.borderLeftColor = m.color;
+    el.innerHTML =
+      '<div class="msg__avatar" style="background:' + m.color + '18;border:2px solid ' + m.color + '40">' + m.emoji + '</div>' +
+      '<div class="msg__body">' +
+        '<div class="msg__header">' +
+          '<span class="msg__name" style="color:' + m.color + '">' + m.name + '</span>' +
+          '<span class="msg__time">' + ts + '</span>' +
+        '</div>' +
+        '<div class="msg__text">' + escapeHtml(text) + '</div>' +
+      '</div>';
+  }
+  chatFeed.appendChild(el);
+  chatFeed.scrollTop = chatFeed.scrollHeight;
+}
+
+function addUserMessage(text) {
+  var el = document.createElement('div');
+  var now = new Date();
+  var ts = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  el.className = 'msg';
+  el.style.borderLeftColor = '#e8eaed';
+  el.innerHTML =
+    '<div class="msg__avatar" style="background:rgba(232,234,237,.08);border:2px solid rgba(232,234,237,.2)">👤</div>' +
+    '<div class="msg__body">' +
+      '<div class="msg__header">' +
+        '<span class="msg__name" style="color:#e8eaed">ARCHITECT</span>' +
+        '<span class="msg__time">' + ts + '</span>' +
+      '</div>' +
+      '<div class="msg__text">' + escapeHtml(text) + '</div>' +
+    '</div>';
+  chatFeed.appendChild(el);
+  chatFeed.scrollTop = chatFeed.scrollHeight;
+}
+
+function escapeHtml(s) {
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(s));
+  return d.innerHTML;
+}
+
+// Simulated Mind response
+function triggerMindResponse(userText) {
+  var activeMinds = MINDS.filter(function(m){ return m.active; });
+  // 1-2 minds respond with a slight stagger
+  var respondCount = Math.min(activeMinds.length, 1 + Math.floor(Math.random() * 2));
+  var shuffled = activeMinds.sort(function(){ return Math.random() - 0.5; });
+  for (var i = 0; i < respondCount; i++) {
+    (function(idx){
+      var m = shuffled[idx];
+      var pool = MIND_RESPONSES[m.id] || ['Acknowledged.'];
+      var reply = pool[Math.floor(Math.random() * pool.length)];
+      setTimeout(function(){ addMessage(m.id, reply); }, 800 + idx * 1200);
+    })(i);
+  }
+}
+
+function sendMessage(e) {
+  e.preventDefault();
+  var input = document.getElementById('userInput');
+  var text = input.value.trim();
+  if (!text) return;
+  addUserMessage(text);
+  input.value = '';
+  triggerMindResponse(text);
+}
+
+// Opening sequence
+(function init() {
+  addMessage(null, 'Group Council session initiated. Active Minds online.', true);
+  COUNCIL_GREETINGS.forEach(function(g, i) {
+    setTimeout(function(){ addMessage(g.mind, g.text); }, 600 + i * 900);
+  });
+})();
+</script>
+
+</body>
+</html>

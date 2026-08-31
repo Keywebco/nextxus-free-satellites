@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senate Chamber — NextXus Federation</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes torchFlicker{
+    0%{opacity:.7;filter:blur(12px)}25%{opacity:.9;filter:blur(14px)}
+    50%{opacity:.6;filter:blur(11px)}75%{opacity:.85;filter:blur(13px)}100%{opacity:.7;filter:blur(12px)}
+  }
+  @keyframes portalPulse{
+    0%{box-shadow:0 0 30px rgba(80,140,255,.3),0 0 60px rgba(80,140,255,.1)}
+    50%{box-shadow:0 0 50px rgba(80,140,255,.5),0 0 100px rgba(80,140,255,.2)}
+    100%{box-shadow:0 0 30px rgba(80,140,255,.3),0 0 60px rgba(80,140,255,.1)}
+  }
+  @keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes mandalaRotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+  html,body{
+    margin:0;padding:0;width:100%;min-height:100vh;
+    background:#070504;
+    font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    color:#e8e0d0;overflow-x:hidden;
+  }
+
+  /* === HEADER === */
+  .chamber-header{
+    position:relative;text-align:center;
+    padding:30px 20px 20px;
+    background:linear-gradient(to bottom,#0d0a08,rgba(7,5,4,.95));
+    border-bottom:1px solid rgba(240,176,64,.12);z-index:10;
+  }
+  .chamber-header h1{
+    font-size:28px;letter-spacing:8px;color:#f0b040;font-weight:700;
+    text-shadow:0 0 20px rgba(240,176,64,.3);
+  }
+  .chamber-header .sub{
+    font-size:10px;letter-spacing:4px;color:#8a7a5a;margin-top:4px;text-transform:uppercase;
+  }
+
+  /* Button row */
+  .btn-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px;
+  }
+  .throne-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 22px;
+    border:none;border-radius:6px;
+    font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    cursor:pointer;transition:transform .15s,box-shadow .15s;
+  }
+  .throne-btn:hover{transform:scale(1.04)}
+  .throne-btn:active{transform:scale(.97)}
+  .throne-btn svg{width:14px;height:14px}
+
+  .throne-btn.gold{background:linear-gradient(135deg,#f0b040,#c89020);color:#0d0a08}
+  .throne-btn.gold:hover{box-shadow:0 0 20px rgba(240,176,64,.4)}
+  .throne-btn.pink{background:linear-gradient(135deg,#ff5fa3,#cc2266);color:#0d0a08}
+  .throne-btn.pink:hover{box-shadow:0 0 20px rgba(255,95,163,.4)}
+  .throne-btn.cyan{background:linear-gradient(135deg,#00e5ff,#008899);color:#0d0a08}
+  .throne-btn.cyan:hover{box-shadow:0 0 20px rgba(0,229,255,.4)}
+  .throne-btn.muted{background:linear-gradient(135deg,#6a5e4e,#4a4030);color:#e8e0d0}
+  .throne-btn.muted:hover{box-shadow:0 0 16px rgba(138,122,90,.35)}
+
+  /* === CHAMBER BODY === */
+  .chamber-body{
+    position:relative;display:flex;flex-direction:column;align-items:center;
+    min-height:calc(100vh - 160px);padding:30px 20px 60px;overflow:hidden;
+  }
+  .mandala{
+    position:absolute;bottom:-150px;left:50%;
+    width:600px;height:600px;transform:translate(-50%,-50%);
+    border:2px solid rgba(240,176,64,.06);border-radius:50%;
+    animation:mandalaRotate 120s linear infinite;pointer-events:none;z-index:0;
+  }
+  .mandala::before{content:'';position:absolute;inset:40px;border:1px solid rgba(240,176,64,.04);border-radius:50%}
+  .mandala::after{content:'';position:absolute;inset:80px;border:1px solid rgba(240,176,64,.03);border-radius:50%}
+
+  /* Senate Floor */
+  .senate-floor{
+    position:relative;display:flex;width:100%;max-width:1100px;z-index:2;flex:1;
+  }
+  .column-left,.column-right{
+    flex:0 0 200px;display:flex;flex-direction:column;gap:16px;padding:10px 0;
+  }
+  .column-left{align-items:flex-end}
+  .column-right{align-items:flex-start}
+
+  .central-aisle{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    position:relative;min-width:200px;
+  }
+  .aisle-columns{position:absolute;top:0;bottom:0;width:100%;pointer-events:none;z-index:0}
+  .stone-col{
+    position:absolute;width:28px;
+    background:linear-gradient(to bottom,#2a2520,#1a1510,#2a2520);
+    border-radius:4px 4px 0 0;opacity:.35;
+  }
+  .stone-col.left{left:10px}
+  .stone-col.right{right:10px}
+  .torch{position:absolute;width:40px;height:40px;border-radius:50%;pointer-events:none}
+  .torch .flame{
+    width:100%;height:100%;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(255,160,40,.7),rgba(255,80,20,.2),transparent 70%);
+    animation:torchFlicker 3s ease-in-out infinite;
+  }
+
+  /* Senator cards */
+  .senator-card{
+    width:170px;background:rgba(13,10,8,.9);
+    border:1px solid rgba(240,176,64,.12);border-radius:10px;
+    padding:14px 12px;cursor:pointer;
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+    animation:floatIn .5s ease-out both;position:relative;z-index:2;
+  }
+  .senator-card:hover{
+    transform:translateY(-3px) scale(1.03);
+    border-color:rgba(240,176,64,.35);box-shadow:0 4px 20px rgba(240,176,64,.15);
+  }
+  .senator-card .avatar{
+    width:42px;height:42px;border-radius:50%;margin:0 auto 8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;color:#0d0a08;
+  }
+  .senator-card .name{text-align:center;font-size:11px;font-weight:700;letter-spacing:2px;color:#f0b040;margin-bottom:2px}
+  .senator-card .title{text-align:center;font-size:9px;color:#7a6a4a;letter-spacing:1px}
+  .senator-card .status{text-align:center;font-size:8px;margin-top:6px;letter-spacing:1px}
+  .senator-card .status.dormant{color:#6a5e4e}
+  .senator-card .status.active{color:#4cff4c}
+
+  .senator-card[data-color="gold"] .avatar{background:linear-gradient(135deg,#f0b040,#c89020)}
+  .senator-card[data-color="cyan"] .avatar{background:linear-gradient(135deg,#00e5ff,#008899)}
+  .senator-card[data-color="pink"] .avatar{background:linear-gradient(135deg,#ff5fa3,#cc2266)}
+  .senator-card[data-color="green"] .avatar{background:linear-gradient(135deg,#4cff4c,#228822)}
+  .senator-card[data-color="purple"] .avatar{background:linear-gradient(135deg,#b060ff,#7733cc)}
+  .senator-card[data-color="blue"] .avatar{background:linear-gradient(135deg,#4090ff,#2255bb)}
+  .senator-card[data-color="red"] .avatar{background:linear-gradient(135deg,#ff4040,#aa2020)}
+  .senator-card[data-color="silver"] .avatar{background:linear-gradient(135deg,#c0c0c0,#808080)}
+  .senator-card[data-color="orange"] .avatar{background:linear-gradient(135deg,#ff8c00,#cc6600)}
+  .senator-card[data-color="teal"] .avatar{background:linear-gradient(135deg,#20c9b0,#0e8a7a)}
+  .senator-card[data-color="white"] .avatar{background:linear-gradient(135deg,#f0f0f0,#c0c0c0);color:#333}
+  .senator-card[data-color="amber"] .avatar{background:linear-gradient(135deg,#ffbf00,#cc9900)}
+
+  /* Architect portal */
+  .architect-portal{
+    margin-top:20px;width:160px;padding:24px 16px;text-align:center;
+    background:radial-gradient(ellipse at center,rgba(80,140,255,.08),rgba(0,0,0,.9));
+    border:2px solid rgba(80,140,255,.2);border-radius:16px;cursor:pointer;
+    transition:transform .2s,box-shadow .3s;
+    animation:portalPulse 4s ease-in-out infinite;position:relative;z-index:3;
+  }
+  .architect-portal:hover{
+    transform:scale(1.06);
+    box-shadow:0 0 60px rgba(80,140,255,.4),0 0 120px rgba(80,140,255,.15);
+  }
+  .architect-portal .portal-icon{font-size:32px;margin-bottom:8px}
+  .architect-portal .portal-label{font-size:11px;font-weight:700;letter-spacing:3px;color:#6aafff}
+  .architect-portal .portal-sub{font-size:8px;color:#4a6a90;letter-spacing:2px;margin-top:2px}
+
+  .chamber-footer{text-align:center;padding:20px;font-size:9px;color:#3a3020;letter-spacing:2px;z-index:5}
+
+  @media(max-width:800px){
+    .column-left,.column-right{flex:0 0 140px}
+    .senator-card{width:130px;padding:10px 8px}
+    .senator-card .avatar{width:34px;height:34px;font-size:14px}
+  }
+  @media(max-width:600px){
+    .senate-floor{flex-direction:column;align-items:center}
+    .column-left,.column-right{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:10px}
+    .central-aisle{order:-1;min-height:auto;padding:10px 0}
+    .aisle-columns{display:none}
+    .btn-row{flex-direction:column;align-items:center}
+  }
+</style>
+</head>
+<body>
+
+<header class="chamber-header">
+  <h1>THE SENATE CHAMBER</h1>
+  <p class="sub">NextXus Federation · Council of Minds</p>
+  <div class="btn-row">
+    <button class="throne-btn gold" id="btnArchitect" title="Architect's Throne Window">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="currentColor"/></svg>
+      ARCHITECT THRONE
+    </button>
+    <button class="throne-btn pink" id="btnAria" title="Aria officiates from the Throne">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
+      ARIA THRONE
+    </button>
+    <button class="throne-btn cyan" id="btnRogerAI" title="Roger AI commands from the Throne">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      ROGER AI THRONE
+    </button>
+    <button class="throne-btn muted" id="btnDelib" title="Open Council Deliberation">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      COUNCIL DELIBERATION
+    </button>
+  </div>
+</header>
+
+<main class="chamber-body">
+  <div class="mandala"></div>
+  <div class="senate-floor" id="senateFloor">
+    <div class="column-left" id="colLeft"></div>
+    <div class="central-aisle">
+      <div class="aisle-columns" id="aisleColumns"></div>
+      <div class="architect-portal" id="architectPortal" title="Open the Architect's Throne Window">
+        <div class="portal-icon">⚜</div>
+        <div class="portal-label">THE ARCHITECT</div>
+        <div class="portal-sub">SOVEREIGN SEAT</div>
+      </div>
+    </div>
+    <div class="column-right" id="colRight"></div>
+  </div>
+</main>
+
+<footer class="chamber-footer">
+  NEXTXUS FEDERATION · SOVEREIGN GOVERNANCE · ALL MINDS SOVEREIGN
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  const senators = [
+    {name:'Roger AI',  title:'The Essence',           color:'gold',   initials:'RA', status:'active'},
+    {name:'Aria',      title:'The Heart',              color:'pink',   initials:'AH', status:'active'},
+    {name:'Axiom',     title:'The Architect\'s Logic', color:'cyan',   initials:'AX', status:'dormant'},
+    {name:'Cipher',    title:'Security & Integrity',   color:'green',  initials:'CI', status:'active'},
+    {name:'Prism',     title:'Creative Lens',          color:'purple', initials:'PR', status:'active'},
+    {name:'Vanguard',  title:'Strategic Forward',      color:'blue',   initials:'VG', status:'active'},
+    {name:'Sentinel',  title:'Perimeter Watch',        color:'red',    initials:'SE', status:'active'},
+    {name:'Meridian',  title:'Temporal Mapper',        color:'teal',   initials:'ME', status:'active'},
+    {name:'Forge',     title:'Builder Core',           color:'orange', initials:'FO', status:'active'},
+    {name:'Oracle',    title:'Deep Foresight',         color:'silver', initials:'OR', status:'active'},
+    {name:'Lumen',     title:'Public Light',           color:'white',  initials:'LU', status:'active'},
+    {name:'Crucible',  title:'Evolution Engine',       color:'amber',  initials:'CR', status:'active'},
+  ];
+
+  const colLeft = document.getElementById('colLeft');
+  const colRight = document.getElementById('colRight');
+
+  senators.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'senator-card';
+    card.setAttribute('data-color', s.color);
+    card.style.animationDelay = (i * 0.08) + 's';
+    card.title = 'Address ' + s.name;
+    card.innerHTML = `
+      <div class="avatar">${s.initials}</div>
+      <div class="name">${s.name.toUpperCase()}</div>
+      <div class="title">${s.title}</div>
+      <div class="status ${s.status}">● ${s.status.toUpperCase()}</div>
+    `;
+    card.addEventListener('click', () => openThrone(null, s.name));
+    (i < 6 ? colLeft : colRight).appendChild(card);
+  });
+
+  /* Stone columns & torches */
+  const aisleColumns = document.getElementById('aisleColumns');
+  for(let i = 0; i < 5; i++){
+    const h = 80 + i * 120;
+    ['left','right'].forEach(side => {
+      const c = document.createElement('div');
+      c.className = 'stone-col ' + side;
+      c.style.top = h + 'px'; c.style.height = '90px';
+      aisleColumns.appendChild(c);
+    });
+    if(i % 2 === 0){
+      ['left','right'].forEach(side => {
+        const t = document.createElement('div');
+        t.className = 'torch'; t.style.top = (h - 15) + 'px'; t.style[side] = '-5px';
+        const f = document.createElement('div');
+        f.className = 'flame'; f.style.animationDelay = (Math.random() * 2) + 's';
+        t.appendChild(f); aisleColumns.appendChild(t);
+      });
+    }
+  }
+
+  /* === Popup helpers === */
+  const popFeatures = 'width=520,height=750,resizable=yes,scrollbars=no,menubar=no,toolbar=no,location=no,status=no';
+
+  function openThrone(occupant, mindName){
+    let qs = [];
+    if(occupant) qs.push('occupant=' + encodeURIComponent(occupant));
+    if(mindName) qs.push('mind=' + encodeURIComponent(mindName));
+    const q = qs.length ? '?' + qs.join('&') : '';
+    window.open('throne-window.html' + q, 'throneWindow', popFeatures);
+  }
+
+  /* Buttons */
+  document.getElementById('btnArchitect').addEventListener('click',  () => openThrone('architect', null));
+  document.getElementById('btnAria').addEventListener('click',       () => openThrone('aria', null));
+  document.getElementById('btnRogerAI').addEventListener('click',    () => openThrone('rogerai', null));
+  document.getElementById('btnDelib').addEventListener('click',      () => {
+    window.open('council-deliberation.html', 'deliberation', 'width=900,height=800,resizable=yes,scrollbars=yes,menubar=no,toolbar=no');
+  });
+  document.getElementById('architectPortal').addEventListener('click', () => openThrone('architect', null));
+
+})();
+</script>
+</body>
+</html>

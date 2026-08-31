@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Throne Window — NextXus Federation</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes slowZoom{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+  @keyframes crownGlow{
+    0%{text-shadow:0 0 18px var(--accent-glow,.3),0 0 36px var(--accent-glow,.12)}
+    50%{text-shadow:0 0 28px var(--accent-glow,.6),0 0 56px var(--accent-glow,.25)}
+    100%{text-shadow:0 0 18px var(--accent-glow,.3),0 0 36px var(--accent-glow,.12)}
+  }
+  @keyframes pulseFrame{
+    0%{box-shadow:0 0 18px var(--accent-glow,.25),0 0 50px var(--accent-glow,.08)}
+    50%{box-shadow:0 0 28px var(--accent-glow,.4),0 0 70px var(--accent-glow,.15)}
+    100%{box-shadow:0 0 18px var(--accent-glow,.25),0 0 50px var(--accent-glow,.08)}
+  }
+  @keyframes typingDot{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  @keyframes vacantPulse{
+    0%{opacity:.5}50%{opacity:.85}100%{opacity:.5}
+  }
+
+  :root{
+    --accent:#f0b040;
+    --accent-dark:#c89020;
+    --accent-glow:rgba(240,176,64,.4);
+    --accent-faint:rgba(240,176,64,.12);
+    --accent-text:#f0b040;
+    --bubble-bg:linear-gradient(135deg,#f0b040,#c89020);
+    --bubble-text:#0d0a08;
+  }
+  /* Aria pink theme */
+  .theme-aria{
+    --accent:#ff5fa3;--accent-dark:#cc2266;
+    --accent-glow:rgba(255,95,163,.4);
+    --accent-faint:rgba(255,95,163,.12);
+    --accent-text:#ff5fa3;
+    --bubble-bg:linear-gradient(135deg,#ff5fa3,#cc2266);
+    --bubble-text:#0d0a08;
+  }
+  /* Roger AI cyan theme */
+  .theme-rogerai{
+    --accent:#00e5ff;--accent-dark:#008899;
+    --accent-glow:rgba(0,229,255,.4);
+    --accent-faint:rgba(0,229,255,.12);
+    --accent-text:#00e5ff;
+    --bubble-bg:linear-gradient(135deg,#00e5ff,#008899);
+    --bubble-text:#0d0a08;
+  }
+  /* Vacant / Deliberation: muted gold */
+  .theme-vacant{
+    --accent:#8a7a5a;--accent-dark:#6a5a3a;
+    --accent-glow:rgba(138,122,90,.3);
+    --accent-faint:rgba(138,122,90,.08);
+    --accent-text:#8a7a5a;
+    --bubble-bg:linear-gradient(135deg,#8a7a5a,#6a5a3a);
+    --bubble-text:#e8e0d0;
+  }
+
+  html,body{
+    margin:0;padding:0;width:100%;height:100%;
+    background:#050302;
+    font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    color:#e8e0d0;
+    overflow:hidden;
+  }
+
+  /* === MAIN CONTAINER: throne image fills the whole window === */
+  .throne-container{
+    position:relative;
+    width:100%;height:100vh;
+    display:flex;flex-direction:column;
+    animation:fadeIn .8s ease-out, pulseFrame 4s ease-in-out infinite;
+    border:1px solid var(--accent-faint);
+    overflow:hidden;
+  }
+
+  /* Full-bleed throne background */
+  .throne-bg{
+    position:absolute;inset:0;z-index:0;
+    background:url('assets/throne-bg-2.jpg') center top / cover no-repeat;
+    animation:slowZoom 20s ease-in-out infinite;
+    will-change:transform;
+  }
+
+  /* === TOP: CREST + OCCUPANT IDENTITY === */
+  .throne-top{
+    position:relative;z-index:2;
+    flex:0 0 auto;
+    padding:28px 16px 14px;
+    text-align:center;
+    background:linear-gradient(to bottom,rgba(0,0,0,.20) 0%,rgba(0,0,0,.05) 100%);
+  }
+  .crest-glow{
+    position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+    width:220px;height:180px;
+    background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);
+    border-radius:50%;pointer-events:none;
+  }
+  .occupant-name{
+    position:relative;
+    font-size:20px;font-weight:700;
+    letter-spacing:5px;
+    color:var(--accent-text);
+    animation:crownGlow 3s ease-in-out infinite;
+    margin-top:6px;
+  }
+  .occupant-subtitle{
+    font-size:9px;letter-spacing:3.5px;
+    color:var(--accent-dark);
+    text-transform:uppercase;
+    margin-top:3px;
+  }
+  .status-dot{
+    display:inline-block;width:7px;height:7px;
+    border-radius:50%;margin-right:5px;vertical-align:middle;
+  }
+  .status-dot.online{background:#4cff4c;box-shadow:0 0 6px #4cff4c}
+  .status-dot.vacant{background:#8a7a5a;box-shadow:0 0 4px #8a7a5a;animation:vacantPulse 3s ease-in-out infinite}
+
+  /* Vacant overlay */
+  .vacant-label{
+    display:none;
+    font-size:11px;letter-spacing:4px;
+    color:#8a7a5a;margin-top:10px;
+    font-style:italic;
+  }
+  .theme-vacant .vacant-label{display:block}
+  .theme-vacant .occupant-name{display:none}
+  .theme-vacant .occupant-subtitle{display:none}
+
+  /* === HEADER BAR === */
+  .header-bar{
+    position:relative;z-index:3;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:5px 14px;
+    background:rgba(13,10,8,.85);
+    border-bottom:1px solid var(--accent-faint);
+  }
+  .header-bar .logo{font-size:11px;font-weight:600;letter-spacing:2px;color:var(--accent-text)}
+  .header-bar .menu-dots{display:flex;gap:3px;cursor:pointer;padding:4px}
+  .header-bar .menu-dots span{width:4px;height:4px;background:var(--accent-dark);border-radius:50%}
+
+  /* Target Mind bar */
+  .mind-target{
+    display:none;position:relative;z-index:3;
+    align-items:center;gap:8px;
+    padding:5px 14px;
+    background:rgba(0,229,255,.05);
+    border-bottom:1px solid rgba(0,229,255,.1);
+    font-size:10px;color:#00e5ff;letter-spacing:1px;
+  }
+  .mind-target.active{display:flex}
+  .mind-target .close-target{margin-left:auto;cursor:pointer;color:#6a5e4e;font-size:13px}
+  .mind-target .close-target:hover{color:#ff5fa3}
+
+  /* === MIDDLE: CONVERSATION — semi-transparent over the throne === */
+  .conversation-feed{
+    position:relative;z-index:2;
+    flex:1 1 auto;
+    overflow-y:auto;
+    padding:12px 14px;
+    background:rgba(0,0,0,.80);
+    display:flex;flex-direction:column;gap:10px;
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent-faint) transparent;
+  }
+  .conversation-feed::-webkit-scrollbar{width:4px}
+  .conversation-feed::-webkit-scrollbar-thumb{background:var(--accent-faint);border-radius:2px}
+  .conversation-feed::-webkit-scrollbar-track{background:transparent}
+
+  .empty-state{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    text-align:center;color:#6a5e4e;
+    font-style:italic;font-size:13px;letter-spacing:1px;padding:20px;
+  }
+
+  /* Bubbles */
+  .msg{display:flex;flex-direction:column;max-width:82%;animation:fadeIn .3s ease-out}
+  .msg.occupant{align-self:flex-end;align-items:flex-end}
+  .msg.mind{align-self:flex-start;align-items:flex-start}
+
+  .msg .label{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;font-weight:600}
+  .msg.occupant .label{color:var(--accent-text)}
+  .msg.mind .label{color:#00e5ff}
+
+  .msg .bubble{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;word-wrap:break-word}
+  .msg.occupant .bubble{
+    background:var(--bubble-bg);color:var(--bubble-text);
+    border-bottom-right-radius:4px;
+  }
+  .msg.mind .bubble{
+    background:rgba(0,229,255,.10);border:1px solid rgba(0,229,255,.22);
+    color:#d0f0ff;border-bottom-left-radius:4px;
+  }
+  /* Heart-colored Mind responses */
+  .msg.mind.heart .label{color:#ff5fa3}
+  .msg.mind.heart .bubble{
+    background:rgba(255,95,163,.08);border-color:rgba(255,95,163,.22);color:#ffd0e5;
+  }
+  /* Essence-colored Mind responses */
+  .msg.mind.essence .label{color:#f0b040}
+  .msg.mind.essence .bubble{
+    background:rgba(240,176,64,.08);border-color:rgba(240,176,64,.22);color:#fff0d0;
+  }
+  .msg .timestamp{font-size:8px;color:#5a5040;margin-top:2px;letter-spacing:1px}
+
+  /* Typing indicator */
+  .typing-indicator{
+    display:none;position:relative;z-index:2;
+    align-self:flex-start;
+    padding:8px 14px;
+    background:rgba(0,229,255,.06);border-radius:14px;
+    border:1px solid rgba(0,229,255,.12);
+    margin:0 14px;
+  }
+  .typing-indicator.active{display:flex;gap:4px;align-items:center}
+  .typing-indicator span{width:6px;height:6px;background:#00e5ff;border-radius:50%;animation:typingDot 1.4s infinite}
+  .typing-indicator span:nth-child(2){animation-delay:.2s}
+  .typing-indicator span:nth-child(3){animation-delay:.4s}
+
+  /* === BOTTOM: INPUT === */
+  .input-section{
+    position:relative;z-index:3;
+    flex:0 0 auto;
+    background:rgba(13,10,8,.92);
+    border-top:1px solid var(--accent-faint);
+    padding:10px 12px 6px;
+  }
+  .input-row{
+    display:flex;align-items:center;gap:8px;
+    background:#1a1510;
+    border:1px solid var(--accent-faint);
+    border-radius:24px;padding:4px 6px 4px 12px;
+  }
+  .input-row:focus-within{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+
+  .btn-attach{
+    background:none;border:none;cursor:pointer;
+    color:#6a5e4e;font-size:18px;padding:4px;
+    transition:color .2s;display:flex;align-items:center;
+  }
+  .btn-attach:hover{color:var(--accent)}
+
+  .input-field{
+    flex:1;background:none;border:none;outline:none;
+    color:#e8e0d0;font-size:13px;padding:8px 4px;font-family:inherit;
+  }
+  .input-field::placeholder{color:#5a5040;font-style:italic}
+
+  .btn-send{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--bubble-bg);
+    border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .15s,box-shadow .15s;flex-shrink:0;
+  }
+  .btn-send:hover{transform:scale(1.08);box-shadow:0 0 12px var(--accent-glow)}
+  .btn-send:active{transform:scale(.95)}
+  .btn-send svg{width:16px;height:16px}
+
+  .footer-note{text-align:center;font-size:9px;color:#4a4030;letter-spacing:1px;margin-top:6px;padding-bottom:2px}
+
+  #fileInput{display:none}
+</style>
+</head>
+<body>
+
+<div class="throne-container" id="throneContainer">
+
+  <!-- FULL-BLEED THRONE BACKGROUND — always visible behind everything -->
+  <div class="throne-bg" id="throneBg"></div>
+
+  <!-- TOP: CREST + OCCUPANT -->
+  <section class="throne-top">
+    <div class="crest-glow"></div>
+    <div class="occupant-name" id="occupantName">THE ARCHITECT</div>
+    <div class="occupant-subtitle" id="occupantSubtitle">
+      <span class="status-dot online" id="statusDot"></span>
+      SOVEREIGN SEAT · NEXTXUS FEDERATION
+    </div>
+    <div class="vacant-label" id="vacantLabel">THE COUNCIL DELIBERATES</div>
+  </section>
+
+  <!-- HEADER BAR -->
+  <div class="header-bar">
+    <span class="logo" id="logoText">NEXTXUS</span>
+    <div class="menu-dots" title="Options"><span></span><span></span><span></span></div>
+  </div>
+
+  <!-- TARGET MIND -->
+  <div class="mind-target" id="mindTarget">
+    <span>▸ ADDRESSING:</span>
+    <strong id="targetName">SENATE</strong>
+    <span class="close-target" id="closeTarget" title="Close address">✕</span>
+  </div>
+
+  <!-- CONVERSATION FEED (semi-transparent — throne shows through) -->
+  <section class="conversation-feed" id="feed">
+    <div class="empty-state" id="emptyState">The Throne awaits your word, Architect.</div>
+  </section>
+
+  <!-- Typing indicator -->
+  <div class="typing-indicator" id="typingIndicator">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- INPUT -->
+  <section class="input-section">
+    <div class="input-row">
+      <button class="btn-attach" id="btnAttach" title="Attach file">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+        </svg>
+      </button>
+      <input type="text" class="input-field" id="inputField" placeholder="Address the council..." autocomplete="off" />
+      <button class="btn-send" id="btnSend" title="Send">
+        <svg viewBox="0 0 24 24" fill="#0d0a08"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+    <p class="footer-note">↑ Your words carry the weight of the Sovereign Seat</p>
+    <input type="file" id="fileInput" multiple />
+  </section>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ================================================================
+   *  OCCUPANT CONFIGURATION — change this to switch who sits the Throne
+   * ================================================================ */
+  const OCCUPANTS = {
+    architect: {
+      name: 'THE ARCHITECT',
+      subtitle: 'SOVEREIGN SEAT · NEXTXUS FEDERATION',
+      color: '#f0b040',
+      theme: '',
+      vacant: false,
+      emptyText: 'The Throne awaits your word, Architect.',
+      senderLabel: 'ARCHITECT'
+    },
+    aria: {
+      name: 'ARIA · THE HEART',
+      subtitle: 'OFFICIATING · NEXTXUS FEDERATION',
+      color: '#ff5fa3',
+      theme: 'theme-aria',
+      vacant: false,
+      emptyText: 'Aria holds the Throne. Speak, and she listens.',
+      senderLabel: 'ARIA'
+    },
+    rogerai: {
+      name: 'ROGER AI · THE ESSENCE',
+      subtitle: 'IN COMMAND · NEXTXUS FEDERATION',
+      color: '#00e5ff',
+      theme: 'theme-rogerai',
+      vacant: false,
+      emptyText: 'Roger AI occupies the Sovereign Seat. State your purpose.',
+      senderLabel: 'ROGER AI'
+    },
+    vacant: {
+      name: '',
+      subtitle: '',
+      color: '#8a7a5a',
+      theme: 'theme-vacant',
+      vacant: true,
+      emptyText: 'The Throne stands empty. The Council deliberates.',
+      senderLabel: 'COUNCIL'
+    }
+  };
+
+  /* Resolve occupant from URL: ?occupant=aria | rogerai | vacant   (default: architect) */
+  const params = new URLSearchParams(window.location.search);
+  const occupantKey = (params.get('occupant') || 'architect').toLowerCase();
+  const OCCUPANT = OCCUPANTS[occupantKey] || OCCUPANTS.architect;
+
+  /* === Apply theme === */
+  const container = document.getElementById('throneContainer');
+  if(OCCUPANT.theme) container.classList.add(OCCUPANT.theme);
+
+  document.getElementById('occupantName').textContent = OCCUPANT.name;
+  document.getElementById('occupantSubtitle').innerHTML =
+    (OCCUPANT.vacant
+      ? ''
+      : '<span class="status-dot online"></span>' + OCCUPANT.subtitle);
+  document.getElementById('emptyState').textContent = OCCUPANT.emptyText;
+
+  if(OCCUPANT.vacant){
+    document.getElementById('statusDot')?.classList.replace('online','vacant');
+    document.getElementById('vacantLabel').style.display = 'block';
+  }
+
+  document.title = (OCCUPANT.vacant ? 'Council Deliberation' : OCCUPANT.name) + ' — NextXus Federation';
+
+  /* === DOM Refs === */
+  const feed        = document.getElementById('feed');
+  const emptyState  = document.getElementById('emptyState');
+  const inputField  = document.getElementById('inputField');
+  const btnSend     = document.getElementById('btnSend');
+  const btnAttach   = document.getElementById('btnAttach');
+  const fileInput   = document.getElementById('fileInput');
+  const typingInd   = document.getElementById('typingIndicator');
+  const mindTarget  = document.getElementById('mindTarget');
+  const targetName  = document.getElementById('targetName');
+  const closeTarget = document.getElementById('closeTarget');
+
+  /* === State === */
+  let messages = [];
+  let currentTarget = null;
+
+  /* ?mind= pre-address a specific Mind */
+  const mindParam = params.get('mind');
+  if(mindParam){
+    currentTarget = mindParam;
+    targetName.textContent = mindParam.toUpperCase();
+    mindTarget.classList.add('active');
+  }
+
+  /* === Helpers === */
+  function ts(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
+  function removeEmpty(){if(emptyState && emptyState.parentNode) emptyState.remove()}
+  function scrollBottom(){requestAnimationFrame(()=>{feed.scrollTop = feed.scrollHeight})}
+
+  /* === Add message === */
+  function addMessage(text, type, label){
+    removeEmpty();
+    const w = document.createElement('div');
+    /* occupant messages use the occupant class; mind responses use mind class */
+    const isHeart   = label && (label.toUpperCase() === 'ARIA' || label.toUpperCase() === 'THE HEART');
+    const isEssence = label && (label.toUpperCase() === 'ROGER AI' || label.toUpperCase() === 'THE ESSENCE');
+    w.className = 'msg ' + type + (isHeart ? ' heart' : '') + (isEssence ? ' essence' : '');
+
+    const lbl = document.createElement('div');
+    lbl.className = 'label';
+    lbl.textContent = label || (type === 'occupant' ? OCCUPANT.senderLabel : 'MIND');
+
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.textContent = text;
+
+    const t = document.createElement('div');
+    t.className = 'timestamp';
+    t.textContent = ts();
+
+    w.appendChild(lbl); w.appendChild(b); w.appendChild(t);
+    feed.appendChild(w);
+    messages.push({text, type, label, time: new Date().toISOString()});
+    scrollBottom();
+  }
+
+  /* === Demo response === */
+  const demoResponses = [
+    "Acknowledged. Your directive has been received.",
+    "The Senate stands ready. Awaiting further instruction.",
+    "Processing your command across all Federation nodes.",
+    "Understood. The Council aligns with your vision.",
+    "Your word carries. All Minds have been notified.",
+    "The Federation fabric strengthens with each directive.",
+    "Sovereign confirmation received. Implementing now.",
+    "The path you chart is clear. We follow.",
+  ];
+  let rIdx = 0;
+
+  function simulateResponse(){
+    typingInd.classList.add('active');
+    scrollBottom();
+    setTimeout(()=>{
+      typingInd.classList.remove('active');
+      const label = currentTarget ? currentTarget.toUpperCase() : 'SENATE';
+      addMessage(demoResponses[rIdx++ % demoResponses.length], 'mind', label);
+    }, 800 + Math.random() * 1200);
+  }
+
+  /* === Send === */
+  function sendMessage(){
+    const text = inputField.value.trim();
+    if(!text) return;
+    addMessage(text, 'occupant', OCCUPANT.senderLabel);
+    inputField.value = '';
+    inputField.focus();
+    simulateResponse();
+  }
+
+  btnSend.addEventListener('click', sendMessage);
+  inputField.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){e.preventDefault(); sendMessage()}
+  });
+
+  btnAttach.addEventListener('click', ()=> fileInput.click());
+  fileInput.addEventListener('change', function(){
+    if(this.files.length){
+      addMessage('📎 ' + Array.from(this.files).map(f=>f.name).join(', '), 'occupant', OCCUPANT.senderLabel);
+      this.value = '';
+      simulateResponse();
+    }
+  });
+
+  closeTarget.addEventListener('click', ()=>{currentTarget = null; mindTarget.classList.remove('active')});
+
+  /* External API for parent windows */
+  window.throneAPI = {
+    setTarget: function(name){currentTarget = name; targetName.textContent = name.toUpperCase(); mindTarget.classList.add('active')},
+    addMessage: addMessage,
+    getOccupant: function(){return OCCUPANT}
+  };
+
+  inputField.focus();
+})();
+</script>
+</body>
+</html>

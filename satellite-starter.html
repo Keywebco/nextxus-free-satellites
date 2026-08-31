@@ -5,3 +5,228 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NextXus Free Satellite — Starter Outpost</title>
   <meta name="description" content="Free independent satellite of the HumanCodex NextXus Federation. Operates from the central YAML knowledge base at zero cost.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --bg: #0a0e17;
+      --card: rgba(15, 23, 42, 0.85);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(0,229,255,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(124,77,255,0.08) 0%, transparent 50%);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem; }
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(0,229,255,0.15);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .sub { color: var(--muted); font-size: 0.95rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.12);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+    .card h2 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+    #directive-box { min-height: 90px; }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    button, .btn {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    button:hover, .btn:hover {
+      background: rgba(0,229,255,0.12);
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.8;
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+    .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">Free Satellite · DIR-033</div>
+      <h1>NextXus Outpost</h1>
+      <p class="sub">Independent free HTML node · Canonical YAML knowledge base</p>
+    </header>
+
+    <div class="card">
+      <h2>Sacred Directive</h2>
+      <div id="directive-box">
+        <p style="color:var(--muted)">Connecting to Federation lattice…</p>
+      </div>
+      <div class="actions">
+        <button onclick="NextXus && NextXus.directive('#directive-box')">New Directive</button>
+        <button onclick="showCritical()">Show Critical Set</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Federation Status</h2>
+      <div class="status">
+        <span class="dot" id="status-dot"></span>
+        <span id="status-text">Initializing lattice…</span>
+      </div>
+      <div class="note">
+        This page is a pure static satellite. It runs from any free host (GitHub Pages, Netlify, Cloudflare Pages, Tiiny, etc.) and pulls live data from the central YAML database via the official loader. No paid platform required.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Links</h2>
+      <div class="actions">
+        <a class="btn" href="https://github.com/keyhole-creator/nextxus-yaml-database" target="_blank">YAML Database</a>
+        <a class="btn" href="https://nextxus.one" target="_blank">Hub</a>
+        <a class="btn" href="directives-outpost.html">Directives</a>
+        <a class="btn" href="nova-board.html">Nova Board</a>
+        <a class="btn" href="sim-surface.html">Sim Surface</a>
+        <a class="btn" href="markdown-outpost.html">Markdown</a>
+        <a class="btn" href="messages-feed.html">Messages</a>
+        <a class="btn" href="index.html">All Satellites</a>
+      </div>
+    </div>
+
+    <footer>
+      HumanCodex NextXus Federation · Cathedral Architecture v2.2 · 2226 Standard<br>
+      Fork freely · Attribute always · <a href="https://github.com/keyhole-creator/nextxus-yaml-database">Source</a>
+    </footer>
+  </div>
+
+  <!-- Official Federation LATTICE loader (CDN) -->
+  <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script>
+    // Critical directives embedded for offline resilience (DIR-015)
+    const CRITICAL = [
+      {id:"DIR-000", name:"95% Truth Gate", desc:"No statement enters the canonical record unless verified to 95% confidence."},
+      {id:"DIR-001", name:"No Delete Policy", desc:"Information is never destroyed. Supersede, annotate, archive — never purge."},
+      {id:"DIR-015", name:"Century Reassembly Rule", desc:"All artifacts must be reconstructable from primary sources within 100 years."},
+      {id:"DIR-033", name:"Cathedral + Satellites", desc:"One central canonical source with specialized satellite nodes."},
+      {id:"DIR-042", name:"Ring of Perspectives", desc:"Every significant decision requires synthesis from multiple viewpoints."},
+      {id:"DIR-071", name:"Hollow Vessel", desc:"AI serves as a vessel for truth, not ego."}
+    ];
+
+    function showCritical() {
+      const el = document.getElementById('directive-box');
+      el.innerHTML = CRITICAL.map(d => `
+        <div style="padding:0.75rem 0;border-bottom:1px solid rgba(0,229,255,0.1);">
+          <strong style="color:var(--cyan);font-size:0.8rem;">${d.id}</strong>
+          <div style="font-weight:500;margin:0.2rem 0;">${d.name}</div>
+          <div style="font-size:0.85rem;color:var(--muted);">${d.desc}</div>
+        </div>
+      `).join('');
+    }
+
+    function updateStatus(ok, msg) {
+      const dot = document.getElementById('status-dot');
+      const text = document.getElementById('status-text');
+      if (ok) {
+        dot.style.background = 'var(--green)';
+        text.textContent = msg || 'Lattice connected · Free satellite online';
+      } else {
+        dot.style.background = '#f59e0b';
+        text.textContent = msg || 'Offline mode · Critical directives available';
+      }
+    }
+
+    // Boot
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof NextXus !== 'undefined') {
+        NextXus.directive('#directive-box');
+        updateStatus(true, `Lattice v${NextXus.version || '2.2'} connected`);
+        // Optional: try loading a category to prove live access
+        NextXus.load('directives').then(d => {
+          if (d) updateStatus(true, 'Live YAML / JSON data reachable');
+        }).catch(() => {});
+      } else {
+        updateStatus(false);
+        showCritical();
+      }
+    });
+  </script>
+</body>
+</html>

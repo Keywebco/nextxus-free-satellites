@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Outpost — NextXus Free Satellite</title>
+  <meta name="description" content="Free markdown viewer for HumanCodex NextXus Federation knowledge. Load from GitHub raw, public URLs, or exported Google Drive files. Zero cost.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --bg: #070b12;
+      --card: rgba(12, 18, 32, 0.92);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.55;
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(0,229,255,0.06) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 100%, rgba(124,77,255,0.06) 0%, transparent 45%);
+    }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.45);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.35rem;
+    }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.4rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.15rem 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .card h2 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--cyan);
+      margin-bottom: 0.7rem;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
+    }
+    input[type="url"], input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(0,229,255,0.25);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.55rem 0.8rem;
+      font-size: 0.88rem;
+    }
+    input:focus { outline: none; border-color: var(--cyan); }
+    button, .btn {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s;
+    }
+    button:hover, .btn:hover { background: rgba(0,229,255,0.12); }
+    .presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .presets button { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
+    #status {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    #content {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem 1.6rem;
+      min-height: 280px;
+      font-size: 0.95rem;
+    }
+    #content h1, #content h2, #content h3, #content h4 {
+      color: var(--cyan);
+      margin: 1.1rem 0 0.45rem;
+      font-weight: 600;
+    }
+    #content h1 { font-size: 1.35rem; }
+    #content h2 { font-size: 1.15rem; }
+    #content h3 { font-size: 1.02rem; }
+    #content p { margin: 0.55rem 0; color: var(--text); }
+    #content ul, #content ol { margin: 0.5rem 0 0.5rem 1.4rem; color: var(--muted); }
+    #content li { margin-bottom: 0.25rem; }
+    #content code {
+      background: rgba(0,0,0,0.4);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--cyan);
+    }
+    #content pre {
+      background: rgba(0,0,0,0.45);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 0.7rem 0;
+      font-size: 0.82rem;
+    }
+    #content pre code { background: none; padding: 0; }
+    #content a { color: var(--cyan); }
+    #content blockquote {
+      border-left: 3px solid var(--purple);
+      padding-left: 0.9rem;
+      color: var(--muted);
+      margin: 0.7rem 0;
+    }
+    #content table { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.88rem; }
+    #content th, #content td { border: 1px solid rgba(0,229,255,0.15); padding: 0.4rem 0.6rem; text-align: left; }
+    #content th { background: rgba(0,229,255,0.08); color: var(--cyan); }
+    .howto {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .howto ol { margin: 0.5rem 0 0 1.2rem; }
+    .howto li { margin-bottom: 0.3rem; }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="badge">Markdown · Free Satellite</div>
+    <h1>Markdown Outpost</h1>
+    <p class="sub">Load and render Federation markdown from any public raw URL. Works with GitHub, GitLab, or exported Google Drive files hosted as text.</p>
+
+    <div class="card">
+      <h2>Load Source</h2>
+      <div class="row">
+        <input type="url" id="src" placeholder="https://raw.githubusercontent.com/…/file.md  or any public .md / .txt URL">
+        <button onclick="loadMd()">Load</button>
+      </div>
+      <div class="presets">
+        <button onclick="loadPreset('https://raw.githubusercontent.com/keyhole-creator/nextxus-yaml-database/main/README.md')">Federation README</button>
+        <button onclick="loadPreset('https://raw.githubusercontent.com/keyhole-creator/nextxus-yaml-database/main/FORK_THIS.md')">FORK_THIS.md</button>
+        <button onclick="loadPreset('https://raw.githubusercontent.com/keyhole-creator/nextxus-living-library-backup/main/README.md')">Living Library README</button>
+      </div>
+      <div id="status">Ready · paste a raw markdown URL or use a preset</div>
+    </div>
+
+    <div class="card">
+      <h2>Google Drive → Free Satellite Pattern</h2>
+      <div class="howto">
+        <ol>
+          <li>In Google Drive open the markdown file → File → Download → Markdown (.md).</li>
+          <li>Upload the .md into a public GitHub (or GitLab / Codeberg) repository.</li>
+          <li>Use the raw URL (raw.githubusercontent.com/…/file.md) in the field above.</li>
+          <li>Alternatively host the .md next to this HTML page and load relative path.</li>
+        </ol>
+        <p style="margin-top:0.6rem;">This keeps everything free, static, and under DIR-015 (Century Reassembly). No paid platform required.</p>
+      </div>
+    </div>
+
+    <div id="content">
+      <p style="color:var(--muted)">Markdown content will appear here after loading a source.</p>
+    </div>
+
+    <footer>
+      HumanCodex NextXus Federation · Cathedral + Satellites (DIR-033) · 2226 Standard<br>
+      <a href="index.html">Satellites home</a> · <a href="https://github.com/keyhole-creator/nextxus-yaml-database">Central YAML</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // Minimal safe markdown → HTML (marked is lightweight CDN)
+    // Fallback simple renderer if CDN blocked
+    function simpleMd(text) {
+      return text
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+        .replace(/`([^`]+)`/gim, '<code>$1</code>')
+        .replace(/^\- (.*$)/gim, '<li>$1</li>')
+        .replace(/\n/g, '<br>');
+    }
+
+    function setStatus(msg) {
+      document.getElementById('status').textContent = msg;
+    }
+
+    async function loadMd(url) {
+      const src = (url || document.getElementById('src').value || '').trim();
+      if (!src) {
+        setStatus('Provide a URL');
+        return;
+      }
+      document.getElementById('src').value = src;
+      setStatus('Fetching…');
+      const content = document.getElementById('content');
+      content.innerHTML = '<p style="color:var(--muted)">Loading…</p>';
+      try {
+        const res = await fetch(src, { cache: 'no-cache' });
+        if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const text = await res.text();
+        if (typeof marked !== 'undefined') {
+          content.innerHTML = marked.parse(text);
+        } else {
+          content.innerHTML = simpleMd(text);
+        }
+        setStatus('Loaded · ' + src.split('/').pop());
+        // Update URL for shareability
+        const u = new URL(window.location);
+        u.searchParams.set('src', src);
+        history.replaceState(null, '', u);
+      } catch (e) {
+        content.innerHTML = `<p style="color:#f59e0b">Could not load: ${e.message}</p>
+          <p style="color:var(--muted);font-size:0.9rem;margin-top:0.6rem;">CORS or network block is common for some hosts. Prefer GitHub raw or same-origin files. For Google Drive exports, place the .md on GitHub and use the raw URL.</p>`;
+        setStatus('Failed');
+      }
+    }
+
+    function loadPreset(url) {
+      loadMd(url);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      const src = params.get('src');
+      if (src) loadMd(src);
+    });
+  </script>
+</body>
+</html>

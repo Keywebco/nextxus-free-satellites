@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Communications Board — NextXus Free Satellite</title>
+  <meta name="description" content="Free HTML Nova-class autonomic & communications board for the HumanCodex NextXus Federation. YAML-driven, zero cost.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --amber: #fbbf24;
+      --bg: #070b12;
+      --card: rgba(12, 18, 32, 0.92);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 30% 10%, rgba(0,229,255,0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 90%, rgba(124,77,255,0.06) 0%, transparent 40%);
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+    header { margin-bottom: 1.5rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.45);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+    .card h2 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      margin-bottom: 0.7rem;
+    }
+    .metric {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .metric small { font-size: 0.75rem; color: var(--muted); font-weight: 400; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.88rem;
+    }
+    .row:last-child { border-bottom: none; }
+    .label { color: var(--muted); }
+    .val { color: var(--text); }
+    .ok { color: var(--green); }
+    .warn { color: var(--amber); }
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2.2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    button, .btn {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    button:hover, .btn:hover { background: rgba(0,229,255,0.1); }
+    #log {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      max-height: 180px;
+      overflow-y: auto;
+      color: var(--muted);
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    #log div { margin-bottom: 0.35rem; }
+    footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">Nova Class · Autonomic / Communications</div>
+      <h1>Nova Communications Board</h1>
+      <p class="sub">Free satellite for system pulse, lattice health & federation relays · YAML-backed</p>
+    </header>
+
+    <div class="status-bar">
+      <span class="dot" id="dot"></span>
+      <span id="status">Nova node initializing…</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Lattice Health</h2>
+        <div class="metric" id="health">— <small>/ 100</small></div>
+        <div class="row"><span class="label">Primary source</span><span class="val" id="source">—</span></div>
+        <div class="row"><span class="label">Cache TTL</span><span class="val">5 min</span></div>
+        <div class="row"><span class="label">Version</span><span class="val" id="ver">—</span></div>
+      </div>
+
+      <div class="card">
+        <h2>Federation Pulse</h2>
+        <div class="row"><span class="label">Critical Directives</span><span class="val ok" id="crit-count">6</span></div>
+        <div class="row"><span class="label">Cathedral model</span><span class="val ok">Active</span></div>
+        <div class="row"><span class="label">DID</span><span class="val">did:web:nextxus.one</span></div>
+        <div class="row"><span class="label">Horizon</span><span class="val">2226</span></div>
+      </div>
+
+      <div class="card">
+        <h2>Satellite Role</h2>
+        <div class="row"><span class="label">Class</span><span class="val">Nova</span></div>
+        <div class="row"><span class="label">Function</span><span class="val">Communications / Autonomic</span></div>
+        <div class="row"><span class="label">Cost</span><span class="val ok">$0</span></div>
+        <div class="row"><span class="label">Persistence</span><span class="val">Static + CDN</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Autonomic Log</h2>
+      <div id="log"></div>
+      <div class="actions">
+        <button onclick="pingLattice()">Ping Lattice</button>
+        <button onclick="refreshCritical()">Refresh Critical Set</button>
+        <button onclick="clearLog()">Clear Log</button>
+        <a class="btn" href="directives-outpost.html">Directives Outpost</a>
+        <a class="btn" href="satellite-starter.html">Starter</a>
+      </div>
+    </div>
+
+    <footer>
+      Nova class · communications evolutions & autonomic functions · HumanCodex NextXus Federation<br>
+      Free to host anywhere · <a href="https://github.com/keyhole-creator/nextxus-yaml-database" target="_blank">YAML Database</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script>
+    const logEl = document.getElementById('log');
+
+    function log(msg, type = 'info') {
+      const t = new Date().toISOString().slice(11, 19);
+      const color = type === 'ok' ? 'var(--green)' : type === 'warn' ? 'var(--amber)' : 'var(--muted)';
+      logEl.innerHTML = `<div style="color:${color}">[${t}] ${msg}</div>` + logEl.innerHTML;
+    }
+
+    function setStatus(msg, ok = true) {
+      document.getElementById('status').textContent = msg;
+      document.getElementById('dot').style.background = ok ? 'var(--green)' : 'var(--amber)';
+    }
+
+    function clearLog() { logEl.innerHTML = ''; }
+
+    async function pingLattice() {
+      log('Pinging Federation lattice…');
+      if (typeof NextXus === 'undefined') {
+        log('Loader not present — offline mode', 'warn');
+        setStatus('Offline · embedded critical set only', false);
+        document.getElementById('health').innerHTML = '40 <small>/ 100</small>';
+        document.getElementById('source').textContent = 'local';
+        return;
+      }
+      try {
+        const start = performance.now();
+        const data = await NextXus.load('directives');
+        const ms = Math.round(performance.now() - start);
+        if (data) {
+          log(`Lattice OK · directives reachable · ${ms} ms`, 'ok');
+          setStatus(`Nova online · lattice healthy · ${ms} ms`);
+          document.getElementById('health').innerHTML = '92 <small>/ 100</small>';
+          document.getElementById('source').textContent = 'GitHub / jsDelivr';
+          document.getElementById('ver').textContent = NextXus.version || '2.2';
+          if (data.critical) {
+            document.getElementById('crit-count').textContent = data.critical.length || 6;
+          }
+        } else {
+          log('Lattice responded but no directives payload', 'warn');
+          setStatus('Partial lattice contact', false);
+          document.getElementById('health').innerHTML = '65 <small>/ 100</small>';
+        }
+      } catch (e) {
+        log('Lattice unreachable: ' + (e.message || e), 'warn');
+        setStatus('Lattice unreachable · local mode', false);
+        document.getElementById('health').innerHTML = '35 <small>/ 100</small>';
+        document.getElementById('source').textContent = 'local only';
+      }
+    }
+
+    function refreshCritical() {
+      log('Refreshing critical directive set from embedded + lattice');
+      if (typeof NextXus !== 'undefined' && NextXus.directives) {
+        const keys = Object.keys(NextXus.directives);
+        document.getElementById('crit-count').textContent = keys.length;
+        log(`Critical set size: ${keys.length}`, 'ok');
+      } else {
+        document.getElementById('crit-count').textContent = '6';
+        log('Using embedded critical set (6)', 'ok');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      log('Nova communications board booted');
+      log('Role: autonomic functions + federation relay pulse');
+      if (typeof NextXus !== 'undefined') {
+        document.getElementById('ver').textContent = NextXus.version || '2.2';
+        setStatus('Nova online · loader present');
+        pingLattice();
+      } else {
+        setStatus('Offline mode', false);
+        log('No loader — running pure local', 'warn');
+      }
+    });
+  </script>
+</body>
+</html>

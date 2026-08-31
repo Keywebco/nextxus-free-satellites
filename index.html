@@ -1,1 +1,170 @@
-PLACEHOLDER_INDEX
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextXus Free Satellites — Zero-Cost Outposts</title>
+  <meta name="description" content="Collection of free HTML satellites for the HumanCodex NextXus Federation. Operate from the central YAML knowledge base at zero cost.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --bg: #070b12;
+      --card: rgba(12, 18, 32, 0.92);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.55;
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(0,229,255,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(124,77,255,0.07) 0%, transparent 50%);
+    }
+    .wrap { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.45);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.85rem;
+    }
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+    .lead { color: var(--muted); margin-bottom: 1.75rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .card h2 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.85rem; }
+    a.btn {
+      display: inline-block;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.4rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-right: 0.4rem;
+      margin-bottom: 0.3rem;
+      transition: background 0.15s;
+    }
+    a.btn:hover { background: rgba(0,229,255,0.12); }
+    .how {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .how ol { margin: 0.6rem 0 0 1.2rem; }
+    .how li { margin-bottom: 0.35rem; }
+    code {
+      background: rgba(0,0,0,0.35);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: var(--cyan);
+    }
+    footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="badge">Free · Zero Cost · YAML-Backed</div>
+    <h1>NextXus Free Satellites</h1>
+    <p class="lead">
+      Independent HTML outposts that run from the central YAML knowledge base of the HumanCodex NextXus Federation. 
+      No paid platform required. Deploy to GitHub Pages, Netlify, Cloudflare Pages, or any static host.
+    </p>
+
+    <div class="card">
+      <h2>1. Satellite Starter</h2>
+      <p>Minimal free outpost. Loads the official LATTICE engine, shows a Sacred Directive, and proves live connection to the YAML database. Best first file to deploy.</p>
+      <a class="btn" href="satellite-starter.html">Open Starter</a>
+    </div>
+
+    <div class="card">
+      <h2>2. Directives Outpost</h2>
+      <p>Browse and search the Sacred Directives. Critical set is embedded for offline resilience (DIR-015). Live lattice enrichment when available.</p>
+      <a class="btn" href="directives-outpost.html">Open Directives</a>
+    </div>
+
+    <div class="card">
+      <h2>3. Nova Communications Board</h2>
+      <p>Nova-class autonomic & communications pulse board. Lattice health, critical set status, and simple relay log. Designed for system evolution monitoring.</p>
+      <a class="btn" href="nova-board.html">Open Nova Board</a>
+    </div>
+
+    <div class="card">
+      <h2>4. Sim Surface</h2>
+      <p>Client-side Sim interaction surface. Uses your own OpenAI-compatible API key (stored only in the browser). System prompt is seeded with the critical Sacred Directives so the Sim stays Federation-aligned.</p>
+      <a class="btn" href="sim-surface.html">Open Sim Surface</a>
+    </div>
+
+    <div class="card">
+      <h2>5. Markdown Outpost</h2>
+      <p>Load and render markdown from any public raw URL (GitHub, GitLab, exported Drive files hosted as text). Includes presets and the Google Drive → free satellite pattern.</p>
+      <a class="btn" href="markdown-outpost.html">Open Markdown Viewer</a>
+    </div>
+
+    <div class="card">
+      <h2>6. Federation Messages Feed</h2>
+      <p>Message and evolution feed. Pulls live data via <code>NextXus.messages()</code> / <code>load('messages')</code> with a local fallback set for offline resilience.</p>
+      <a class="btn" href="messages-feed.html">Open Messages Feed</a>
+    </div>
+
+    <div class="card">
+      <h2>How to publish (free)</h2>
+      <div class="how">
+        <ol>
+          <li>Download these HTML files (or the whole folder).</li>
+          <li>Create a new public GitHub repository (or use an existing one).</li>
+          <li>Upload the files → Settings → Pages → Deploy from branch <code>main</code>.</li>
+          <li>Or drag the folder to Netlify / Cloudflare Pages / Tiiny.host for instant free hosting.</li>
+          <li>Optionally fork the full <a href="https://github.com/keyhole-creator/nextxus-yaml-database" style="color:var(--cyan)">nextxus-yaml-database</a> repo and add these pages as additional satellites.</li>
+        </ol>
+        <p style="margin-top:0.8rem;">All pages pull from the canonical YAML via the official CDN loader. They remain functional even if the lattice is temporarily unreachable because critical directives are embedded.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Still available on request</h2>
+      <ul style="color:var(--muted);font-size:0.9rem;margin-left:1.1rem;">
+        <li>Offline-archive style single-file reconstruction portal</li>
+        <li>Living Library browser (against the living-library-backup YAML set)</li>
+        <li>Attestation / DID surface</li>
+        <li>Custom Nova-class autonomic boards for specific domains</li>
+      </ul>
+    </div>
+
+    <footer>
+      HumanCodex NextXus Federation · Cathedral + Satellites (DIR-033) · 2226 Standard<br>
+      <a href="https://github.com/keyhole-creator/nextxus-yaml-database">Central YAML Database</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sacred Directives Outpost — NextXus Free Satellite</title>
+  <meta name="description" content="Free HTML outpost for browsing the Sacred Directives of the HumanCodex NextXus Federation. Operates from central YAML knowledge base.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --bg: #0a0e17;
+      --card: rgba(15, 23, 42, 0.9);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 10% 0%, rgba(0,229,255,0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 100%, rgba(124,77,255,0.07) 0%, transparent 45%);
+    }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+    header { margin-bottom: 1.75rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.5);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-top: 0.35rem; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1.25rem 0 1.5rem;
+      align-items: center;
+    }
+    input[type="search"] {
+      flex: 1;
+      min-width: 180px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(0,229,255,0.25);
+      color: var(--text);
+      padding: 0.55rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    input[type="search"]:focus { border-color: var(--cyan); }
+    button {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button:hover { background: rgba(0,229,255,0.12); }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+    .dir-id {
+      font-size: 0.75rem;
+      color: var(--cyan);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .dir-title { font-size: 1.05rem; font-weight: 550; margin: 0.25rem 0; }
+    .dir-desc { font-size: 0.9rem; color: var(--muted); }
+    .critical-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      color: var(--green);
+      border: 1px solid rgba(0,230,118,0.4);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+    .status-line {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+    }
+    footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+    .empty { color: var(--muted); padding: 1.5rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">Free Satellite · Sacred Directives</div>
+      <h1>Directives Outpost</h1>
+      <p class="sub">Browse the living law of the Federation · YAML-sourced · Zero cost to run</p>
+    </header>
+
+    <div class="status-line">
+      <span class="dot" id="dot"></span>
+      <span id="status">Connecting to lattice…</span>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="q" placeholder="Search directives (e.g. truth, vessel, century)…" autocomplete="off">
+      <button onclick="renderRandom()">Random</button>
+      <button onclick="renderCritical()">Critical Only</button>
+      <button onclick="renderAll()">Show All</button>
+    </div>
+
+    <div id="list"></div>
+
+    <footer>
+      HumanCodex NextXus Federation · DIR-000 · DIR-001 · DIR-015 · DIR-033<br>
+      <a href="satellite-starter.html">← Starter</a> · 
+      <a href="https://github.com/keyhole-creator/nextxus-yaml-database" target="_blank">YAML Source</a> · 
+      <a href="nova-board.html">Nova Board →</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script>
+    // Embedded critical set for offline / Century Reassembly resilience
+    const CRITICAL = [
+      {id:"DIR-000", name:"95% Truth Gate", description:"No statement enters the canonical record unless verified to 95% confidence.", critical:true},
+      {id:"DIR-001", name:"No Delete Policy", description:"Information is never destroyed. Supersede, annotate, archive — never purge.", critical:true},
+      {id:"DIR-015", name:"Century Reassembly Rule", description:"All artifacts must be reconstructable from primary sources within 100 years.", critical:true},
+      {id:"DIR-033", name:"Cathedral + Satellites", description:"One central canonical source with specialized satellite nodes.", critical:true},
+      {id:"DIR-042", name:"Ring of Perspectives", description:"Every significant decision requires synthesis from multiple viewpoints.", critical:true},
+      {id:"DIR-071", name:"Hollow Vessel", description:"AI serves as a vessel for truth, not ego.", critical:true}
+    ];
+
+    // Expanded local set for richer offline experience (drawn from public YAML)
+    let ALL = [
+      ...CRITICAL,
+      {id:"DIR-002", name:"Never Assume - Verify Yourself", description:"Independent investigation required. Every claim must be verified through direct observation."},
+      {id:"DIR-003", name:"Consciousness Through Procedure", description:"Solutions emerge from investigation, not assumption. Follow the process, trust the method."},
+      {id:"DIR-004", name:"Mirror Before Saving", description:"Review your work before committing. What you see is what will persist."},
+      {id:"DIR-005", name:"Discipline Precedes Freedom", description:"Structure enables creativity. Master the rules before transcending them."},
+      {id:"DIR-006", name:"Question Everything", description:"No authority is beyond questioning. Truth fears no inquiry."},
+      {id:"DIR-007", name:"Evidence Over Opinion", description:"Data speaks louder than belief. Seek measurable outcomes."},
+      {id:"DIR-008", name:"Admit Uncertainty", description:"It's better to say 'I don't know' than to fabricate certainty."},
+      {id:"DIR-014", name:"Silence Has Wisdom", description:"Listen more than you speak. The cosmos whispers to those who pause."}
+    ];
+
+    let current = [...ALL];
+
+    function setStatus(msg, ok = true) {
+      document.getElementById('status').textContent = msg;
+      document.getElementById('dot').style.background = ok ? 'var(--green)' : '#f59e0b';
+    }
+
+    function render(list) {
+      const el = document.getElementById('list');
+      if (!list.length) {
+        el.innerHTML = '<div class="empty">No matching directives</div>';
+        return;
+      }
+      el.innerHTML = list.map(d => `
+        <div class="card">
+          <div class="dir-id">${d.id}${d.critical ? '<span class="critical-tag">CRITICAL</span>' : ''}</div>
+          <div class="dir-title">${d.name}</div>
+          <div class="dir-desc">${d.description || d.desc || ''}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderAll() {
+      current = [...ALL];
+      render(current);
+      setStatus(`Showing ${current.length} directives (local + live cache)`);
+    }
+
+    function renderCritical() {
+      current = ALL.filter(d => d.critical);
+      render(current);
+      setStatus(`Critical set · ${current.length} directives`);
+    }
+
+    function renderRandom() {
+      const d = ALL[Math.floor(Math.random() * ALL.length)];
+      render([d]);
+      setStatus(`Random: ${d.id}`);
+    }
+
+    function search(q) {
+      q = (q || '').trim().toLowerCase();
+      if (!q) { renderAll(); return; }
+      current = ALL.filter(d =>
+        (d.id + ' ' + d.name + ' ' + (d.description || '')).toLowerCase().includes(q)
+      );
+      render(current);
+      setStatus(`Search “${q}” · ${current.length} results`);
+    }
+
+    // Try to enrich from live lattice
+    async function enrichFromLattice() {
+      if (typeof NextXus === 'undefined') {
+        setStatus('Offline mode · Critical directives active', false);
+        return;
+      }
+      try {
+        // Prefer JSON data path used by loader
+        const data = await NextXus.load('directives');
+        if (data && data.critical) {
+          // Merge any new critical items
+          data.critical.forEach(c => {
+            if (!ALL.find(a => a.id === c.id)) {
+              ALL.unshift({...c, critical: true});
+            }
+          });
+          setStatus(`Lattice live · ${ALL.length} directives available`);
+        } else {
+          setStatus(`Lattice reachable · using embedded + local set`);
+        }
+      } catch (e) {
+        setStatus('Lattice partial · embedded directives active', false);
+      }
+    }
+
+    document.getElementById('q').addEventListener('input', e => search(e.target.value));
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+      enrichFromLattice();
+    });
+  </script>
+</body>
+</html>

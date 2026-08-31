@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Federation Messages Feed — NextXus Free Satellite</title>
+  <meta name="description" content="Free HTML federation message and evolution feed for HumanCodex NextXus. Pulls from central YAML via loader.js. Zero cost.">
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --purple: #7c4dff;
+      --green: #00e676;
+      --bg: #070b12;
+      --card: rgba(12, 18, 32, 0.92);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 25% 0%, rgba(0,229,255,0.06) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 100%, rgba(124,77,255,0.06) 0%, transparent 45%);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.45);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sub { color: var(--muted); font-size: 0.9rem; margin: 0.35rem 0 1.4rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px;
+      padding: 1.2rem 1.35rem;
+      margin-bottom: 1rem;
+    }
+    .card h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      margin-bottom: 0.8rem;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+    .dot.warn { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    #feed {
+      min-height: 160px;
+    }
+    .msg-item {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(0,229,255,0.08);
+    }
+    .msg-item:last-child { border-bottom: none; }
+    .msg-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.03em;
+    }
+    .msg-body { font-size: 0.92rem; line-height: 1.5; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem; }
+    button, .btn {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s;
+    }
+    button:hover, .btn:hover { background: rgba(0,229,255,0.12); }
+    .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.8rem;
+      padding: 0.7rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+    }
+    footer {
+      margin-top: 2.2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="badge">Messages · Free Satellite</div>
+    <h1>Federation Feed</h1>
+    <p class="sub">Live and cached messages from the central YAML knowledge base. Independent outpost under DIR-033.</p>
+
+    <div class="card">
+      <h2>Status</h2>
+      <div class="status">
+        <span class="dot" id="dot"></span>
+        <span id="status-text">Initializing…</span>
+      </div>
+      <div class="actions">
+        <button onclick="refreshFeed()">Refresh Feed</button>
+        <button onclick="showFallback()">Show Local Fallback</button>
+        <a class="btn" href="nova-board.html">Nova Board</a>
+        <a class="btn" href="directives-outpost.html">Directives</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Messages / Evolution Log</h2>
+      <div id="feed">
+        <p style="color:var(--muted)">Connecting to lattice…</p>
+      </div>
+      <div class="note">
+        This satellite calls <code>NextXus.messages()</code> against the official CDN loader. If the lattice is unreachable the embedded fallback set keeps the outpost functional (DIR-015).
+      </div>
+    </div>
+
+    <footer>
+      HumanCodex NextXus Federation · Cathedral Architecture v2.2 · 2226 Standard<br>
+      <a href="index.html">Satellites home</a> · <a href="https://github.com/keyhole-creator/nextxus-yaml-database">YAML Database</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script>
+    // Local fallback so the satellite still has content offline
+    const FALLBACK = [
+      { time: 'Federation baseline', text: 'Cathedral + Satellites architecture active (DIR-033). All free outposts share one canonical YAML source.' },
+      { time: 'DIR-015', text: 'Century Reassembly Rule in force. Critical artifacts and directives are reconstructable from primary sources.' },
+      { time: 'DIR-000', text: '95% Truth Gate remains the entry condition for canonical record.' },
+      { time: 'Operational', text: 'Free HTML satellites can be published on GitHub Pages, Netlify, Cloudflare Pages, or Tiiny.host at zero cost.' },
+      { time: 'Note', text: 'When live messages.json is reachable this feed will enrich automatically.' }
+    ];
+
+    function setStatus(ok, msg) {
+      const dot = document.getElementById('dot');
+      const text = document.getElementById('status-text');
+      dot.className = 'dot' + (ok ? '' : ' warn');
+      text.textContent = msg;
+    }
+
+    function renderItems(items) {
+      const feed = document.getElementById('feed');
+      if (!items || !items.length) {
+        feed.innerHTML = '<p style="color:var(--muted)">No messages available.</p>';
+        return;
+      }
+      feed.innerHTML = items.map(m => {
+        const meta = m.time || m.date || m.id || m.source || 'Federation';
+        const body = m.text || m.message || m.body || m.content || JSON.stringify(m);
+        return `<div class="msg-item"><div class="msg-meta">${meta}</div><div class="msg-body">${body}</div></div>`;
+      }).join('');
+    }
+
+    function showFallback() {
+      renderItems(FALLBACK);
+      setStatus(false, 'Local fallback active');
+    }
+
+    async function refreshFeed() {
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '<p style="color:var(--muted)">Refreshing…</p>';
+      if (typeof NextXus === 'undefined') {
+        showFallback();
+        return;
+      }
+      try {
+        // Prefer official helper
+        await NextXus.messages('#feed', 12);
+        // If the helper just injected, also try raw load for richer control
+        const data = await NextXus.load('messages').catch(() => null);
+        if (data) {
+          let list = Array.isArray(data) ? data : (data.messages || data.items || data.entries || []);
+          if (list.length) {
+            renderItems(list.slice(0, 15));
+            setStatus(true, 'Live messages loaded');
+            return;
+          }
+        }
+        // If messages() already filled the DOM, leave it
+        if (feed.children.length && !feed.textContent.includes('Refreshing')) {
+          setStatus(true, 'Feed rendered via lattice');
+        } else {
+          showFallback();
+        }
+      } catch (e) {
+        showFallback();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof NextXus !== 'undefined') {
+        setStatus(true, `Lattice v${NextXus.version || '2.2'} present`);
+        refreshFeed();
+      } else {
+        showFallback();
+      }
+    });
+  </script>
+</body>
+</html>

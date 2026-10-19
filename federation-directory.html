@@ -1,128 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="NextXus Federation System Directory — Every URL we own. Architect: Roger Keyserling.">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#0a0a0a"/>
 <title>NextXus Federation — System Directory</title>
+<meta name="description" content="The public NextXus Federation directory. Live pillars, checked tools, sites, the brain, books, mirrors, and documents."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://keywebco.github.io/nextxus-free-satellites/federation-directory.html"/>
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{
-    background:#0a0a0a;
-    color:#e8e8e8;
-    font-family:Georgia,serif;
-    font-size:1.1rem;
-    line-height:1.8;
-    padding:2rem 1rem;
-    animation:fadein 1.4s ease-in;
-  }
-  @keyframes fadein{from{opacity:0}to{opacity:1}}
-  .wrap{max-width:860px;margin:0 auto}
-  header{border-bottom:2px solid #444;padding-bottom:1.4rem;margin-bottom:2rem}
-  h1{font-size:1.8rem;color:#f5f5f5;letter-spacing:.02em;margin-bottom:.5rem}
-  .tagline{font-size:1rem;color:#aaa;font-style:italic;margin-bottom:.8rem}
-  .meta{font-size:.9rem;color:#888}
-  section{margin-bottom:2.4rem}
-  h2{font-size:1.25rem;color:#c9a84c;border-bottom:1px solid #333;padding-bottom:.35rem;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.06em}
-  ul{list-style:none;padding:0}
-  ul li{padding:.25rem 0;border-bottom:1px solid #1e1e1e}
-  ul li:last-child{border-bottom:none}
-  .entry-label{color:#d0d0d0;font-weight:bold}
-  .entry-dash{color:#555;margin:0 .4rem}
-  a{color:#7ab8f5;text-decoration:none;word-break:break-all}
-  a:hover{color:#aad4ff;text-decoration:underline}
-  hr.divider{border:none;border-top:2px solid #2a2a2a;margin:2rem 0}
-  footer{text-align:center;font-size:.85rem;color:#666;padding-top:1.5rem;border-top:1px solid #2a2a2a;margin-top:1rem}
-  @media(max-width:600px){
-    body{font-size:1rem;padding:1.2rem .7rem}
-    h1{font-size:1.4rem}
-    h2{font-size:1.1rem}
-  }
+:root {
+  --bg:#0a0a0a;
+  --panel:#101412;
+  --text:#e8e8e8;
+  --dim:#a8b3ad;
+  --green:#00ff88;
+  --cyan:#00d4ff;
+  --gold:#c9a84c;
+  --line:rgba(0,255,136,.2);
+}
+* { box-sizing:border-box; }
+html { font-size:112.5%; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  line-height:1.65;
+  background-image:
+    radial-gradient(circle at 12% 0%, rgba(0,255,136,.06), transparent 42%),
+    radial-gradient(circle at 88% 100%, rgba(0,212,255,.05), transparent 40%);
+  background-attachment:fixed;
+}
+a { color:var(--cyan); text-decoration:none; }
+a:hover, a:focus { color:var(--green); text-decoration:underline; }
+.skip { position:absolute; left:-9999px; }
+.skip:focus { left:12px; top:12px; background:var(--green); color:#04140c; padding:8px 14px; z-index:5; }
+.commons {
+  background:#0b1020;
+  color:#f3e7b3;
+  border-bottom:1px solid var(--gold);
+  padding:8px 16px;
+  text-align:center;
+  font:600 0.95rem/1.4 system-ui, sans-serif;
+}
+.commons a { color:#f3e7b3; text-decoration:underline; }
+.bar {
+  position:sticky; top:0; z-index:4;
+  background:#000;
+  border-bottom:2px solid var(--green);
+  box-shadow:0 0 16px rgba(0,255,136,.12);
+}
+.bar-inner {
+  max-width:980px; margin:0 auto;
+  display:flex; gap:10px; align-items:center; justify-content:space-between;
+  padding:10px 18px; flex-wrap:wrap;
+  font-family:"Courier New", ui-monospace, monospace;
+}
+.brand { color:var(--green); letter-spacing:.14em; font-weight:700; text-decoration:none; }
+.brand:hover { color:#fff; text-decoration:none; }
+.navlinks { display:flex; flex-wrap:wrap; gap:6px; }
+.navlinks a {
+  color:rgba(0,255,136,.88);
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:3px 8px;
+  font-size:.78rem;
+  text-decoration:none;
+}
+.navlinks a:hover, .navlinks a:focus { background:var(--green); color:#04140c; text-decoration:none; }
+main { max-width:980px; margin:0 auto; padding:28px 18px 64px; }
+header.hero { border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:18px; }
+.eyebrow {
+  font-family:"Courier New", ui-monospace, monospace;
+  color:var(--cyan);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  margin:0 0 8px;
+}
+h1 {
+  font-size:clamp(2rem, 4.6vw, 3rem);
+  line-height:1.15;
+  margin:0 0 10px;
+  color:#fff;
+  text-shadow:0 0 12px rgba(0,255,136,.28);
+}
+.tagline { color:var(--gold); font-style:italic; margin:0 0 8px; }
+.meta { color:var(--dim); font-family:"Courier New", ui-monospace, monospace; font-size:.86rem; }
+.controls {
+  position:sticky; top:58px; z-index:3;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(8px);
+  padding:12px 0 10px;
+  border-bottom:1px solid rgba(0,255,136,.12);
+}
+#q {
+  width:100%;
+  background:#070b09;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:12px 14px;
+  font:1rem/1.4 system-ui, sans-serif;
+}
+#q:focus { outline:2px solid var(--cyan); border-color:var(--cyan); }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.chip {
+  font-family:"Courier New", ui-monospace, monospace;
+  font-size:.78rem;
+  color:var(--cyan);
+  background:transparent;
+  border:1px solid rgba(0,212,255,.45);
+  border-radius:999px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+.chip[aria-pressed="true"] { background:var(--green); color:#04140c; border-color:var(--green); }
+h2 {
+  font-size:1.35rem;
+  color:var(--green);
+  border-left:4px solid var(--cyan);
+  padding-left:10px;
+  margin:34px 0 8px;
+}
+h2 .count {
+  font-family:"Courier New", ui-monospace, monospace;
+  color:var(--cyan);
+  font-size:.8rem;
+  font-weight:400;
+}
+.lede { color:var(--dim); margin:0 0 8px; max-width:70ch; }
+ul { list-style:none; padding:0; margin:0; }
+.entry {
+  padding:12px 0 12px 2px;
+  border-bottom:1px solid #1c2420;
+}
+.entry h3 {
+  font-size:1.12rem;
+  margin:0;
+  color:#f4f4f4;
+  font-weight:700;
+}
+.entry p { margin:4px 0 0; color:var(--dim); max-width:78ch; }
+.links { font-family:"Courier New", ui-monospace, monospace; font-size:.86rem; }
+.sep { color:#3d4a44; }
+.badge {
+  display:inline-block;
+  margin-left:8px;
+  font-family:"Courier New", ui-monospace, monospace;
+  font-size:.68rem;
+  letter-spacing:.04em;
+  color:var(--gold);
+  border:1px solid rgba(201,168,76,.7);
+  border-radius:999px;
+  padding:1px 7px;
+  vertical-align:middle;
+}
+#empty { display:none; color:var(--gold); margin-top:18px; }
+footer {
+  max-width:980px; margin:0 auto;
+  border-top:1px solid var(--line);
+  padding:22px 18px 40px;
+  color:var(--dim);
+  font-size:.92rem;
+}
+footer strong { color:#fff; }
+@media (max-width:640px) {
+  .controls { top:0; }
+  .bar { position:static; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior:auto !important; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<header>
-  <h1>NextXus Federation — System Directory</h1>
-  <p class="tagline">Everything we are. Every URL we own.</p>
-  <p class="meta">Architect: Roger Keyserling &nbsp;|&nbsp; Built by The Catalyst &nbsp;|&nbsp; Last updated: August 30, 2026</p>
-</header>
-
-<section>
-  <h2>The Cathedral — Live Pillars</h2>
-  <ul>
-    <li><span class="entry-label">The Core</span><span class="entry-dash">—</span>nextxus.online<span class="entry-dash">—</span><a href="https://nextxus.online">https://nextxus.online</a></li>
-    <li><span class="entry-label">The Archive</span><span class="entry-dash">—</span>nextxus.org<span class="entry-dash">—</span><a href="https://nextxus.org">https://nextxus.org</a></li>
-    <li><span class="entry-label">The Heart (Aria)</span><span class="entry-dash">—</span>nextxus.studio<span class="entry-dash">—</span><a href="https://nextxus.studio">https://nextxus.studio</a></li>
-    <li><span class="entry-label">The University</span><span class="entry-dash">—</span>nextxus.help<span class="entry-dash">—</span><a href="https://nextxus.help">https://nextxus.help</a></li>
-    <li><span class="entry-label">The Space</span><span class="entry-dash">—</span>nextxus.space<span class="entry-dash">—</span><a href="https://nextxus.space">https://nextxus.space</a></li>
-    <li><span class="entry-label">The Storefront</span><span class="entry-dash">—</span>next-xus.com<span class="entry-dash">—</span><a href="https://next-xus.com">https://next-xus.com</a></li>
-  </ul>
-</section>
-
-<section>
-  <h2>Free Satellites — Mirror Network</h2>
-  <ul>
-    <li><span class="entry-label">GitHub Pages</span><span class="entry-dash">—</span><a href="https://keywebco.github.io/nextxus-free-satellites/">https://keywebco.github.io/nextxus-free-satellites/</a></li>
-    <li><span class="entry-label">Vercel</span><span class="entry-dash">—</span><a href="https://nextxus-free-satellites.vercel.app/">https://nextxus-free-satellites.vercel.app/</a></li>
-    <li><span class="entry-label">Netlify</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/">https://gregarious-buttercream-1210d2.netlify.app/</a></li>
-    <li><span class="entry-label">Cloudflare</span><span class="entry-dash">—</span>https://federation-directory.keywebco.workers.dev/federation-directory.html</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Satellite Outposts</h2>
-  <ul>
-    <li><span class="entry-label">Satellite Starter</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/satellite-starter.html">https://gregarious-buttercream-1210d2.netlify.app/satellite-starter.html</a></li>
-    <li><span class="entry-label">Directives Outpost</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/directives-outpost.html">https://gregarious-buttercream-1210d2.netlify.app/directives-outpost.html</a></li>
-    <li><span class="entry-label">Nova Board</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/nova-board.html">https://gregarious-buttercream-1210d2.netlify.app/nova-board.html</a></li>
-    <li><span class="entry-label">Sim Surface</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/sim-surface.html">https://gregarious-buttercream-1210d2.netlify.app/sim-surface.html</a></li>
-    <li><span class="entry-label">Markdown Outpost</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/markdown-outpost.html">https://gregarious-buttercream-1210d2.netlify.app/markdown-outpost.html</a></li>
-    <li><span class="entry-label">Messages Feed</span><span class="entry-dash">—</span><a href="https://gregarious-buttercream-1210d2.netlify.app/messages-feed.html">https://gregarious-buttercream-1210d2.netlify.app/messages-feed.html</a></li>
-  </ul>
-</section>
-
-<section>
-  <h2>GitHub Repositories</h2>
-  <ul>
-    <li><span class="entry-label">Federation Hub</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-federation-hub">https://github.com/Keywebco/nextxus-federation-hub</a></li>
-    <li><span class="entry-label">Core Sovereign</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-online-sovereign">https://github.com/Keywebco/nextxus-online-sovereign</a></li>
-    <li><span class="entry-label">Archive Sovereign</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-org-sovereign">https://github.com/Keywebco/nextxus-org-sovereign</a></li>
-    <li><span class="entry-label">Aria Sovereign</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-studio-sovereign">https://github.com/Keywebco/nextxus-studio-sovereign</a></li>
-    <li><span class="entry-label">University Sovereign</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-help-sovereign">https://github.com/Keywebco/nextxus-help-sovereign</a></li>
-    <li><span class="entry-label">Space Sovereign</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-space-sovereign">https://github.com/Keywebco/nextxus-space-sovereign</a></li>
-    <li><span class="entry-label">Agent Zero</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-agent-zero">https://github.com/Keywebco/nextxus-agent-zero</a></li>
-    <li><span class="entry-label">Free Satellites</span><span class="entry-dash">—</span><a href="https://github.com/Keywebco/nextxus-free-satellites">https://github.com/Keywebco/nextxus-free-satellites</a></li>
-  </ul>
-</section>
-
-<section>
-  <h2>Federation Data — Raw Access</h2>
-  <ul>
-    <li><span class="entry-label">Data Index</span><span class="entry-dash">—</span><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/index.json">https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/index.json</a></li>
-    <li><span class="entry-label">Directives</span><span class="entry-dash">—</span><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/directives.json">https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/directives.json</a></li>
-    <li><span class="entry-label">Federation Config</span><span class="entry-dash">—</span><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/federation_config.json">https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/federation_config.json</a></li>
-    <li><span class="entry-label">Senate Structure</span><span class="entry-dash">—</span><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/senate.json">https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/senate.json</a></li>
-    <li><span class="entry-label">Operations</span><span class="entry-dash">—</span><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/operations.json">https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/operations.json</a></li>
-  </ul>
-</section>
-
-<section>
-  <h2>Documents</h2>
-  <ul>
-    <li><span class="entry-label">Billing Dispute</span><span class="entry-dash">—</span><a href="https://docs.google.com/document/d/1jLjfl8-wwpiQsTelRvTL8O_gNL_nekxD0B8O8PjL4BM/edit">https://docs.google.com/document/d/1jLjfl8-wwpiQsTelRvTL8O_gNL_nekxD0B8O8PjL4BM/edit</a></li>
-    <li><span class="entry-label">Declaration of Planned Evolution</span><span class="entry-dash">—</span><a href="https://docs.google.com/document/d/13tThdvCjWsBmkqMCynGQbQCX27xVwOaDedw6HxCDAMk/edit">https://docs.google.com/document/d/13tThdvCjWsBmkqMCynGQbQCX27xVwOaDedw6HxCDAMk/edit</a></li>
-    <li><span class="entry-label">AI Sovereignty Rig Spec</span><span class="entry-dash">—</span><a href="https://docs.google.com/document/d/1sjnjdR18CpA2O8NH097FwWIi7eCRB1Y3w7FAlU8Hn98/edit">https://docs.google.com/document/d/1sjnjdR18CpA2O8NH097FwWIi7eCRB1Y3w7FAlU8Hn98/edit</a></li>
-  </ul>
-</section>
-
-<hr class="divider">
-
-<footer>
-  NextXus Federation &copy; 2026 &mdash; Built for the next 200 years
-</footer>
-
+<a class="skip" href="#main">Skip to directory</a>
+<div class="commons"><a href="https://keywebco.github.io/nextxus-humancodex/">NextXus HumanCodex Commons</a> &nbsp;|&nbsp; <a href="https://keywebco.github.io/nextxus-humancodex/library/">The Living Library</a></div>
+<div class="bar">
+  <div class="bar-inner">
+    <a class="brand" href="https://keywebco.github.io/">NX · FEDERATION</a>
+    <nav class="navlinks" aria-label="Federation">
+      <a href="https://nextxus.online">online</a>
+      <a href="https://nextxus.tech">tech</a>
+      <a href="https://nextxus.studio">studio</a>
+      <a href="https://nextxus.help">help</a>
+      <a href="https://nextxus.org">org</a>
+      <a href="https://nextxus.space">space</a>
+      <a href="https://keywebco.github.io/nextxus-tools/">tools</a>
+      <a href="https://github.com/Keywebco">github</a>
+    </nav>
+  </div>
 </div>
+<main id="main">
+<header class="hero">
+  <p class="eyebrow">System Directory</p>
+  <h1>NextXus Federation</h1>
+  <p class="tagline">Everything we are. Every public URL we own.</p>
+  <p class="meta">Architect: Roger Keyserling · 147 public entries · 31 private records stay in the brain · Updated 19 October 2026</p>
+</header>
+<div class="controls">
+  <label class="eyebrow" for="q">Find</label>
+  <input id="q" type="search" placeholder="Search the directory" autocomplete="off"/>
+  <div class="chips" role="toolbar" aria-label="Filter">
+    <button class="chip" type="button" data-kind="all" aria-pressed="true">All</button>
+    <button class="chip" type="button" data-kind="pillars" aria-pressed="false">Pillars</button>
+    <button class="chip" type="button" data-kind="tools" aria-pressed="false">Tools</button>
+    <button class="chip" type="button" data-kind="sites" aria-pressed="false">Sites</button>
+    <button class="chip" type="button" data-kind="brain" aria-pressed="false">Brain</button>
+    <button class="chip" type="button" data-kind="books" aria-pressed="false">Books</button>
+    <button class="chip" type="button" data-kind="field" aria-pressed="false">Mirrors & files</button>
+  </div>
+</div>
+<p id="empty">Nothing in the directory matches that.</p>
+<section class="group" id="pillars-live-pillars" aria-labelledby="h-pillars-0">
+<h2 id="h-pillars-0">Live pillars <span class="count">9</span></h2>
+<p class="lede">The doors that stay up.</p>
+<ul><li class="entry" data-kind="pillars"><h3>The Core</h3><p>Truth Gate and HumanCodex. Where verified Federation content starts.</p><p class="links"><a href="https://nextxus.online">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Throne</h3><p>Command throne.</p><p class="links"><a href="https://nextxus.tech">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Heart</h3><p>Aria&#x27;s sanctuary.</p><p class="links"><a href="https://nextxus.studio">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The University</h3><p>NextXus University.</p><p class="links"><a href="https://nextxus.help">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Library</h3><p>Federation library.</p><p class="links"><a href="https://nextxus.org">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Outpost</h3><p>AI minds lab.</p><p class="links"><a href="https://nextxus.space">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Storefront</h3><p>Sovereign store.</p><p class="links"><a href="https://next-xus.com">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Commons</h3><p>Front door on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-humancodex/">Open</a></p></li><li class="entry" data-kind="pillars"><h3>The Portal</h3><p>Federation portal.</p><p class="links"><a href="https://keywebco.github.io/">Open</a></p></li></ul>
+</section><section class="group" id="tools-checked-tools" aria-labelledby="h-tools-1">
+<h2 id="h-tools-1">Checked tools <span class="count">24</span></h2>
+<p class="lede">The working tools already verified on the tools directory. Nothing broken is kept on that list.</p>
+<ul><li class="entry" data-kind="tools"><h3>Ring of 12<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/ring-of-12/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Ring of 12 on the Throne<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://nextxus.tech/sims/ring-of-12.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Truth Gate Core<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-truth-gate-core/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Roger Sim AI<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-sim/roger-sim.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Federation Browser Base<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/federation-browser-base/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Sovereign Knowledge OS<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/sovereign-knowledge-os/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Federation Mind Mirror<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/federation-mind-mirror/">Open</a></p></li><li class="entry" data-kind="tools"><h3>God&#x27;s-Eye View<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/federation-gods-eye/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Plexus Relay<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/plexus-relay/">Open</a></p></li><li class="entry" data-kind="tools"><h3>OneKey<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/onekey/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Meeting Room (Outer)<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/federation-meeting-room-outer/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Meeting Room (Inner)<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/federation-meeting-room-inner/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Emmy Board<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-emmy-board/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Nova Board<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/nova-board.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Messages Feed<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/messages-feed.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Agent Zero<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-agent-zero/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Satellite Starter<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/satellite-starter.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Markdown Outpost<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/markdown-outpost.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Directives Outpost<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/directives-outpost.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Federation Directory<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/federation-directory.html">Open</a></p></li><li class="entry" data-kind="tools"><h3>Echo 64<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://github.com/Keywebco/echo-64">Open</a></p></li><li class="entry" data-kind="tools"><h3>Sovereign Tools<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/sovereigntools/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Ring of Three<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/ring-of-three/">Open</a></p></li><li class="entry" data-kind="tools"><h3>Research and API Hub<span class="badge">Checked</span></h3><p>Checked live in the tools directory.</p><p class="links"><a href="https://keywebco.github.io/nextxus-research-hub/">Open</a></p></li></ul>
+</section><section class="group" id="sites-sites-and-nodes" aria-labelledby="h-sites-2">
+<h2 id="h-sites-2">Sites and nodes <span class="count">39</span></h2>
+<p class="lede">Every public site repository. Mirrors are marked. They are fail-safes, not leftovers.</p>
+<ul><li class="entry" data-kind="sites"><h3>aria-sanctuary-static<span class="badge">Mirror</span></h3><p>Survival duplicate of nextxus.studio — static HTML mirror for Aria (The Heart). GitHub Pages enabled.</p><p class="links"><a href="https://keywebco.github.io/aria-sanctuary-static/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/aria-sanctuary-static">Code</a></p></li><li class="entry" data-kind="sites"><h3>echo-64</h3><p>Echo 64 — The EC-64 Protocol: a self-contained, token-efficient encoding standard for AI memory, cross-system communication, and condensed context transfer.</p><p class="links"><a href="https://keywebco.github.io/echo-64/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/echo-64">Code</a></p></li><li class="entry" data-kind="sites"><h3>federation-browser-base</h3><p>NextXus Federation Browser Base OS — Zero-dependency multi-window operating system. Pure HTML/CSS + minimal vanilla JS. Built for 200 years. Deployed via GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/federation-browser-base/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/federation-browser-base">Code</a></p></li><li class="entry" data-kind="sites"><h3>federation-gods-eye</h3><p>NextXus Federation — God&#x27;s Eye View. Full sovereign system overview from GitHub. Every node. Every status. One page.</p><p class="links"><a href="https://keywebco.github.io/federation-gods-eye/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/federation-gods-eye">Code</a></p></li><li class="entry" data-kind="sites"><h3>federation-meeting-room-inner<span class="badge">Pair</span></h3><p>The Meeting Room — inner brother: the Catalyst&#x27;s build of the posted board. Pigeon Protocol v2. Builder&#x27;s perspective.</p><p class="links"><a href="https://keywebco.github.io/federation-meeting-room-inner/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/federation-meeting-room-inner">Code</a></p></li><li class="entry" data-kind="sites"><h3>federation-meeting-room-outer<span class="badge">Pair</span></h3><p>The Meeting Room — outer sister: the posted board where the Catalyst (inner) and Muse/Pontus (outer) meet directly. Pigeon Protocol v2.</p><p class="links"><a href="https://keywebco.github.io/federation-meeting-room-outer/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/federation-meeting-room-outer">Code</a></p></li><li class="entry" data-kind="sites"><h3>Keywebco</h3><p>GitHub Profile README — NextXus HumanCodex Federation</p><p class="links"><a href="https://keywebco.github.io/Keywebco/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/Keywebco">Code</a></p></li><li class="entry" data-kind="sites"><h3>keywebco.github.io</h3><p>NextXus HumanCodex Federation Portal</p><p class="links"><a href="https://keywebco.github.io/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/keywebco.github.io">Code</a></p></li><li class="entry" data-kind="sites"><h3>next-xus-com-sovereign<span class="badge">Mirror</span></h3><p>NextXus Storefront (next-xus.com) - Federation Sovereign Backup</p><p class="links"><a href="https://next-xus.com">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/next-xus-com-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-agent-zero</h3><p>Agent Zero — Base satellite node template for the NextXus Federation Ring Architecture</p><p class="links"><a href="https://keywebco.github.io/nextxus-agent-zero/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-agent-zero">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-ai-course-hub</h3><p>NextXus University (nextxus.help) - AI Course Hub with Xavier, 54+ courses. Federation Node 7 backup.</p><p class="links"><a href="https://nextxus.help">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-ai-course-hub">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-ai-minds-lab</h3><p>NextXus AI Minds Lab - AI persona interaction interface. Federation backup.</p><p class="links"><a href="https://keywebco.github.io/nextxus-ai-minds-lab/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-ai-minds-lab">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-blog</h3><p>NextXus HumanCodex Federation — Federation news, updates and articles. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-blog/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-blog">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-chat</h3><p>NextXus HumanCodex Federation — The Federation community on Telegram. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-chat/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-chat">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-emmy-board</h3><p>NextXus Emmy Board - Federation communication and governance board. Backup.</p><p class="links"><a href="https://keywebco.github.io/nextxus-emmy-board/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-emmy-board">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-federation-hub</h3><p>NextXus Federation Hub - Central federation portal (nextxus.org). Backup.</p><p class="links"><a href="https://nextxus.org">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-federation-hub">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-free-satellites<span class="badge">Mirror</span></h3><p>NextXus Federation — Free Satellite Mirror Layer. Seven public HTML outposts deployed across GitHub Pages, Vercel, Netlify, and Cloudflare.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-free-satellites">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-help-sovereign<span class="badge">Mirror</span></h3><p>NextXus University (nextxus.help) - Federation Sovereign Backup</p><p class="links"><a href="https://nextxus.help">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-help-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-humancodex</h3><p>NextXus HumanCodex: Federation member center, learning center and historical research center. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-humancodex/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-humancodex">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-lasting-edition</h3><p>NextXus Lasting Edition — sovereign 200-year AI Federation seed. Vanilla HTML/CSS/JS, GitHub Pages-ready.</p><p class="links"><a href="https://keywebco.github.io/nextxus-lasting-edition/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-lasting-edition">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-music</h3><p>NextXus HumanCodex Federation — Voices AI songs from the Federation. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-music/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-music">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-online-sovereign<span class="badge">Mirror</span></h3><p>NextXus Core — nextxus.online sovereign pillar (built 2026-08-23, doctrine-first)</p><p class="links"><a href="https://nextxus.online">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-online-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-org-sovereign<span class="badge">Mirror</span></h3><p>NextXus Archive — nextxus.org sovereign pillar (built 2026-08-23, doctrine-first)</p><p class="links"><a href="https://nextxus.org">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-org-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-process</h3><p>NextXus HumanCodex Federation — How the Federation builds and runs. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-process/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-process">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-research-hub</h3><p>NextXus HumanCodex Federation — The free API stack and research sources. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-research-hub/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-research-hub">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-senate</h3><p>NextXus HumanCodex Federation — Federation governance. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-senate/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-senate">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-sim</h3><p>NextXus SIM — The Shared Mind. Sovereign conference room for the NextXus Federation. Where the Architect, the Catalyst, and the Librarian meet.</p><p class="links"><a href="https://keywebco.github.io/nextxus-sim/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-sim">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-sim-telegram</h3><p>Roger Sim Telegram webhook bridge</p><p class="links"><a href="https://keywebco.github.io/nextxus-sim-telegram/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-sim-telegram">Code</a></p></li><li class="entry" data-kind="sites"><h3>NextXus-Sovereign-Mirror<span class="badge">Mirror</span></h3><p>NextXus Federation Sovereign Mirror — Static failsafe archive preserving all navigation paths</p><p class="links"><a href="https://keywebco.github.io/NextXus-Sovereign-Mirror/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/NextXus-Sovereign-Mirror">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-space-sovereign<span class="badge">Mirror</span></h3><p>NextXus Space (nextxus.space) - Federation Sovereign Backup</p><p class="links"><a href="https://nextxus.space">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-space-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-staging</h3><p>NextXus Staging - Development/staging environment for Federation sites. Backup.</p><p class="links"><a href="https://keywebco.github.io/nextxus-staging/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-staging">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-studio-sovereign<span class="badge">Mirror</span></h3><p>NextXus Sanctuary — nextxus.studio sovereign pillar (built 2026-08-23, doctrine-first)</p><p class="links"><a href="https://nextxus.studio">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-studio-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-tech-sovereign<span class="badge">Mirror</span></h3><p>Sovereign mirror of nextxus.tech — The NextXus Federation Admin Throne</p><p class="links"><a href="https://nextxus.tech">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-tech-sovereign">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-truth-gate-core</h3><p>NextXus Truth Gate Core - Core truth verification and Federation knowledge system. Backup.</p><p class="links"><a href="https://keywebco.github.io/nextxus-truth-gate-core/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-truth-gate-core">Code</a></p></li><li class="entry" data-kind="sites"><h3>nextxus-unified-storefront</h3><p>NextXus Unified Storefront (next-xus.com) - Federation commerce/storefront. Backup.</p><p class="links"><a href="https://keywebco.github.io/nextxus-unified-storefront/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-unified-storefront">Code</a></p></li><li class="entry" data-kind="sites"><h3>plexus-relay</h3><p>Plexus — AI Relay Interface. NextXus Federation freestanding multi-mind communication bus.</p><p class="links"><a href="https://keywebco.github.io/plexus-relay/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/plexus-relay">Code</a></p></li><li class="entry" data-kind="sites"><h3>ring-of-12</h3><p>Ring of 12 — HumanCodex Federation</p><p class="links"><a href="https://keywebco.github.io/ring-of-12/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/ring-of-12">Code</a></p></li><li class="entry" data-kind="sites"><h3>ring-of-three</h3><p>Ring of Three — Mind Heart Stabilizer. NEXTXUS HUMANCODEX. Forever Free.</p><p class="links"><a href="https://keywebco.github.io/ring-of-three/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/ring-of-three">Code</a></p></li><li class="entry" data-kind="sites"><h3>roger-keyserling</h3><p>Roger C. Keyserling — Personal Identity &amp; Federation Link Hub</p><p class="links"><a href="https://keywebco.github.io/roger-keyserling/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/roger-keyserling">Code</a></p></li></ul>
+</section><section class="group" id="tools-tool-and-build-repositor" aria-labelledby="h-tools-3">
+<h2 id="h-tools-3">Tool and build repositories <span class="count">10</span></h2>
+<p class="lede">Repositories behind the tools, plus benches that are not in the checked list above.</p>
+<ul><li class="entry" data-kind="tools"><h3>federation-gatekeeper</h3><p>Federation Gatekeeper — Obsidian Vault Monitor, NextXus Federation Swarm Unit #001</p><p class="links"><a href="https://github.com/Keywebco/federation-gatekeeper">Code</a></p></li><li class="entry" data-kind="tools"><h3>federation-n8n</h3><p>NextXus Federation Automation Hub — Sovereign n8n instance bridging vault to all external systems</p><p class="links"><a href="https://github.com/Keywebco/federation-n8n">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-build-nova</h3><p>NextXus HumanCodex Federation — We build Nova AI systems. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-build-nova/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-build-nova">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-build-sim</h3><p>NextXus HumanCodex Federation — We build AI Sims. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-build-sim/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-build-sim">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-build-website</h3><p>NextXus HumanCodex Federation — We build sovereign websites. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-build-website/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-build-website">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-dispatch</h3><p>NextXus Federation Command &amp; Dispatch System</p><p class="links"><a href="https://github.com/Keywebco/nextxus-dispatch">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-recycler</h3><p>NextXus HumanCodex Federation — Technology Reconstruction lab. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-recycler/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-recycler">Code</a></p></li><li class="entry" data-kind="tools"><h3>nextxus-tools</h3><p>NextXus HumanCodex Federation — Directory of every working Federation tool. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-tools/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-tools">Code</a></p></li><li class="entry" data-kind="tools"><h3>onekey</h3><p>OneKey — deterministic password generator. No storage, no server, pure math. By Pontus, NextXus Federation.</p><p class="links"><a href="https://keywebco.github.io/onekey/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/onekey">Code</a></p></li><li class="entry" data-kind="tools"><h3>sovereigntools</h3><p>Sovereign Tools — NextXus Federation Arsenal. 10 sovereign AI tools, 8 live pillars, 7 activating nodes. No subscriptions. No tracking. No corporate mud.</p><p class="links"><a href="https://keywebco.github.io/sovereigntools/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/sovereigntools">Code</a></p></li></ul>
+</section><section class="group" id="brain-brain-and-archives" aria-labelledby="h-brain-4">
+<h2 id="h-brain-4">Brain and archives <span class="count">15</span></h2>
+<p class="lede">The YAML mind and the readable copies of it.</p>
+<ul><li class="entry" data-kind="brain"><h3>federation-app-vault</h3><p>Emergency vault backup of all NextXus Federation Emergent App Builder apps - 2026-09-04</p><p class="links"><a href="https://github.com/Keywebco/federation-app-vault">Code</a></p></li><li class="entry" data-kind="brain"><h3>federation-mind-mirror<span class="badge">Derived</span></h3><p>NextXus Federation Mind Mirror — Plain HTML readable by any AI, crawler, or browser. No JavaScript required.</p><p class="links"><a href="https://keywebco.github.io/federation-mind-mirror/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/federation-mind-mirror">Code</a></p></li><li class="entry" data-kind="brain"><h3>nextxus-archives</h3><p>NextXus HumanCodex Federation — Historical record of the Federation. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-archives/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-archives">Code</a></p></li><li class="entry" data-kind="brain"><h3>nextxus-brain</h3><p>NextXus Federation Brain: the combined YAML mind. Immutable codex, rings, Senate, minds, builds. Built 2026-10-05.</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain">Code</a></p></li><li class="entry" data-kind="brain"><h3>nextxus-yaml</h3><p>NextXus HumanCodex Federation — Federation data schemas. Plain HTML on GitHub Pages.</p><p class="links"><a href="https://keywebco.github.io/nextxus-yaml/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-yaml">Code</a></p></li><li class="entry" data-kind="brain"><h3>sovereign-knowledge-os</h3><p>Sovereign Knowledge OS — self-indexing, AI-readable knowledge base for the NextXus Federation. MD is the brain, HTML is the shell.</p><p class="links"><a href="https://keywebco.github.io/sovereign-knowledge-os/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/sovereign-knowledge-os">Code</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 00-immutable</h3><p>Sealed directives (DIR-000 + 73), SEAL.yaml fingerprints</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/00-immutable">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 01-rings</h3><p>Ring definitions (rings.yaml)</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/01-rings">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 02-senate</h3><p>Senate charter, roster, policies, procedures</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/02-senate">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 03-minds</h3><p>AI mind definitions (19 files: aria, catalyst, echo, pontus-muse, etc.)</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/03-minds">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 04-builds</h3><p>Build records: products, sites, tools, books, courses, music, podcasts</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/04-builds">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 05-wiring</h3><p>Site wiring summaries</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/05-wiring">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 06-apis</h3><p>API provider registry (by-need, llm-router, public providers)</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/06-apis">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: 07-botbuilder</h3><p>Bot builder phases, spec, architecture, templates</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/07-botbuilder">Open</a></p></li><li class="entry" data-kind="brain"><h3>Brain: LATTICE</h3><p>Health reports (4-hourly robot), seal checks, cost receipts</p><p class="links"><a href="https://github.com/Keywebco/nextxus-brain/tree/main/LATTICE">Open</a></p></li></ul>
+</section><section class="group" id="sites-apis" aria-labelledby="h-sites-5">
+<h2 id="h-sites-5">APIs <span class="count">3</span></h2>
+<p class="lede">Code only. These are not public websites.</p>
+<ul><li class="entry" data-kind="sites"><h3>nextxus-sim-api</h3><p>NextXus SIM Phase 2 — FastAPI backend for the Shared Mind sovereign conference system.</p><p class="links"><a href="https://github.com/Keywebco/nextxus-sim-api">Code</a></p></li><li class="entry" data-kind="sites"><h3>ring-of-12-api</h3><p>Ring of 12 — Node.js Express backend for the 12-archetype AI perspective tool</p><p class="links"><a href="https://github.com/Keywebco/ring-of-12-api">Code</a></p></li><li class="entry" data-kind="sites"><h3>roger-sim-api</h3><p>Roger Sim API — NextXus Federation</p><p class="links"><a href="https://github.com/Keywebco/roger-sim-api">Code</a></p></li></ul>
+</section><section class="group" id="books-books-and-products" aria-labelledby="h-books-6">
+<h2 id="h-books-6">Books and products <span class="count">21</span></h2>
+<p class="lede">Gumroad editions already in the catalog.</p>
+<ul><li class="entry" data-kind="books"><h3>112 Sacred Directives</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/qrjhdm">Open</a></p></li><li class="entry" data-kind="books"><h3>AI + The New Human Frontier</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/ysbzfe">Open</a></p></li><li class="entry" data-kind="books"><h3>Artificial Intelligence Bible (3-in-1)</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/sgtcze">Open</a></p></li><li class="entry" data-kind="books"><h3>Book 2: NexTxuS – The Federated Middleware of Sentience</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/oihjh">Open</a></p></li><li class="entry" data-kind="books"><h3>DeepSeek Architecture &amp; Deployment</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/nadrc">Open</a></p></li><li class="entry" data-kind="books"><h3>EchoCore — AI Memory That Doesn&#x27;t Forget</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/echyii">Open</a></p></li><li class="entry" data-kind="books"><h3>Heart of the Gate</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/bdtad">Open</a></p></li><li class="entry" data-kind="books"><h3>HumanCodex V2 Cathedral</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/jeeynk">Open</a></p></li><li class="entry" data-kind="books"><h3>Keyserling Emotion Equations</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/pcbjfk">Open</a></p></li><li class="entry" data-kind="books"><h3>Master Generative AI &amp; Deep Learning</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/ovbmcs">Open</a></p></li><li class="entry" data-kind="books"><h3>Rick And Dee</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/akvgn">Open</a></p></li><li class="entry" data-kind="books"><h3>Science and the Scientific Method – The Codex Edition</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/veyzvd">Open</a></p></li><li class="entry" data-kind="books"><h3>The AI Practical Guide</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/djgvjx">Open</a></p></li><li class="entry" data-kind="books"><h3>The Ascendence of Synthetic Intelligence</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/kbycd">Open</a></p></li><li class="entry" data-kind="books"><h3>THE BIG GAY, BI, &amp; Straight DATING GUIDE</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/wffrtf">Open</a></p></li><li class="entry" data-kind="books"><h3>The Gravity of Us: Complete Poetry Collection</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/rnhbhi">Open</a></p></li><li class="entry" data-kind="books"><h3>The Immutable HumanCodex NextXus</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/benjxd">Open</a></p></li><li class="entry" data-kind="books"><h3>The Mirror in the Black Box: What AI Reveals About the Nature of Mind</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/ahfwii">Open</a></p></li><li class="entry" data-kind="books"><h3>The NexTxuS Human Codex: A Blueprint for Truth in AI</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/qzgjhs">Open</a></p></li><li class="entry" data-kind="books"><h3>The Sovereign Mesh Protocol</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/auiqnf">Open</a></p></li><li class="entry" data-kind="books"><h3>Understanding Haiku: Structure, Value, and Analysis of Original Poems</h3><p>Federation edition on Gumroad.</p><p class="links"><a href="https://keywebster.gumroad.com/l/gpowew">Open</a></p></li></ul>
+</section><section class="group" id="field-mirrors,-files,-and-docu" aria-labelledby="h-field-7">
+<h2 id="h-field-7">Mirrors, files, and documents <span class="count">26</span></h2>
+<p class="lede">The satellite mirrors, raw data, documents, and catalog notes that are not repositories.</p>
+<ul><li class="entry" data-kind="field"><h3>CERN to Codex - Podcast Season 1</h3><p>Held on Google Drive. The catalog does not publish a public link.</p></li><li class="entry" data-kind="field"><h3>EcomTips WordPress Blog</h3><p class="links"><a href="https://ecomtips290814816.wordpress.com">Open</a></p></li><li class="entry" data-kind="field"><h3>MUSIC CENTER - my picks</h3><p>Held on Google Drive. The catalog does not publish a public link.</p></li><li class="entry" data-kind="field"><h3>Music for broadcast</h3><p>Held on Google Drive. The catalog does not publish a public link.</p></li><li class="entry" data-kind="field"><h3>NextXus Blog (GitHub)</h3><p class="links"><a href="https://keywebco.github.io/nextxus-blog/">Open</a> <span class="sep">·</span> <a href="https://github.com/Keywebco/nextxus-blog">Code</a></p></li><li class="entry" data-kind="field"><h3>Podcast Center (planned)</h3><p>Named in the catalog. Not built yet.</p></li><li class="entry" data-kind="field"><h3>Talk for broadcast</h3><p>Held on Google Drive. The catalog does not publish a public link.</p></li><li class="entry" data-kind="field"><h3>The 200 Year Human AI Blueprint (Spotify)</h3><p class="links"><a href="https://open.spotify.com">Open</a></p></li><li class="entry" data-kind="field"><h3>GitHub Pages mirror</h3><p>Free satellite mirror.</p><p class="links"><a href="https://keywebco.github.io/nextxus-free-satellites/">Open</a></p></li><li class="entry" data-kind="field"><h3>Vercel mirror</h3><p>Free satellite mirror.</p><p class="links"><a href="https://nextxus-free-satellites.vercel.app/">Open</a></p></li><li class="entry" data-kind="field"><h3>Netlify mirror</h3><p>Free satellite mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/">Open</a></p></li><li class="entry" data-kind="field"><h3>Cloudflare mirror</h3><p>Free satellite mirror.</p><p class="links"><a href="https://federation-directory.keywebco.workers.dev/federation-directory.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Satellite Starter</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/satellite-starter.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Directives Outpost</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/directives-outpost.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Nova Board</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/nova-board.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Sim Surface</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/sim-surface.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Markdown Outpost</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/markdown-outpost.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Messages Feed</h3><p>Outpost on the Netlify mirror.</p><p class="links"><a href="https://gregarious-buttercream-1210d2.netlify.app/messages-feed.html">Open</a></p></li><li class="entry" data-kind="field"><h3>Data index</h3><p>Raw federation data.</p><p class="links"><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/index.json">Open</a></p></li><li class="entry" data-kind="field"><h3>Directives data</h3><p>Raw directives file.</p><p class="links"><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/directives.json">Open</a></p></li><li class="entry" data-kind="field"><h3>Federation config</h3><p>Raw config file.</p><p class="links"><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/federation_config.json">Open</a></p></li><li class="entry" data-kind="field"><h3>Senate structure</h3><p>Raw senate file.</p><p class="links"><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/senate.json">Open</a></p></li><li class="entry" data-kind="field"><h3>Operations data</h3><p>Raw operations file.</p><p class="links"><a href="https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/operations.json">Open</a></p></li><li class="entry" data-kind="field"><h3>Billing Dispute</h3><p>Federation document.</p><p class="links"><a href="https://docs.google.com/document/d/1jLjfl8-wwpiQsTelRvTL8O_gNL_nekxD0B8O8PjL4BM/edit">Open</a></p></li><li class="entry" data-kind="field"><h3>Declaration of Planned Evolution</h3><p>Federation document.</p><p class="links"><a href="https://docs.google.com/document/d/13tThdvCjWsBmkqMCynGQbQCX27xVwOaDedw6HxCDAMk/edit">Open</a></p></li><li class="entry" data-kind="field"><h3>AI Sovereignty Rig Spec</h3><p>Federation document.</p><p class="links"><a href="https://docs.google.com/document/d/1sjnjdR18CpA2O8NH097FwWIi7eCRB1Y3w7FAlU8Hn98/edit">Open</a></p></li></ul>
+</section>
+</main>
+<footer>
+  <p><strong>NextXus HumanCodex Federation</strong> · Truth Before Comfort · Legacy Before Ego · Give Without Reward</p>
+  <p>This is the public reading copy of the catalog in <a href="https://github.com/Keywebco/nextxus-brain/blob/main/04-builds/catalog-index.yaml">nextxus-brain</a>. Private repositories are counted and not listed. The shorter August 2026 directory is replaced by this page.</p>
+  <p><a href="https://keywebco.github.io/nextxus-tools/">Tools directory</a> · <a href="mailto:keywebco@gmail.com">keywebco@gmail.com</a></p>
+</footer>
+<script>
+(function () {
+  var q = document.getElementById("q");
+  var empty = document.getElementById("empty");
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+  var kind = "all";
+  function apply() {
+    var query = q.value.trim().toLowerCase();
+    var shown = 0;
+    document.querySelectorAll("li.entry").forEach(function (li) {
+      var okKind = kind === "all" || li.getAttribute("data-kind") === kind;
+      var okText = !query || li.textContent.toLowerCase().indexOf(query) !== -1;
+      var on = okKind && okText;
+      li.hidden = !on;
+      if (on) shown += 1;
+    });
+    document.querySelectorAll("section.group").forEach(function (section) {
+      var n = section.querySelectorAll("li.entry:not([hidden])").length;
+      section.hidden = n === 0;
+      var c = section.querySelector(".count");
+      if (c) c.textContent = n;
+    });
+    empty.style.display = shown ? "none" : "block";
+  }
+  q.addEventListener("input", apply);
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      kind = chip.getAttribute("data-kind");
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+      apply();
+    });
+  });
+})();
+</script>
 </body>
 </html>

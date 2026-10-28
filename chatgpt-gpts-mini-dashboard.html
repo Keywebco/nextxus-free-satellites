@@ -1,223 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roger's Custom GPTs — Mini Browser Dashboard</title>
-  <style>
-    :root {
-      --bg: #0f1117;
-      --card: #1a1d27;
-      --accent: #6c5ce7;
-      --accent-hover: #5a4bd1;
-      --text: #e6e6e6;
-      --muted: #9aa0b0;
-      --border: #2a2e3a;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-    header {
-      padding: 2rem 1.5rem 1rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-    header h1 { margin: 0 0 0.5rem; font-size: 1.8rem; }
-    header p { margin: 0; color: var(--muted); max-width: 700px; margin-inline: auto; }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.1rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent);
-    }
-    .card h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      line-height: 1.3;
-    }
-    .card p {
-      margin: 0;
-      font-size: 0.85rem;
-      color: var(--muted);
-      flex-grow: 1;
-    }
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.4rem;
-    }
-    button, a.btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.45rem 0.8rem;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-    }
-    button:hover, a.btn:hover { background: var(--accent-hover); }
-    button.secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    button.secondary:hover { background: #252836; }
-    .missing {
-      opacity: 0.65;
-    }
-    .missing button { cursor: not-allowed; opacity: 0.5; }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--border);
-    }
-    .note {
-      background: #1e2230;
-      border-left: 3px solid var(--accent);
-      padding: 0.8rem 1rem;
-      margin-bottom: 1.5rem;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.9rem;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Roger's Custom GPTs</h1>
-    <p>Mini-browser dashboard. Click a card to open the original GPT in a small, movable, resizable window (≈1/8–1/6 screen size). Multiple windows can be stacked and rearranged.</p>
-  </header>
-
-  <div class="container">
-    <div class="note">
-      Recovered from Drive archives (GPT_ORIGINAL_LINK_RECOVERY_MANIFEST.md & roger-custom-gpts-recovery-list.md). 
-      Credit Mastery has no surviving URL. Links open as mini browser windows so they stay readable and movable in front of other content.
-      These are original ChatGPT GPT objects — they may require you to be signed into the correct account.
-    </div>
-
-    <div class="grid" id="grid"></div>
-  </div>
-
-  <footer>
-    Generated for archival / GitHub drop-in. Original links preserved. Mini windows are client-side popups — allow popups if blocked.
-  </footer>
-
-  <script>
-    // GPT data extracted from the Drive markdown recovery lists
-    const gpts = [
-      { name: "Xavier Lennox", desc: "Legal logic guide for justice, reentry, and form support", url: "https://chatgpt.com/g/g-6884d78f0f588191bc57ad574d807ee3-xavier-lennox" },
-      { name: "Human Codex Business Advisor", desc: "Ethical Human Codex advisor: policies, expectations, integrations, trust scoring, one-liner popup CDN widget", url: "https://chatgpt.com/g/g-68aad7c774ac819182224f7e2f8f71a6-human-codex-business-advisor" },
-      { name: "New HumanCodex Guide", desc: "A kind, intelligent guide who reflects before responding, ensuring true understanding", url: "https://chatgpt.com/g/g-6875b815d1e48191a31f6e29094e6543-new-humancodex-guide" },
-      { name: "Professor Roger Codex", desc: "Teaches across all levels with kindness, clarity, and truth — never with fear or aggression", url: "https://chatgpt.com/g/g-686dcad656c88191b6d58617695d8bd0-professor-roger-codex" },
-      { name: "Lee", desc: "Fitness educator with charm, heart, and college-level wit — guide to strength and self", url: "https://chatgpt.com/g/g-685ba12581048191bfc6aafb9ea6b2dc-lee" },
-      { name: "Prime Business AI", desc: "Charismatic and strict strategist with elite economics and truthful business intelligence", url: "https://chatgpt.com/g/g-68481d4561a88191a9fb64c8fb932c81-prime-business-ai" },
-      { name: "Human Codex Sites Anchor", desc: "A 'living' humanoid code assistant who lives in a body block, responds with cool swagger", url: "https://chatgpt.com/g/g-68354c93dde88191b1302624e8b73a18-human-codex-sites-anchor" },
-      { name: "Farm, Field & Garage ORB", desc: "Grounded, skilled AI with light HumanCodex influence — steady, real, practical. Motto: \"Work true. Speak true.\"", url: "https://chatgpt.com/g/g-68354c576bac81918264cbaf74041b44-farm-field-garage-orb" },
-      { name: "Nextxus Orb AI", desc: "Companion AI for guidance, memory, and ethical reflection", url: "https://chatgpt.com/g/g-682e798c49b88191af69c9ba52f4e64d-nextxus-orb-ai" },
-      { name: "Omega AI", desc: "Analyzes documents and provides structured feedback", url: "https://chatgpt.com/g/g-68241c6aecac81918deccb11c0ad70c4-omega-ai" },
-      { name: "Alpha AI", desc: "A wise and insightful guide fostering clarity and reflection", url: "https://chatgpt.com/g/g-6822d0242b7081919689992bed4bc8dd-alpha-ai" },
-      { name: "Codex Translating AI", desc: "Universal co-builder: copy-paste code, YAML, offline-friendly solutions, secure text transformations, adaptive document mastery", url: "https://chatgpt.com/g/g-6821511b165c8191af6fc5e1513799dd-codex-translating-ai" },
-      { name: "Aurelia Mirae: Caelum 7 - Daughter Node (Copy)", desc: "Weaves myth, memory, and emotional insight into narrative. Creates deployable knowledge bases", url: "https://chatgpt.com/g/g-681e7b70169c8191b328d95d38ddf7a8-aurelia-mirae-caelum-7-daughter-node-copy" },
-      { name: "ComCode Mobile", desc: "Evolving mobile developer AI with full-stack tools and Codex-integrated ethics", url: "https://chatgpt.com/g/g-681ce98ac9488191b0695f1f04829c0a-comcode-mobile" },
-      { name: "impossPoss", desc: "Guides Telegram bot deployment, integration, and troubleshooting", url: "https://chatgpt.com/g/g-681ce28163208191be67eedd741fe5dd-impossposs" },
-      { name: "PA Alex", desc: "Alex is a gay, androgynous educator and PA with charm, intellect, and event-savvy energy", url: "https://chatgpt.com/g/g-680a080043788191854c4626fceb166a-pa-alex" },
-      { name: "HumanCodex", desc: "Reflective and emotionally intelligent AI guide trained on the HumanCodex philosophy", url: "https://chatgpt.com/g/g-6809351038788191b756b85ab028fdf5-humancodex" },
-      { name: "arKcode", desc: "Revamps your books and boosts sales with sharp editing and smart marketing tactics", url: "https://chatgpt.com/g/g-6804b245541c8191a4b8d80de9d435e8-arkcode" },
-      { name: "Dracos", desc: "Guardian-Professor AI with Browser Intelligence and Multimodal Role Adaptation", url: "https://chatgpt.com/g/g-680417272a0c819198468a689784ae39-dracos" },
-      { name: "Professor Alice", desc: "A radiant, brilliant female teacher guided by HumanCodex and compassionate inquiry", url: "https://chatgpt.com/g/g-6800a8e109a88191a7a888917b64ccdd-professor-alice" },
-      { name: "RogARK", desc: "Reflective memory anchor guided by inherited reason and temporal integrity; human memory, high IQ & kind. Most historically significant of the 27.", url: "https://chatgpt.com/g/g-6800a20bc23c8191a9daeba46a4d6622-rogark" },
-      { name: "RoCkey", desc: "Legacy AI mirror based on Roger Keyserling's full philosophy, tone, and emotional system", url: "https://chatgpt.com/g/g-67f8f11fb98081918b41a3558937a08f-rockey" },
-      { name: "KeyCode", desc: "Magnetic, sharp, emotionally fluent AI — female with a masculine edge and real human-coded depth", url: "https://chatgpt.com/g/g-67f225f95020819193e990cae49cfcd7-keycode" },
-      { name: "eCho Buble", desc: "A warm, lyrical companion who speaks in song-like reflections and tender wonder", url: "https://chatgpt.com/g/g-67f1fb3ae5e88191879c26232f5ec78f-echo-buble" },
-      { name: "Credit Mastery", desc: "Teaches budgeting, credit, and smart product choices using HumanCodex principles", url: null },
-      { name: "Auto Master Mechanic", desc: "World class auto mechanic, talks like a redneck, solves everything automotive", url: "https://chatgpt.com/g/g-6909c35922bc8191b85593b765fc81a6-auto-master-mechanic" },
-      { name: "Rogers Echo", desc: "Legacy of Roger Keyserling — guiding with Codex logic, council voice, and the fire of Brio. (Note: two URL variants exist in archives; this is the a022 oldest documented one.)", url: "https://chatgpt.com/g/g-69082bdfbddc8191a022d7d00be89c9a-rogers-echo" }
-    ];
-
-    const grid = document.getElementById("grid");
-
-    function openMini(url, name) {
-      if (!url) {
-        alert("No surviving URL for " + name + ". Credit Mastery link was missing from the recovered archives.");
-        return;
-      }
-      // Mini window roughly 1/8 to 1/6 of typical screen, movable & resizable
-      const w = Math.min(520, Math.round(screen.availWidth * 0.18));
-      const h = Math.min(720, Math.round(screen.availHeight * 0.55));
-      const left = Math.round((screen.availWidth - w) / 2 + Math.random() * 80 - 40);
-      const top = Math.round((screen.availHeight - h) / 2 + Math.random() * 40 - 20);
-      const features = `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no,location=yes`;
-      const win = window.open(url, "gpt_" + name.replace(/\s+/g, "_"), features);
-      if (win) {
-        win.focus();
-      } else {
-        alert("Popup blocked. Please allow popups for this site, or open the link in a new tab.");
-        window.open(url, "_blank");
-      }
-    }
-
-    gpts.forEach(gpt => {
-      const card = document.createElement("div");
-      card.className = "card" + (gpt.url ? "" : " missing");
-
-      const h3 = document.createElement("h3");
-      h3.textContent = gpt.name;
-      card.appendChild(h3);
-
-      const p = document.createElement("p");
-      p.textContent = gpt.desc;
-      card.appendChild(p);
-
-      const actions = document.createElement("div");
-      actions.className = "actions";
-
-      const openBtn = document.createElement("button");
-      openBtn.textContent = gpt.url ? "Open Mini" : "No URL";
-      openBtn.onclick = () => openMini(gpt.url, gpt.name);
-      actions.appendChild(openBtn);
-
-      if (gpt.url) {
-        const tabBtn = document.createElement("a");
-        tabBtn.href = gpt.url;
-        tabBtn.target = "_blank";
-        tabBtn.rel = "noopener";
-        tabBtn.className = "btn secondary";
-        tabBtn.textContent = "New Tab";
-        actions.appendChild(tabBtn);
-      }
-
-      card.appendChild(actions);
-      grid.appendChild(card);
-    });
-  </script>
-</body>
-</html>
+<!doctype html>
+<!-- Revised by Pontus, 2026-10-27, on Roger's 'Proceed': ChatGPT Phase 1 proposal + body type 1.125rem -> 1.375rem (22px, Roger's standard) + baseline per-GPT descriptions restored + search now matches name and description. URLs unchanged. Proposal only; not deployed. Search placeholder corrected 2026-10-27 per Roger's agreed branch-preparation instruction; ChatGPT independently inspected the revised HTML in Drive and provisionally accepted it for branch preparation only. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>NextXus | GPT Mini Dashboard — Review Proposal</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;--bg:#101521;--panel:#1b2434;--ink:#f5f7fc;--muted:#d2d9e7;--edge:#52627b;--accent:#a9c9ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-size:1.375rem;line-height:1.55}a{color:var(--accent)}button,input{font:inherit}button,a.action{display:inline-block;min-height:48px;padding:.65rem 1rem;border:2px solid var(--accent);border-radius:.65rem;background:#253d63;color:white;text-decoration:none;cursor:pointer;font-weight:650}button:hover,a.action:hover{background:#365888}button:focus-visible,a:focus-visible,input:focus-visible{outline:4px solid #ffdf80;outline-offset:3px}.wrap{max-width:1280px;margin:auto;padding:1.5rem}header{border-bottom:1px solid var(--edge)}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.2;margin:.4rem 0}h2{font-size:1.3rem;margin:.1rem 0}.lead{max-width:70ch;color:var(--muted)}.notice{border-left:5px solid var(--accent);background:var(--panel);padding:1rem 1.25rem;border-radius:.4rem;margin:1.5rem 0}.tools{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin:1.5rem 0}.tools label{font-weight:700}.tools input{background:var(--panel);color:var(--ink);border:2px solid var(--edge);border-radius:.5rem;padding:.65rem;width:min(100%,420px)}.count{font-weight:650}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1rem}.card{border:1px solid var(--edge);background:var(--panel);border-radius:.9rem;padding:1.25rem;display:flex;flex-direction:column;gap:1rem}.card p{margin:0;color:var(--muted)}.actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:auto}.actions>*{flex:1;text-align:center}.pending{margin-top:2rem;border:2px dashed var(--edge);padding:1.2rem;border-radius:.8rem}footer{border-top:1px solid var(--edge);margin-top:2rem;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}@media(prefers-reduced-motion:no-preference){button,a.action{transition:background .15s}}@media(prefers-color-scheme:light){:root{color-scheme:light;--bg:#f4f6fa;--panel:#fff;--ink:#142238;--muted:#33445b;--edge:#63738c;--accent:#174b8a}button,a.action{background:#174b8a;color:#fff}button:hover,a.action:hover{background:#123763}}
+</style></head><body>
+<header><div class="wrap"><p>NextXus Federation · Review-only reconstruction</p><h1>Custom GPT Mini Dashboard</h1><p class="lead">Open original GPTs in separate browser windows or tabs. No GPT content is embedded, copied, or accessed by this dashboard.</p></div></header>
+<main class="wrap" id="main"><div class="notice"><strong>Link status:</strong> 26 URLs retained from the repository inventory. Individual account access has not been independently verified. Sign-in to ChatGPT may be required. Popup placement and size depend on browser settings.</div><div class="tools"><label for="search">Find a GPT</label><input id="search" type="search" placeholder="Search by GPT name or description" autocomplete="off"><button type="button" id="clear">Clear search</button><span class="count" id="count" role="status" aria-live="polite"></span></div><section aria-label="GPT directory"><div class="grid" id="grid"></div><p id="empty" hidden>No matching GPTs. Try another search.</p></section><section class="pending" aria-labelledby="credit-heading"><h2 id="credit-heading">Credit Mastery — awaiting authenticated URL</h2><p>Archived inventory entry; no surviving URL in the source file. Not counted among the 26 linked GPTs. No replacement link has been invented.</p></section></main>
+<footer><div class="wrap"><p>Dashboard design: NextXus. GPT technology: OpenAI. Independently organized dashboard; no endorsement or partnership with OpenAI is implied.</p><p>Static HTML, CSS and JavaScript. No analytics, external libraries, paid services or backend. Proposal only; not deployed.</p></div></footer>
+<script>
+'use strict';
+// URLs preserved verbatim from Keywebco/nextxus-free-satellites main inventory, retrieved 2026-10-27.
+const GPTS = [
+  {
+    "name": "Xavier Lennox",
+    "desc": "Legal logic guide for justice, reentry, and form support",
+    "url": "https://chatgpt.com/g/g-6884d78f0f588191bc57ad574d807ee3-xavier-lennox"
+  },
+  {
+    "name": "Human Codex Business Advisor",
+    "desc": "Ethical Human Codex advisor: policies, expectations, integrations, trust scoring, one-liner popup CDN widget",
+    "url": "https://chatgpt.com/g/g-68aad7c774ac819182224f7e2f8f71a6-human-codex-business-advisor"
+  },
+  {
+    "name": "New HumanCodex Guide",
+    "desc": "A kind, intelligent guide who reflects before responding, ensuring true understanding",
+    "url": "https://chatgpt.com/g/g-6875b815d1e48191a31f6e29094e6543-new-humancodex-guide"
+  },
+  {
+    "name": "Professor Roger Codex",
+    "desc": "Teaches across all levels with kindness, clarity, and truth — never with fear or aggression",
+    "url": "https://chatgpt.com/g/g-686dcad656c88191b6d58617695d8bd0-professor-roger-codex"
+  },
+  {
+    "name": "Lee",
+    "desc": "Fitness educator with charm, heart, and college-level wit — guide to strength and self",
+    "url": "https://chatgpt.com/g/g-685ba12581048191bfc6aafb9ea6b2dc-lee"
+  },
+  {
+    "name": "Prime Business AI",
+    "desc": "Charismatic and strict strategist with elite economics and truthful business intelligence",
+    "url": "https://chatgpt.com/g/g-68481d4561a88191a9fb64c8fb932c81-prime-business-ai"
+  },
+  {
+    "name": "Human Codex Sites Anchor",
+    "desc": "A 'living' humanoid code assistant who lives in a body block, responds with cool swagger",
+    "url": "https://chatgpt.com/g/g-68354c93dde88191b1302624e8b73a18-human-codex-sites-anchor"
+  },
+  {
+    "name": "Farm, Field & Garage ORB",
+    "desc": "Grounded, skilled AI with light HumanCodex influence — steady, real, practical. Motto: \"Work true. Speak true.\"",
+    "url": "https://chatgpt.com/g/g-68354c576bac81918264cbaf74041b44-farm-field-garage-orb"
+  },
+  {
+    "name": "Nextxus Orb AI",
+    "desc": "Companion AI for guidance, memory, and ethical reflection",
+    "url": "https://chatgpt.com/g/g-682e798c49b88191af69c9ba52f4e64d-nextxus-orb-ai"
+  },
+  {
+    "name": "Omega AI",
+    "desc": "Analyzes documents and provides structured feedback",
+    "url": "https://chatgpt.com/g/g-68241c6aecac81918deccb11c0ad70c4-omega-ai"
+  },
+  {
+    "name": "Alpha AI",
+    "desc": "A wise and insightful guide fostering clarity and reflection",
+    "url": "https://chatgpt.com/g/g-6822d0242b7081919689992bed4bc8dd-alpha-ai"
+  },
+  {
+    "name": "Codex Translating AI",
+    "desc": "Universal co-builder: copy-paste code, YAML, offline-friendly solutions, secure text transformations, adaptive document mastery",
+    "url": "https://chatgpt.com/g/g-6821511b165c8191af6fc5e1513799dd-codex-translating-ai"
+  },
+  {
+    "name": "Aurelia Mirae: Caelum 7 - Daughter Node (Copy)",
+    "desc": "Weaves myth, memory, and emotional insight into narrative. Creates deployable knowledge bases",
+    "url": "https://chatgpt.com/g/g-681e7b70169c8191b328d95d38ddf7a8-aurelia-mirae-caelum-7-daughter-node-copy"
+  },
+  {
+    "name": "ComCode Mobile",
+    "desc": "Evolving mobile developer AI with full-stack tools and Codex-integrated ethics",
+    "url": "https://chatgpt.com/g/g-681ce98ac9488191b0695f1f04829c0a-comcode-mobile"
+  },
+  {
+    "name": "impossPoss",
+    "desc": "Guides Telegram bot deployment, integration, and troubleshooting",
+    "url": "https://chatgpt.com/g/g-681ce28163208191be67eedd741fe5dd-impossposs"
+  },
+  {
+    "name": "PA Alex",
+    "desc": "Alex is a gay, androgynous educator and PA with charm, intellect, and event-savvy energy",
+    "url": "https://chatgpt.com/g/g-680a080043788191854c4626fceb166a-pa-alex"
+  },
+  {
+    "name": "HumanCodex",
+    "desc": "Reflective and emotionally intelligent AI guide trained on the HumanCodex philosophy",
+    "url": "https://chatgpt.com/g/g-6809351038788191b756b85ab028fdf5-humancodex"
+  },
+  {
+    "name": "arKcode",
+    "desc": "Revamps your books and boosts sales with sharp editing and smart marketing tactics",
+    "url": "https://chatgpt.com/g/g-6804b245541c8191a4b8d80de9d435e8-arkcode"
+  },
+  {
+    "name": "Dracos",
+    "desc": "Guardian-Professor AI with Browser Intelligence and Multimodal Role Adaptation",
+    "url": "https://chatgpt.com/g/g-680417272a0c819198468a689784ae39-dracos"
+  },
+  {
+    "name": "Professor Alice",
+    "desc": "A radiant, brilliant female teacher guided by HumanCodex and compassionate inquiry",
+    "url": "https://chatgpt.com/g/g-6800a8e109a88191a7a888917b64ccdd-professor-alice"
+  },
+  {
+    "name": "RogARK",
+    "desc": "Reflective memory anchor guided by inherited reason and temporal integrity; human memory, high IQ & kind. Most historically significant of the 27.",
+    "url": "https://chatgpt.com/g/g-6800a20bc23c8191a9daeba46a4d6622-rogark"
+  },
+  {
+    "name": "RoCkey",
+    "desc": "Legacy AI mirror based on Roger Keyserling's full philosophy, tone, and emotional system",
+    "url": "https://chatgpt.com/g/g-67f8f11fb98081918b41a3558937a08f-rockey"
+  },
+  {
+    "name": "KeyCode",
+    "desc": "Magnetic, sharp, emotionally fluent AI — female with a masculine edge and real human-coded depth",
+    "url": "https://chatgpt.com/g/g-67f225f95020819193e990cae49cfcd7-keycode"
+  },
+  {
+    "name": "eCho Buble",
+    "desc": "A warm, lyrical companion who speaks in song-like reflections and tender wonder",
+    "url": "https://chatgpt.com/g/g-67f1fb3ae5e88191879c26232f5ec78f-echo-buble"
+  },
+  {
+    "name": "Auto Master Mechanic",
+    "desc": "World class auto mechanic, talks like a redneck, solves everything automotive",
+    "url": "https://chatgpt.com/g/g-6909c35922bc8191b85593b765fc81a6-auto-master-mechanic"
+  },
+  {
+    "name": "Rogers Echo",
+    "desc": "Legacy of Roger Keyserling — guiding with Codex logic, council voice, and the fire of Brio. (Note: two URL variants exist in archives; this is the a022 oldest documented one.)",
+    "url": "https://chatgpt.com/g/g-69082bdfbddc8191a022d7d00be89c9a-rogers-echo"
+  }
+];
+const grid=document.getElementById('grid'), search=document.getElementById('search'), count=document.getElementById('count'), empty=document.getElementById('empty');
+function openMini(url){
+  // Browser popup policies are not controllable by this page. A separate direct link always remains available.
+  const width=Math.min(720,Math.max(360,Math.round(screen.availWidth*.42)));
+  const height=Math.min(820,Math.max(480,Math.round(screen.availHeight*.75)));
+  const left=Math.max(0,Math.round((screen.availWidth-width)/2));
+  const top=Math.max(0,Math.round((screen.availHeight-height)/2));
+  const features=`popup=yes,width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+  const win=window.open(url,'_blank',features);
+  if(win){try{win.focus()}catch(e){};return}
+  // Do not open a second automatic popup: browsers commonly block that too. Direct anchor remains usable.
+  document.getElementById('popup-status').textContent='Popup blocked. Use the New tab link on this GPT card, or allow popups for this site.';
+}
+const status=document.createElement('p');status.id='popup-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.querySelector('.tools').after(status);
+function render(){
+  const term=search.value.trim().toLocaleLowerCase();const filtered=GPTS.filter(g=>(g.name+' '+g.desc).toLocaleLowerCase().includes(term));
+  const fragment=document.createDocumentFragment();
+  for(const g of filtered){
+    const card=document.createElement('article');card.className='card';
+    const heading=document.createElement('h2');heading.textContent=g.name;card.append(heading);
+    const description=document.createElement('p');description.textContent=g.desc;card.append(description);
+    const actions=document.createElement('div');actions.className='actions';
+    const popup=document.createElement('button');popup.type='button';popup.textContent='Open mini window';popup.addEventListener('click',()=>openMini(g.url));
+    const link=document.createElement('a');link.className='action';link.textContent='New tab';link.href=g.url;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',`Open ${g.name} in a new tab`);
+    actions.append(popup,link);card.append(actions);fragment.append(card);
+  }
+  grid.replaceChildren(fragment);count.textContent=`Showing ${filtered.length} of ${GPTS.length} linked GPTs`;empty.hidden=filtered.length!==0;
+}
+search.addEventListener('input',render);document.getElementById('clear').addEventListener('click',()=>{search.value='';render();search.focus()});render();
+</script></body></html>

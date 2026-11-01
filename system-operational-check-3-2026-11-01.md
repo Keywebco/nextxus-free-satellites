@@ -1,0 +1,7 @@
+# System Operational Check 3 — 2026-11-01 03:41 CST — Main Verified, Live Gaps Noted
+Main verified, via GitHub App, 2026-11-01 03:41 CST, total 26 files checked:
+nextxus-free-satellites, 24 files: federation-directory.html, working-model-bundle-manifest.md, aria-working.html, redeem-portal-working.html, xavier-working.html, university-working.html, senate-working.html, media-working.html, scribe.py, sim-token-code-route-proposal.md, gumroad-backend-proposal.md, render-deploy-check-2026-11-01.md, senate-session-001-preparation.md, ai-101-working.html, sci-101-working.html, hcx-101-working.html, lit-101-working.html, econ-101-working.html, psy-101-working.html, system-operational-check-2026-11-01.md, drive-inventory-working-2026-11-01.md, keyhole-transfer-check-2026-11-01.md, system-operational-check-2-2026-11-01.md, github-support-investigation-2026-11-01.md.
+nextxus-sim, 1 file: roger-sim-working-model.html.
+roger-sim-api, 1 file: server.js, Working Model fallback.
+NOT claimed operational live: Pages live URLs not browser-checked in this check, Render live health unavailable corpus false at 03:23 CST, Gumroad verification not implemented, Senate Session 001 not convened, full player rollout not complete, keyhole stranded transfer not verified, Copilot landing unknown, GitHub support message not sent.
+Working model status: Pages, code, proposals, checks, inventory, and support investigation are merged and linked on main, Keywebco only, Emergent removed. Live backend gaps remain, listed above.

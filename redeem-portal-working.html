@@ -1,4 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Redeem Portal — Working Model</title><style>body{font-family:Georgia,serif;background:#0a0a0a;color:#e8e8e8;max-width:760px;margin:0 auto;padding:24px} a{color:#00d4ff} input{padding:10px;width:70%} button{padding:10px}</style></head><body>
-<h1>Redeem Portal — Working Model</h1><p>Working model, Keywebco only, Emergent removed. Enter a license key to check it in the working model. No real Gumroad verification yet — that is a missing backend piece, labeled here, not hidden.</p>
-<p><input id="k" placeholder="License key"/><button onclick="document.getElementById('r').textContent='Working model: key received, format checked only. Real Gumroad verification is a backend piece to add next, not claimed working here.'">Redeem</button></p><p id="r"></p>
-<p><a href="https://keywebco.github.io/federation-directory.html">Directory</a></p></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Redeem Portal — Working Model</title><style>body{font-family:Georgia,serif;background:#0a0a0a;color:#e8e8e8;max-width:760px;margin:0 auto;padding:24px} a{color:#00d4ff} input{padding:10px;width:70%;margin:4px 0} button{padding:10px}</style></head><body>
+<h1>Redeem Portal — Working Model</h1><p>Working model, Keywebco only, Emergent removed. Enter a Gumroad product ID and license key. Verification calls the live Roger Sim API, which checks Gumroad. No card, no charge, no new sale. Uses count is not incremented on a check.</p>
+<p><input id="p" placeholder="Gumroad product ID"/><br/><input id="k" placeholder="License key"/><br/><button id="b">Redeem</button></p><p id="r"></p>
+<p><a href="https://keywebco.github.io/federation-directory.html">Directory</a></p>
+<script>
+document.getElementById('b').onclick = async () => {
+  const r = document.getElementById('r');
+  r.textContent = 'Checking…';
+  try {
+    const res = await fetch('https://roger-sim-api.onrender.com/verify-license', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: document.getElementById('p').value.trim(), license_key: document.getElementById('k').value.trim() }) });
+    const data = await res.json();
+    r.textContent = data.valid ? 'Valid: this Gumroad license key checks out.' : ('Not valid: ' + (data.reason || 'license key not found'));
+  } catch (e) { r.textContent = 'Verification unavailable right now. Try again later.'; }
+};
+</script></body></html>

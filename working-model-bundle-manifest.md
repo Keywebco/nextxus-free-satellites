@@ -1,4 +1,4 @@
-# Working Model Bundle Manifest — Updated 2026-11-01 05:25 CST — Merges 1-33
+# Working Model Bundle Manifest — Updated 2026-11-01 05:31 CST — Merges 1-35
 Clean working model, Keywebco only, history discarded as blocker, Emergent removed.
 Bundle = plain files in Keywebco, copyable chunked, local + Drive, no large transfer to Roger's computer, no new platform account created, platform choice still pending Roger's specific word.
 Merges, in order, all merged true on main:
@@ -35,4 +35,6 @@ Merges, in order, all merged true on main:
 31. System check 8 — PR 36, merge d29b6ee4 — 33 main files verified
 32. Bundle manifest update — PR 37, merge 37aaa09a — manifest listed Merges 1-31
 33. System check 9 — PR 38, merge 20468536 — 34 main files verified
+34. Bundle manifest update — PR 39, merge c9c5916b — manifest listed Merges 1-33
+35. System check 10 — PR 40, merge 4523442f — 35 main files verified
 Backend pieces still pending, labeled, not claimed working: Render live deploy, real Gumroad verification, real Senate Session 001, full player rollout, keyhole stranded transfer, Copilot landing, GitHub support message, Grok Task 4, portable bundle platform choice, Pages browser checks for merged working pages.

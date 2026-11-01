@@ -1,4 +1,4 @@
-# Working Model Bundle Manifest — Updated 2026-11-01 05:06 CST — Merges 1-25
+# Working Model Bundle Manifest — Updated 2026-11-01 05:13 CST — Merges 1-27
 Clean working model, Keywebco only, history discarded as blocker, Emergent removed.
 Bundle = plain files in Keywebco, copyable chunked, local + Drive, no large transfer to Roger's computer, no new platform account created, platform choice still pending Roger's specific word.
 Merges, in order, all merged true on main:
@@ -27,4 +27,6 @@ Merges, in order, all merged true on main:
 23. Grok shared-doc check — PR 28, merge 289c52ac — no new Grok entry, Tasks 1-4 pending in doc, no live change
 24. System check 5 — PR 29, merge 54bc1e12 — 29 main files verified, corrected count before merge
 25. Full System Directory — PR 30, merge ec9a916a — federation-directory.html from Drive master, 147 entries, all eight sections, Tool and build repositories 10, Working model directory links removed from that file, working pages remain as separate files
+26. Bundle manifest update — PR 31, merge c6612735 — manifest listed Merges 1-25
+27. System check 6 — PR 32, merge b828093f — 31 main files verified
 Backend pieces still pending, labeled, not claimed working: Render live deploy, real Gumroad verification, real Senate Session 001, full player rollout, keyhole stranded transfer, Copilot landing, GitHub support message, Grok Task 4, portable bundle platform choice, Pages browser checks for merged working pages.

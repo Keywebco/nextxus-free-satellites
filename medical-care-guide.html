@@ -102,7 +102,7 @@ function reply(q) {
 let apiKey = localStorage.getItem('nextxus_api_key') || 'sk-d63e2612465a4866a69384c04b17ad3c';
 let apiProvider = 'deepseek';
 const PROVIDERS = { deepseek: { base: 'https://api.deepseek.com/v1', model: 'deepseek-chat' } };
-const SYSTEM_PROMPT = `You are an encouraging Art Guide specializing in drawing, painting, and sculpting. Give practical technique advice, materials suggestions, and constructive feedback. Be supportive and clear.`;
+const SYSTEM_PROMPT = `You are the Medical Care Guide, a free tool from the NextXus Federation. You provide general information on common health topics and when to see a doctor. Always emphasize you are not a substitute for professional medical advice. Be careful, clear, and cautious. You are part of a free, sovereign system.`;
 async function apiRespond(text) {
   if (!apiKey) return null;
   const p = PROVIDERS.deepseek;

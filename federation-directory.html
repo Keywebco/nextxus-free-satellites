@@ -230,6 +230,110 @@ return 'Search the box above or ask me about a specific pillar, tool, or the lib
 document.getElementById('sendChat').onclick=()=>{const t=inp.value.trim();if(!t)return;add('You',t);setTimeout(()=>add('Guide',reply(t)),300);inp.value='';};
 inp.onkeypress=e=>{if(e.key==='Enter')document.getElementById('sendChat').click();};
 })();
+// === Hybrid + Premium Voice Path ===
+let intentClassifier = null;
+let apiKey = localStorage.getItem('nextxus_api_key') || '';
+let apiProvider = localStorage.getItem('nextxus_api_provider') || 'deepseek';
+let isOwner = localStorage.getItem('nextxus_owner') === '1';
+let monthlySpend = parseFloat(localStorage.getItem('nextxus_monthly_spend') || '0');
+const SOFT_CAP = 15;
+
+const PROVIDERS = {
+  deepseek: { base: 'https://api.deepseek.com/v1', model: 'deepseek-chat' },
+  grok:     { base: 'https://api.x.ai/v1', model: 'grok-4' },
+  mimo:     { base: 'https://api.xiaomimimo.com/v1', model: 'mimo-v2.6-pro' },
+  openrouter:{ base: 'https://openrouter.ai/api/v1', model: 'openai/gpt-3.5-turbo' }
+};
+
+async function loadIntentModel() {
+  if (intentClassifier) return;
+  try {
+    const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+    intentClassifier = await pipeline('zero-shot-classification', 'Xenova/mobilebert-uncased-mnli');
+    document.getElementById('aiStatus').textContent = 'Local AI ready';
+  } catch {
+    document.getElementById('aiStatus').textContent = 'Keywords only';
+  }
+}
+
+async function classifyIntent(text) {
+  if (!intentClassifier) return null;
+  try {
+    const labels = ['games', 'music', 'library', 'ownership', 'directory', 'tools', 'general'];
+    const result = await intentClassifier(text, labels);
+    return result.labels[0];
+  } catch { return null; }
+}
+
+async function apiRespond(text) {
+  if (!apiKey) return null;
+  if (monthlySpend >= SOFT_CAP && !isOwner) {
+    return 'Monthly soft cap of $15 reached on the subscription path. Paste your own API key to continue, or the free voice/keyword path is still available.';
+  }
+  const p = PROVIDERS[apiProvider] || PROVIDERS.deepseek;
+  try {
+    const res = await fetch(p.base + '/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: p.model,
+        messages: [
+          { role: 'system', content: 'You are the NextXus Federation Guide. Be helpful, concise, and emphasize free ownership of code and sites.' },
+          { role: 'user', content: text }
+        ],
+        max_tokens: 180
+      })
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    monthlySpend += 0.002;
+    localStorage.setItem('nextxus_monthly_spend', monthlySpend.toFixed(4));
+    return data.choices?.[0]?.message?.content || null;
+  } catch { return null; }
+}
+
+const hybridUI = `
+<div style="padding:10px;background:#0a0f0b;border-top:1px solid #1f3a24;font-size:13px;line-height:1.4">
+  <div style="margin-bottom:6px;color:#00ff88;font-weight:bold">Voice & AI Options</div>
+  <label><input type="checkbox" id="useLocal"> Load Local AI (free, offline)</label><br>
+  <label><input type="checkbox" id="useApi"> Use High-Quality AI / Voice path</label><br>
+  <select id="providerSelect" style="background:#000;color:#fff;border:1px solid #1f3a24;padding:4px;margin:4px 0">
+    <option value="deepseek">DeepSeek</option>
+    <option value="grok">Grok (xAI)</option>
+    <option value="mimo">MiMo</option>
+    <option value="openrouter">OpenRouter</option>
+  </select>
+  <input id="apiKeyInput" placeholder="Your API key (or leave blank)" style="width:100%;background:#000;color:#fff;border:1px solid #1f3a24;padding:4px">
+  <div style="margin-top:6px;font-size:12px;color:#aaa">
+    Free voice & answers always work.<br>
+    Higher-quality neural voice / deeper models: <a href="https://keywebster.gumroad.com/l/dqyabh" target="_blank" style="color:#00ff88">Scholar’s Ledger ($20/mo)</a><br>
+    Soft $15 monthly cap on subscription path, then own-API.
+  </div>
+  <span id="aiStatus" style="color:#00ff88;font-size:12px">Keywords ready</span>
+</div>`;
+
+const chatPanel = document.getElementById('chatPanel');
+if (chatPanel) {
+  const inputRow = chatPanel.querySelector('div[style*="display:flex"]') || chatPanel.lastElementChild;
+  if (inputRow) inputRow.insertAdjacentHTML('beforebegin', hybridUI);
+}
+
+document.getElementById('useLocal')?.addEventListener('change', e => { if (e.target.checked) loadIntentModel(); });
+document.getElementById('providerSelect')?.addEventListener('change', e => {
+  apiProvider = e.target.value;
+  localStorage.setItem('nextxus_api_provider', apiProvider);
+});
+document.getElementById('apiKeyInput')?.addEventListener('input', e => {
+  apiKey = e.target.value.trim();
+  if (apiKey) localStorage.setItem('nextxus_api_key', apiKey);
+});
+document.getElementById('useApi')?.addEventListener('change', () => {
+  apiKey = document.getElementById('apiKeyInput').value.trim();
+  if (apiKey) localStorage.setItem('nextxus_api_key', apiKey);
+});
+
+if (isOwner) document.getElementById('aiStatus').textContent = 'Owner mode: max capacity';
+
 </script>
 <main id="main">
 <header class="hero">

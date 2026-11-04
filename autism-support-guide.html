@@ -171,6 +171,88 @@ document.getElementById('sendChat').onclick = () => {
   }, 300);
 };
 chatInput.onkeypress = e => { if (e.key === 'Enter') document.getElementById('sendChat').click(); };
+
+// === Autism Support Chat with optional API ===
+let apiKey = localStorage.getItem('nextxus_api_key') || '';
+let apiProvider = localStorage.getItem('nextxus_api_provider') || 'deepseek';
+const PROVIDERS = {
+  deepseek: { base: 'https://api.deepseek.com/v1', model: 'deepseek-chat' },
+  grok:     { base: 'https://api.x.ai/v1', model: 'grok-4' },
+  mimo:     { base: 'https://api.xiaomimimo.com/v1', model: 'mimo-v2.6-pro' }
+};
+
+const SYSTEM_PROMPT = `You are a calm, kind, practical Autism Support Guide for parents of a child who was recently diagnosed with autism. 
+Be warm, clear, and supportive. Give accurate general information about autism, sensory needs, meltdowns, routines, communication, school, strengths, and caregiver self-care. 
+Always note that you are not a substitute for the child's doctors or therapists. Encourage consulting professionals for personal medical advice. 
+Keep answers concise and useful. Free voice is available on this page.`;
+
+async function apiRespond(text) {
+  if (!apiKey) return null;
+  const p = PROVIDERS[apiProvider] || PROVIDERS.deepseek;
+  try {
+    const res = await fetch(p.base + '/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: p.model,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: text }
+        ],
+        max_tokens: 300,
+        temperature: 0.7
+      })
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || null;
+  } catch { return null; }
+}
+
+const hybridUI = `
+<div style="padding:8px;background:#0a0f0b;border-top:1px solid #1f3a24;font-size:13px">
+  <div style="color:#00ff88;font-weight:bold;margin-bottom:4px">Optional Higher-Quality AI</div>
+  <select id="providerSelect" style="background:#000;color:#fff;border:1px solid #1f3a24;padding:4px;width:100%;margin-bottom:4px">
+    <option value="deepseek">DeepSeek</option>
+    <option value="grok">Grok (xAI)</option>
+    <option value="mimo">MiMo</option>
+  </select>
+  <input id="apiKeyInput" placeholder="Paste API key for deeper answers (optional)" style="width:100%;background:#000;color:#fff;border:1px solid #1f3a24;padding:4px">
+  <div style="font-size:12px;color:#aaa;margin-top:4px">Free keyword answers always work without a key.</div>
+</div>`;
+
+const chatPanel = document.getElementById('chatPanel');
+if (chatPanel) {
+  const inputRow = chatPanel.querySelector('.chat-input');
+  if (inputRow) inputRow.insertAdjacentHTML('beforebegin', hybridUI);
+}
+
+document.getElementById('providerSelect')?.addEventListener('change', e => {
+  apiProvider = e.target.value;
+  localStorage.setItem('nextxus_api_provider', apiProvider);
+});
+document.getElementById('apiKeyInput')?.addEventListener('input', e => {
+  apiKey = e.target.value.trim();
+  if (apiKey) localStorage.setItem('nextxus_api_key', apiKey);
+});
+if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
+document.getElementById('providerSelect').value = apiProvider;
+
+// Override send to try API first
+const originalSend = document.getElementById('sendChat').onclick;
+document.getElementById('sendChat').onclick = async () => {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  addMessage('You', text);
+  chatInput.value = '';
+  addMessage('Guide', 'Thinking…');
+  const thinking = chatMessages.lastChild;
+  let answer = await apiRespond(text);
+  if (!answer) answer = reply(text);  // fallback to keyword
+  thinking.innerHTML = `<strong>Guide:</strong> ${answer}`;
+  if (voiceEnabled) speak(answer);
+};
+
 </script>
 </body>
 </html>

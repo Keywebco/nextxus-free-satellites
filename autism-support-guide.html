@@ -173,7 +173,7 @@ document.getElementById('sendChat').onclick = () => {
 chatInput.onkeypress = e => { if (e.key === 'Enter') document.getElementById('sendChat').click(); };
 
 // === Autism Support Chat with optional API ===
-let apiKey = localStorage.getItem('nextxus_api_key') || '';
+let apiKey = localStorage.getItem('nextxus_api_key') || 'sk-d63e2612465a4866a69384c04b17ad3c';
 let apiProvider = localStorage.getItem('nextxus_api_provider') || 'deepseek';
 const PROVIDERS = {
   deepseek: { base: 'https://api.deepseek.com/v1', model: 'deepseek-chat' },
@@ -236,6 +236,8 @@ document.getElementById('apiKeyInput')?.addEventListener('input', e => {
   if (apiKey) localStorage.setItem('nextxus_api_key', apiKey);
 });
 if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
+localStorage.setItem('nextxus_api_key', apiKey);
+localStorage.setItem('nextxus_api_provider', 'deepseek');
 document.getElementById('providerSelect').value = apiProvider;
 
 // Override send to try API first

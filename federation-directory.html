@@ -173,6 +173,14 @@ footer strong { color:#fff; }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior:auto !important; }
 }
+
+.voice-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.96);border-top:2px solid #00ff88;z-index:20;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;font-family:system-ui,sans-serif}
+.voice-bar .status{color:#c9a84c;font-weight:700;font-size:.9rem;min-width:120px;text-align:center}
+.voice-bar button{background:#00ff88;color:#04140c;font-weight:700;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:.9rem}
+.voice-bar button.alt{background:transparent;color:#00ff88;border:2px solid #00ff88}
+.speaking{animation:speakpulse 1.2s ease-in-out infinite}
+@keyframes speakpulse{0%,100%{opacity:1}50%{opacity:.45}}
+body{padding-bottom:90px}
 </style>
 </head>
 <body>
@@ -293,6 +301,35 @@ footer strong { color:#fff; }
     });
   });
 })();
+</script>
+
+<div class="voice-bar" role="toolbar" aria-label="Voice guide">
+<span class="status" id="voiceStatus">Voice off</span>
+<button type="button" id="btnEnable">Enable Voice</button>
+<button class="alt" type="button" id="btnWelcome" disabled>Welcome</button>
+<button class="alt" type="button" id="btnThisPage" disabled>What’s on this page?</button>
+<button class="alt" type="button" id="btnThisSite" disabled>What’s on this site?</button>
+<button class="alt" type="button" id="btnNotHere" disabled>What’s not here?</button>
+<button class="alt" type="button" id="btnTour" disabled>Announce Tour</button>
+<button class="alt" type="button" id="btnDomains" disabled>Three Domains</button>
+<button class="alt" type="button" id="btnHelp" disabled>Help</button>
+</div>
+<script>
+const synth = window.speechSynthesis;
+let voiceEnabled = false;
+const statusEl = document.getElementById('voiceStatus');
+const buttons = {enable:document.getElementById('btnEnable'),welcome:document.getElementById('btnWelcome'),thisPage:document.getElementById('btnThisPage'),thisSite:document.getElementById('btnThisSite'),notHere:document.getElementById('btnNotHere'),tour:document.getElementById('btnTour'),domains:document.getElementById('btnDomains'),help:document.getElementById('btnHelp')};
+function setEnabled(on){voiceEnabled=on;statusEl.textContent=on?'Voice ready':'Voice off';statusEl.classList.toggle('speaking',false);Object.values(buttons).forEach(b=>{if(b!==buttons.enable)b.disabled=!on});buttons.enable.textContent=on?'Disable Voice':'Enable Voice';}
+function speak(text){if(!voiceEnabled||!synth)return;synth.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.95;u.onstart=()=>{statusEl.textContent='Speaking…';statusEl.classList.add('speaking')};u.onend=()=>{statusEl.textContent='Voice ready';statusEl.classList.remove('speaking')};synth.speak(u);}
+buttons.enable.addEventListener('click',()=>{setEnabled(!voiceEnabled);if(voiceEnabled)speak('Voice enabled. You are on the NextXus Federation System Directory.');});
+buttons.welcome.addEventListener('click',()=>speak('Welcome to the NextXus Federation System Directory. Everything we are. Every public URL we own.'));
+buttons.thisPage.addEventListener('click',()=>speak('This page is the System Directory. It lists live pillars, checked tools, sites and nodes, the brain, books, mirrors, and documents. You can search and filter by type.'));
+buttons.thisSite.addEventListener('click',()=>speak('This site is keywebco.github.io slash nextxus-free-satellites. It hosts the Directory and several working pages and outposts. The main Portal is at keywebco.github.io.'));
+buttons.notHere.addEventListener('click',()=>speak('Individual tools such as Ring of 12, the Browser Base, and music live on their own GitHub Pages. The Portal overview is at keywebco.github.io. The three domains will point to these pages.'));
+buttons.tour.addEventListener('click',()=>speak('Tour of the Directory. First, Live pillars. Then Checked tools. Then Sites and nodes. Then Brain, Books, Working pages, and Mirrors. Use the search box or the filter chips to narrow the list.'));
+buttons.domains.addEventListener('click',()=>speak('The three domains are next-xus.net, next-xus.org, and next-xus.info. They will serve as the primary public faces. All content will live on GitHub Pages. Nothing remains on Emergent.'));
+buttons.help.addEventListener('click',()=>speak('Help. You can ask what is on this page, what is on this site, what is not here, announce a tour, or hear about the three domains. You can also search the directory with the box above.'));
+setEnabled(false);
 </script>
 </body>
 </html>

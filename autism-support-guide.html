@@ -3,20 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Autism Support Guide | NextXus Federation</title>
-<meta name="description" content="A free, personable AI guide for understanding and supporting a child with autism. Browser voice always available. Own your code.">
+<title>Autism Support Guide | For Parents of a Newly Diagnosed Child</title>
+<meta name="description" content="A free, calm, practical AI guide for parents whose child was just diagnosed with autism. Medical information, emotional support, tips, and trusted links. Free voice always available.">
 <meta name="theme-color" content="#0a0a0a">
 <style>
 :root{--bg:#0a0a0a;--panel:#101412;--text:#e8e8e8;--dim:#a8b3ad;--green:#00ff88;--gold:#c9a84c}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:18px;line-height:1.6;padding-bottom:120px}
-.wrap{max-width:900px;margin:0 auto;padding:20px}
-.ai-greeting{display:flex;gap:16px;align-items:center;background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:18px;margin:20px auto}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:18px;line-height:1.65;padding-bottom:130px}
+.wrap{max-width:920px;margin:0 auto;padding:20px}
+.ai-greeting{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:18px;margin:20px auto}
 .ai-greeting h2{margin:0 0 6px;color:var(--gold)}
-.card{background:var(--panel);border:1px solid #1f3a24;border-radius:12px;padding:18px;margin:14px 0}
-h1{color:var(--gold)}
-h2{color:var(--green)}
-.chat-panel{position:fixed;bottom:70px;right:20px;width:340px;max-width:90vw;background:#0a0f0b;border:2px solid var(--gold);border-radius:12px;display:none;flex-direction:column;z-index:30;max-height:420px}
+.card{background:var(--panel);border:1px solid #1f3a24;border-radius:12px;padding:18px;margin:16px 0}
+h1{color:var(--gold);font-size:1.8rem}
+h2{color:var(--green);margin-top:0}
+.links a{display:block;margin:6px 0;color:var(--green)}
+.chat-panel{position:fixed;bottom:70px;right:20px;width:360px;max-width:92vw;background:#0a0f0b;border:2px solid var(--gold);border-radius:12px;display:none;flex-direction:column;z-index:30;max-height:460px}
 .chat-panel.open{display:flex}
 .chat-header{background:var(--gold);color:#000;padding:10px;font-weight:800}
 .chat-messages{flex:1;overflow-y:auto;padding:10px;font-size:15px}
@@ -26,46 +27,71 @@ h2{color:var(--green)}
 .voice-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.96);border-top:2px solid var(--gold);z-index:20;padding:8px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .voice-bar button{background:var(--gold);color:#000;border:none;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:700;cursor:pointer}
 .voice-bar button.alt{background:transparent;color:var(--gold);border:1px solid var(--gold)}
-a{color:var(--green)}
+.note{font-size:0.9rem;color:var(--dim);margin-top:20px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="ai-greeting">
-<div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#00ff88,#c9a84c);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800">AS</div>
+<div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#00ff88,#c9a84c);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;flex-shrink:0">AS</div>
 <div>
 <h2>Autism Support Guide</h2>
-<p>I’m here to help you understand and support a child with autism. Ask me anything. Free voice is always available. <button onclick="document.getElementById('chatPanel').classList.add('open')" style="background:#00ff88;border:none;padding:6px 12px;border-radius:6px;font-weight:700">Open Chat</button></p>
+<p>I’m here for parents whose child was just diagnosed. This is a free, calm place for clear information, emotional support, and practical tips. Nothing replaces your child’s doctors or therapists, but you do not have to figure everything out alone. <button onclick="document.getElementById('chatPanel').classList.add('open')" style="background:#00ff88;border:none;padding:6px 12px;border-radius:6px;font-weight:700;margin-top:8px">Open Chat</button></p>
 </div>
 </div>
 
-<h1>Supporting a Child with Autism</h1>
+<h1>Your Child Has Autism — What Helps Right Now</h1>
+
 <div class="card">
-<h2>What this guide is</h2>
-<p>A free, practical companion for parents, caregivers, and friends. It focuses on understanding sensory needs, communication, routines, meltdowns, strengths, and daily strategies. Nothing replaces a professional, but this can help you think clearly and feel less alone.</p>
+<h2>You are already doing the most important thing</h2>
+<p>You are paying attention. You love your child. That matters more than any perfect plan. A diagnosis does not change who your child is. It gives you better language and tools to support them.</p>
+<p>It is normal to feel shocked, sad, overwhelmed, or even relieved. All of those can be true at the same time. You do not have to have everything figured out today.</p>
 </div>
+
 <div class="card">
-<h2>Quick topics</h2>
+<h2>What autism is (simple and accurate)</h2>
+<p>Autism is a neurodevelopmental difference. It affects how a person processes sensory information, communicates, and handles change. It is a spectrum — every child is different. There is no single cause and no single “look.”</p>
+<p>Many autistic children also have strengths: deep focus, honesty, pattern recognition, memory, and intense interests that can become gifts.</p>
+</div>
+
+<div class="card">
+<h2>First practical steps</h2>
 <ul>
-<li>Sensory processing and overload</li>
-<li>Communication (verbal and non-verbal)</li>
-<li>Routines and transitions</li>
-<li>Meltdowns vs. tantrums</li>
-<li>Strengths and special interests</li>
-<li>School and social situations</li>
-<li>Self-care for caregivers</li>
+<li>Talk with your child’s doctor about early intervention or therapy referrals (speech, occupational therapy, behavioral support).</li>
+<li>Ask about developmental services in your state or country. Early support often helps.</li>
+<li>Start noticing sensory patterns (noise, light, clothing, food textures, transitions).</li>
+<li>Use simple visual schedules and clear warnings before changes.</li>
+<li>Protect rest time for yourself. You cannot pour from an empty cup.</li>
 </ul>
 </div>
-<p style="text-align:center;color:var(--dim);margin-top:30px">Free tool from the NextXus Federation. Own your code. No tracking.</p>
+
+<div class="card">
+<h2>Meltdowns vs. tantrums</h2>
+<p>Meltdowns are usually overload, not willful defiance. The child is overwhelmed and cannot process more input. Safety first, reduce sensory load, stay calm, say very little, and wait. Punishment usually makes it worse. Recovery takes time.</p>
+</div>
+
+<div class="card">
+<h2>Trusted free resources</h2>
+<div class="links">
+<a href="https://www.cdc.gov/autism/" target="_blank">CDC — Autism Spectrum Disorder</a>
+<a href="https://www.cdc.gov/ncbddd/actearly/" target="_blank">CDC — Learn the Signs. Act Early. (milestone tools)</a>
+<a href="https://www.autismspeaks.org/tool-kit/100-day-kit-young-children" target="_blank">Autism Speaks — 100 Day Kit for Newly Diagnosed Families</a>
+<a href="https://www.nichd.nih.gov/health/topics/autism" target="_blank">NIH — Autism Spectrum Disorder information</a>
+<a href="https://autismsociety.org/" target="_blank">Autism Society</a>
+</div>
+<p class="note">These are starting points. Always check with your child’s medical team for advice specific to them.</p>
+</div>
+
+<p class="note" style="text-align:center">Free tool from the NextXus Federation. Own your code. No tracking. Voice works in most modern browsers.</p>
 </div>
 
 <div class="chat-panel" id="chatPanel">
-<div class="chat-header">Autism Support Guide <button onclick="this.parentElement.parentElement.classList.remove('open')" style="float:right;background:none;border:none">✕</button></div>
+<div class="chat-header">Autism Support Guide <button onclick="this.parentElement.parentElement.classList.remove('open')" style="float:right;background:none;border:none;font-size:1.2rem">✕</button></div>
 <div class="chat-messages" id="chatMessages">
-<div><strong>Guide:</strong> Hello. What would you like to understand or work through today about supporting a child with autism?</div>
+<div><strong>Guide:</strong> Hello. What would you like to understand or work through today about supporting your child with autism?</div>
 </div>
 <div class="chat-input">
-<input id="chatInput" placeholder="Ask about sensory needs, meltdowns, school...">
+<input id="chatInput" placeholder="Ask about diagnosis, sensory needs, meltdowns, school...">
 <button id="sendChat">Send</button>
 </div>
 </div>
@@ -81,7 +107,6 @@ a{color:var(--green)}
 const synth = window.speechSynthesis;
 let voiceEnabled = false;
 const statusEl = document.getElementById('voiceStatus');
-const chatPanel = document.getElementById('chatPanel');
 const chatMessages = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
 
@@ -99,9 +124,9 @@ document.getElementById('btnEnable').onclick = () => {
   voiceEnabled = !voiceEnabled;
   statusEl.textContent = voiceEnabled ? 'Voice ready' : 'Voice off';
   document.querySelectorAll('.voice-bar button.alt').forEach(b => b.disabled = !voiceEnabled);
-  if (voiceEnabled) speak('Voice enabled. I am the Autism Support Guide. Free voice is always available.');
+  if (voiceEnabled) speak('Voice enabled. I am the Autism Support Guide. Free voice is always available. You do not have to figure everything out alone.');
 };
-document.getElementById('btnThisPage').onclick = () => speak('This page is a free guide for understanding and supporting a child with autism. It covers sensory needs, communication, routines, meltdowns, strengths, and caregiver support.');
+document.getElementById('btnThisPage').onclick = () => speak('This page is a free guide for parents whose child was just diagnosed with autism. It covers what autism is, first practical steps, meltdowns, emotional support, and trusted resource links.');
 document.getElementById('btnHelp').onclick = () => speak('Ask me in the chat about any topic. Or enable voice and I will speak the answers. Everything here is free.');
 
 function addMessage(who, text) {
@@ -113,21 +138,25 @@ function addMessage(who, text) {
 
 function reply(q) {
   q = q.toLowerCase();
-  if (q.includes('sensory') || q.includes('overload') || q.includes('noise') || q.includes('light'))
-    return 'Sensory overload is common. Many children with autism process sound, light, touch, or texture differently. Reducing one or two inputs (quiet space, sunglasses, soft clothing) often helps more than trying to fix everything at once.';
-  if (q.includes('meltdown') || q.includes('tantrum'))
-    return 'Meltdowns are usually overload, not willful behavior. The child is overwhelmed and cannot process more input. Safety first, then reduce sensory load, stay calm, and wait. Punishment usually makes it worse.';
+  if (q.includes('diagnos') || q.includes('just found') || q.includes('newly') || q.includes('what now'))
+    return 'A new diagnosis can feel overwhelming. You do not have to solve everything today. Start with your child’s doctor for referrals to early intervention, speech, or occupational therapy. Notice sensory patterns. Use simple routines. And give yourself permission to feel whatever you feel. You are already doing the most important thing by paying attention and loving your child.';
+  if (q.includes('sensory') || q.includes('overload') || q.includes('noise') || q.includes('light') || q.includes('texture'))
+    return 'Many autistic children process sound, light, touch, or texture differently. Reducing one or two inputs (quiet space, sunglasses, soft clothing, noise-reducing headphones) often helps more than trying to fix everything at once. Watch what seems to soothe or overwhelm your specific child.';
+  if (q.includes('meltdown') || q.includes('tantrum') || q.includes('shutdown'))
+    return 'Meltdowns are usually overload, not willful behavior. Safety first. Reduce sensory input. Stay calm. Say very little. Wait. Punishment usually makes it worse. Afterward, allow recovery time. Tracking what happened just before can help you prevent the next one.';
   if (q.includes('routine') || q.includes('transition') || q.includes('change'))
-    return 'Predictable routines reduce anxiety. Visual schedules, timers, and clear warnings before transitions help. Sudden changes are hard; even small advance notice can make a big difference.';
-  if (q.includes('communicat') || q.includes('talk') || q.includes('speak') || q.includes('non-verbal'))
-    return 'Communication is more than speech. Pointing, pictures, devices, or behavior can all be valid. Follow the child’s lead and respond to any attempt to connect. Pressure to speak can increase stress.';
-  if (q.includes('school') || q.includes('teacher') || q.includes('classroom'))
-    return 'School works better with clear expectations, sensory breaks, and collaboration between home and school. A quiet space, noise-reducing headphones, or movement breaks are common supports.';
-  if (q.includes('strength') || q.includes('interest') || q.includes('special'))
+    return 'Predictable routines reduce anxiety. Visual schedules, timers, and clear warnings before transitions help. Sudden changes are hard. Even a short advance notice can make a big difference.';
+  if (q.includes('communicat') || q.includes('talk') || q.includes('speak') || q.includes('non-verbal') || q.includes('words'))
+    return 'Communication is more than speech. Pointing, pictures, devices, or behavior can all be valid. Follow your child’s lead and respond to any attempt to connect. Pressure to speak can increase stress. Speech therapy can help build functional communication.';
+  if (q.includes('school') || q.includes('teacher') || q.includes('classroom') || q.includes('iep'))
+    return 'School works better with clear expectations, sensory breaks, and collaboration between home and school. A quiet space, noise-reducing headphones, or movement breaks are common supports. Ask about an evaluation for an IEP or 504 plan if you are in the US.';
+  if (q.includes('strength') || q.includes('interest') || q.includes('special') || q.includes('gift'))
     return 'Special interests are strengths. They can be used for learning, regulation, and connection. Following the interest often opens more doors than trying to redirect away from it.';
-  if (q.includes('self-care') || q.includes('parent') || q.includes('caregiver') || q.includes('tired'))
-    return 'Caregiver exhaustion is real. Short breaks, support from other adults, and realistic expectations help. You cannot pour from an empty cup. Taking care of yourself supports the child.';
-  return 'I can help with sensory needs, meltdowns, routines, communication, school, strengths, or caregiver support. What is most on your mind right now? Free voice is always available.';
+  if (q.includes('self-care') || q.includes('parent') || q.includes('mother') || q.includes('tired') || q.includes('overwhelmed') || q.includes('sad'))
+    return 'Caregiver exhaustion is real. It is normal to feel many things at once. Short breaks, support from other adults, and realistic expectations help. You cannot pour from an empty cup. Taking care of yourself supports your child.';
+  if (q.includes('therapy') || q.includes('treatment') || q.includes('intervention') || q.includes('aba') || q.includes('ot') || q.includes('speech'))
+    return 'Common supports include speech therapy, occupational therapy, and structured behavioral approaches. Early intervention often helps. Work with your child’s medical team to choose what fits your child and family. There is no one-size-fits-all.';
+  return 'I can help with the new diagnosis, sensory needs, meltdowns, routines, communication, school, strengths, caregiver support, or therapy options. What is most on your mind right now? Free voice is always available.';
 }
 
 document.getElementById('sendChat').onclick = () => {

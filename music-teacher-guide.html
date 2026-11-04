@@ -48,6 +48,14 @@ h2{color:var(--green);margin-top:0}
 <div class="card"><h2>Practice and technique</h2><p>Consistent practice and good technique build skill over time for both vocals and instruments.</p></div>
 <div class="card"><h2>Common topics</h2><p>Warm-ups, practice routines, basic theory, and constructive feedback.</p></div>
 
+<div class="card"><h2>Make this Sim yours</h2>
+<p>These are Sims, not legacy Sims. A legacy Sim is fixed and static. This Sim can be customized by you: your own API key, your own face, and your own personality instruction.</p>
+<p><strong>Use your own API key if you wish.</strong> DeepSeek is the default here, with a preloaded API already active. Grok is an option, not a requirement. Open the chat and use the key box there, then press Save key. Your saved key is stored in this browser only and is used for DeepSeek answers here. Note: this page's live API call uses DeepSeek, so a Grok key alone will not work here unless you get a Grok-enabled copy.</p>
+<p><strong>Change the face.</strong> Choose your own picture below. It replaces the face on this page, in this browser only, and is not uploaded anywhere.</p>
+<p><label>Your picture: <input type="file" id="faceFile" accept="image/*"></label> <button id="faceReset" type="button">Use original face</button> <span id="faceStatus"></span></p>
+<p><strong>Change the personality.</strong> Write how you want this guide to sound or behave, then press Save personality. That instruction is actually sent with the API prompt, so it changes API answers. It does not change the free keyword fallback answers, which are fixed text.</p>
+<p><label>Personality instruction:<br><textarea id="personalityInput" rows="3" style="width:100%;background:#000;color:#fff;border:1px solid #1f3a24;padding:6px" placeholder="For example: be concise, be warm, give step-by-step answers"></textarea></label><br><button id="savePersonality" type="button">Save personality</button> <span id="personalityStatus"></span></p>
+</div>
 <div class="card">
 <h2>Custom face or upgrade</h2>
 <p>This guide comes with a face already. If you want to use your own picture, or have a customized version with a different face or API setup, that is available as an upgrade.</p>
@@ -65,8 +73,9 @@ h2{color:var(--green);margin-top:0}
 
 
 <div style="padding:8px;background:#0a0f0b;border-top:1px solid #1f3a24;font-size:13px">
-  <div style="color:#00ff88;font-weight:bold;margin-bottom:4px">Optional: Use your own API key</div>
+  <div style="color:#00ff88;font-weight:bold;margin-bottom:4px">Use your own API key if you wish</div>
   <input id="grokKeyInput" placeholder="Paste your Grok (or other) API key — optional" style="width:100%;background:#000;color:#fff;border:1px solid #1f3a24;padding:4px">
+  <button id="saveKeyBtn" type="button" style="margin-top:4px;background:#00ff88;border:none;padding:6px 10px;font-weight:700">Save key</button> <span id="keyStatus" style="font-size:12px;color:#aaa"></span>
   <div style="font-size:12px;color:#aaa;margin-top:4px">
     A preloaded API is already active for immediate answers.<br>
     Prefer your own key or higher quality? Add it here.<br>
@@ -102,9 +111,9 @@ document.getElementById('btnEnable').onclick = () => {
   voiceEnabled = !voiceEnabled;
   statusEl.textContent = voiceEnabled ? 'Voice ready' : 'Voice off';
   document.querySelectorAll('.voice-bar button.alt').forEach(b => b.disabled = !voiceEnabled);
-  if (voiceEnabled) speak('Voice enabled. I am the Art Guide for drawing, painting, and sculpting.');
+  if (voiceEnabled) speak('Voice enabled. I am the Music Teacher Guide.');
 };
-document.getElementById('btnThisPage').onclick = () => speak('This page is a free guide for drawing, painting, and sculpting techniques and ideas.');
+document.getElementById('btnThisPage').onclick = () => speak('This page is a free guide for music teaching, vocal and instruments.');
 function addMessage(who, text) {
   const div = document.createElement('div');
   div.innerHTML = `<strong>${who}:</strong> ${text}`;
@@ -128,7 +137,7 @@ async function apiRespond(text) {
       headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: p.model,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: text }],
+        messages: [{ role: 'system', content: SYSTEM_PROMPT + (customPersonality ? '\nUser personality instruction: ' + customPersonality : '') }, { role: 'user', content: text }],
         max_tokens: 300,
         temperature: 0.7
       })
@@ -151,6 +160,23 @@ document.getElementById('sendChat').onclick = async () => {
   if (voiceEnabled) speak(answer);
 };
 chatInput.onkeypress = e => { if (e.key === 'Enter') document.getElementById('sendChat').click(); };
+
+// --- Sim customization: own API key, face, personality (wired, not labels only) ---
+let customPersonality = localStorage.getItem('nextxus_personality_music-teacher-guide') || '';
+let savedFaceCustom = localStorage.getItem('nextxus_face_music-teacher-guide');
+if (savedFaceCustom) { const fi = document.querySelector('.ai-greeting img'); if (fi) fi.src = savedFaceCustom; }
+const faceInputCustom = document.getElementById('faceFile');
+if (faceInputCustom) { faceInputCustom.addEventListener('change', e => { const file = e.target.files && e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = () => { const fi = document.querySelector('.ai-greeting img'); if (fi) fi.src = reader.result; try { localStorage.setItem('nextxus_face_music-teacher-guide', reader.result); } catch {} const st = document.getElementById('faceStatus'); if (st) st.textContent = 'Face changed in this browser.'; }; reader.readAsDataURL(file); }); }
+const faceResetCustom = document.getElementById('faceReset');
+if (faceResetCustom) { faceResetCustom.onclick = () => { localStorage.removeItem('nextxus_face_music-teacher-guide'); location.reload(); }; }
+const persInputCustom = document.getElementById('personalityInput');
+if (persInputCustom) { persInputCustom.value = customPersonality; }
+const persSaveCustom = document.getElementById('savePersonality');
+if (persSaveCustom) { persSaveCustom.onclick = () => { customPersonality = persInputCustom ? persInputCustom.value.trim() : ''; if (customPersonality) localStorage.setItem('nextxus_personality_music-teacher-guide', customPersonality); else localStorage.removeItem('nextxus_personality_music-teacher-guide'); const st = document.getElementById('personalityStatus'); if (st) st.textContent = customPersonality ? 'Personality saved. It will be sent with API answers.' : 'Personality cleared.'; }; }
+
+const keyInputCustom = document.getElementById('grokKeyInput');
+const keyBtnCustom = document.getElementById('saveKeyBtn');
+if (keyInputCustom && keyBtnCustom) { keyBtnCustom.onclick = () => { const v = keyInputCustom.value.trim(); const st = document.getElementById('keyStatus'); if (v) { apiKey = v; localStorage.setItem('nextxus_api_key', v); if (st) st.textContent = 'Your key saved. It will be used for DeepSeek answers in this browser.'; } else if (st) st.textContent = 'Paste a key first.'; }; }
 </script>
 </body>
 </html>

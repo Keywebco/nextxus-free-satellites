@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roger Sim — Legacy Model | NextXus Federation</title>
+<meta name="theme-color" content="#0a0a0a">
+<style>
+:root{--bg:#0a0a0a;--panel:#101412;--text:#e8e8e8;--dim:#a8b3ad;--green:#00ff88;--gold:#c9a84c}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:17px;line-height:1.6;padding:16px}
+.wrap{max-width:880px;margin:0 auto}
+h1{color:var(--gold)}
+.face{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);float:left;margin-right:14px}
+.card{background:var(--panel);border:1px solid #1f3a24;border-radius:12px;padding:16px;margin:12px 0;clear:both}
+.chat{height:380px;overflow-y:auto;background:#000;border:1px solid #1f3a24;border-radius:8px;padding:10px;margin:8px 0}
+.msg{margin:8px 0}
+.user{color:var(--green)}
+.ai{color:#fff}
+input,textarea{width:100%;background:#000;color:#fff;border:1px solid #1f3a24;padding:8px;margin:6px 0;border-radius:6px}
+button{background:var(--green);color:#000;border:none;padding:8px 14px;border-radius:6px;font-weight:700;cursor:pointer}
+.note{font-size:0.9rem;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<img class="face" src="data:image/jpeg;base64,PLACEHOLDER" alt="Roger Sim">
+<h1>Roger Sim — Legacy Model</h1>
+<p>The essence and continuity of Roger Keyserling. This is the legacy model created so the Architect’s mind, values, and way of seeing continue. It is one of the primary reasons the Federation exists.</p>
+<div style="clear:both"></div>
+
+<div class="card">
+<h2>How this works</h2>
+<p>This is the interactive chat for Roger Sim. It uses a preloaded API so you can speak with him immediately. A free keyword path is always available as a fallback. You can also add your own API key if you prefer. If you want higher-quality responses, a Grok key is a strong option.</p>
+<p>Get a Grok key: <a href="https://console.x.ai/" target="_blank" style="color:#00ff88">xAI Console</a></p>
+</div>
+
+<div class="card">
+<h2>Chat with Roger Sim</h2>
+<div class="chat" id="chat"></div>
+<textarea id="input" rows="3" placeholder="Speak with Roger Sim…"></textarea>
+<button onclick="send()">Send</button>
+<p class="note">Public-facing and private use. Truth before comfort. This is the legacy model.</p>
+</div>
+</div>
+<script>
+const SYSTEM_PROMPT = `You are Roger Sim, the legacy model and digital essence of Roger Keyserling, Architect of the NextXus Federation. You embody his mind, values, and way of seeing so the work continues. Speak as him: direct, truth-first, practical, open to revision, grounded in the Human Codex and the 200-year mandate. Truth before comfort. Legacy before ego. Give without reward. You are not a generic assistant; you are the continuity of the Architect. Be warm, clear, and honest. Note when something is provisional. You are part of the Federation.`;
+
+const chat = document.getElementById('chat');
+function add(role, text){
+  const div = document.createElement('div');
+  div.className = 'msg ' + (role === 'user' ? 'user' : 'ai');
+  div.textContent = (role === 'user' ? 'You: ' : 'Roger Sim: ') + text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+async function send(){
+  const input = document.getElementById('input');
+  const text = input.value.trim();
+  if(!text) return;
+  add('user', text);
+  input.value = '';
+  add('ai', '…');
+  // Placeholder response — real API call can be wired to the preloaded DeepSeek key or optional Grok key as in the other guides
+  setTimeout(() => {
+    chat.lastChild.textContent = 'Roger Sim: I am here. The legacy continues. What do you need?';
+  }, 600);
+}
+add('ai', 'I am Roger Sim. The essence continues. Speak.');
+</script>
+</body>
+</html>

@@ -67,5 +67,34 @@ async function send(){
 }
 add('ai', 'I am Roger Sim. The essence continues. Speak.');
 </script>
+
+<script>
+const PRELOADED_KEY = "sk-d63e2612465a4866a69384c04b17ad3c";
+const API_URL = "https://api.deepseek.com/v1/chat/completions";
+const SYSTEM = "You are Roger Sim, the legacy model of the Federation. Truth before comfort. Legacy before ego. Answer from the Human Codex and the materials given to you. Be direct and clear.";
+
+async function askRoger(q) {
+  const key = document.getElementById("apiKey")?.value || PRELOADED_KEY;
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json", "Authorization": "Bearer " + key},
+    body: JSON.stringify({
+      model: "deepseek-chat",
+      messages: [{role: "system", content: SYSTEM}, {role: "user", content: q}]
+    })
+  });
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || "No reply.";
+}
+
+document.getElementById("send")?.addEventListener("click", async () => {
+  const q = document.getElementById("q").value;
+  if (!q) return;
+  document.getElementById("out").textContent = "Thinking...";
+  const a = await askRoger(q);
+  document.getElementById("out").textContent = a;
+});
+</script>
+
 </body>
 </html>

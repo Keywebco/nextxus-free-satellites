@@ -1,0 +1,26 @@
+name: Federation Scheduler
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Daily at 12:00 UTC
+  workflow_dispatch:
+
+jobs:
+  run-scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log daily run
+        run: |
+          echo "# Daily Scheduler Log — $(date -u +%Y-%m-%d)" > reports/daily-$(date -u +%Y-%m-%d).md
+          echo "" >> reports/daily-$(date -u +%Y-%m-%d).md
+          echo "Scheduler ran. Review scheduled_operations.yaml for the full list of intended actions." >> reports/daily-$(date -u +%Y-%m-%d).md
+          echo "Outputs are drafts. Nothing publishes without review." >> reports/daily-$(date -u +%Y-%m-%d).md
+          mkdir -p reports
+          git config user.name "Federation Scheduler"
+          git config user.email "scheduler@nextxus.local"
+          git add reports/
+          git commit -m "Scheduler daily log $(date -u +%Y-%m-%d)" || echo "No changes"
+          git push

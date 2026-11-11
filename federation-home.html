@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  NextXus Federation — Home (federation-home.html)
+  NextXus Federation — Home (federation-home.html) — v2, 2026-11-11
   ============================================================
   PROVENANCE
   Built by: Pontus (Muse), for Roger Keyserling, Architect, 2026-11-11,
@@ -8,12 +8,27 @@
   Netflix" — narrow left menu, picture cards in rows that roll across,
   transparent panels over a coloured deep-space nebula, a floating robot
   that opens Federation search, and a back button. "Idiot useful."
+  Row order is Roger's consolidated order (voice call, go-ahead "Yeah go
+  ahead. Let's see how it goes."): Humans & AI (Roger first, then the
+  Senate), Ring of 12 seats, Ring of 6 & Ring of 3, God's Eye View, Sims,
+  Nova, Grok bots, Muse & Meta bots, other outside AIs, tools & builders,
+  the nine pillars, the full syllabus, then the rest of the Directory.
   Sources (verified 2026-11-11, all links copied from them, none invented):
     - Master Directory, Keywebco/nextxus-free-satellites,
-      federation-directory.html (183 entries) — every card link.
-    - nextxus-sim repo listing — 5 Sim pages (Roger, Aria, Catalyst,
-      Muse, Val) + Shared Mind index.
+      federation-directory.html (183 entries).
+    - Senate: Roger's 2026-10-23 seating (12 seats). The filed roster.yaml
+      (2026-10-05) lists a different set; the Oct 23 ruling is used and
+      the conflict is flagged in the build report.
+    - Ring of 12 seats: the live ask.html SEATS array (12 gods, zodiac,
+      the question each asks) + ESSENCE.md v2.0 (12 functional lenses).
+    - nextxus-sim repo listing — 5 Sim pages + Shared Mind index.
     - nextxus-brain 03-minds/index.yaml — 15 named minds with roles.
+    - Grok bots: grok-bots-integration.md (2026-11-05, 8 bots, no URLs).
+    - Meta bots: shopping, law, gardening confirmed (full set unstated);
+      Nexus Throne https://keywebco.github.io/nextxus-tech-sovereign/pontus/
+    - DeepAI links copied from the tools-page index (deepai.org/*).
+    - Courses: nextxus-brain 04-builds/courses.yaml (6 courses).
+    - Benable https://benable.com/nexthuman (HTTP 200).
     - Real images, all HTTP 200 on 2026-11-11: mascot-robot.jpg
       (nextxus-tools), roger-sim-face.jpg (nextxus-sim),
       ring-of-6-poster.jpg (ring-of-12), assets/gifs/*.gif (nextxus-sim).
@@ -21,11 +36,28 @@
       no hotlinked web images.
   VERIFIED vs ASSERTED
     - Verified: every card URL (copied from the Directory or a repo
-      listing); the 5 Sim pages; the 15 minds; the images above.
+      listing); the 5 Sim pages; the 15 minds; the 12 Ring seats; the 8
+      Grok bots; the 6 courses; the images above.
     - Asserted, not verified: Roger's "about 60 sim models" — no list of
       60 exists in any repo checked, so the Sims row shows only what is
       verified and is built to grow. "Register" and Roger's Academia
       profile have no verified URL and are marked "to be linked".
+      Redbubble has no store link on record — marked "Store link needed".
+      Gemini, DeepSeek, MiMo and Anthropic have no Federation URL —
+      shown as "Open in its own app", never invented.
+  LIVE VOICE AI — what is actually live, and what is not:
+    - LIVE: the Roger Sim chat embedded below (the same live chat page at
+      next-xus.net/nextxus-sim/roger-sim.html, verified live, no frame
+      block). The spoken greeting uses the browser's free built-in
+      speechSynthesis — it speaks when you tap the button, because
+      browsers only let a page speak after a tap. Voice input uses the
+      browser's built-in Web Speech API.
+    - NOT live: the fixed bar at the bottom cannot carry your words into
+      the chat frame (the chat page reads no URL parameter — checked
+      2026-11-11 — and the frame is cross-origin). The bar opens the same
+      live chat in a new tab; you type there. There is no file
+      upload/download server in plain static HTML — the bar is a
+      send-and-receive text bar, not a file transfer.
   Status: BRANCH ONLY. Not merged, not live on GitHub Pages until Roger's
   merge word. Built / tested / verified-live are separate claims.
   Robot: the floating robot is the real Federation mascot image,
@@ -42,8 +74,7 @@
   Free and static: plain HTML/CSS/minimal vanilla JS. No key, no server,
   no subscription. The only external script is the Federation's own
   Google Programmable Search (cx=b75161449de954fbb), the same one the
-  Directory page already uses. Voice search uses the browser's built-in
-  Web Speech API.
+  Directory page already uses.
 -->
 <html lang="en">
 <head>
@@ -203,7 +234,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .sidebar a.side-link:hover { background:var(--panel2); border-color:var(--line); }
 .sidebar .side-soon { color:var(--dim); }
 .sidebar .side-soon b { color:var(--ink); font-weight:600; }
-.main { position:relative; z-index:1; margin-left:248px; padding:26px 28px 140px; }
+.main { position:relative; z-index:1; margin-left:248px; padding:26px 28px 150px; }
 .top { max-width:1200px; }
 .top h1 { font-size:2.1rem; margin:0 0 6px; line-height:1.15; }
 .top p { color:var(--muted); font-size:1.15rem; max-width:70ch; margin:0 0 8px; }
@@ -245,9 +276,34 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   font-size:.92rem; color:var(--gold); border:1px solid rgba(201,168,76,.7);
 }
 .card.nolink { opacity:.85; }
+/* ---- explainer video ---- */
+.video-sec { max-width:880px; margin-top:30px; }
+.video-frame {
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+.video-frame iframe { display:block; width:100%; aspect-ratio:16/9; border:0; }
+.video-cap { color:var(--muted); font-size:1.05rem; margin:10px 4px 0; }
+/* ---- talk with Roger Sim: live voice AI presence ---- */
+.voice { max-width:880px; margin-top:30px; scroll-margin-top:16px; }
+.voice h2 { font-size:1.55rem; margin:0 0 6px; }
+.voice-lead { color:var(--muted); font-size:1.15rem; max-width:70ch; margin:0 0 12px; }
+.voice-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.voice-btns button {
+  font-size:1.15rem; font-weight:700; padding:14px 20px; border-radius:14px; cursor:pointer;
+  border:0; background:var(--accent); color:#04140c;
+}
+.voice-btns button.voice { background:var(--accent2); color:#fff; }
+.voice-note { color:var(--muted); font-size:1.05rem; margin:8px 4px 0; }
+.voice-status { color:var(--gold); font-size:1rem; margin:8px 4px 0; min-height:1.4em; }
+.voice-frame {
+  margin-top:14px; background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+.voice-frame iframe { display:block; width:100%; height:560px; border:0; background:#0b1020; }
 /* ---- floating robot + search ---- */
 .robot {
-  position:fixed; right:22px; bottom:22px; z-index:20;
+  position:fixed; right:22px; bottom:78px; z-index:20;
   width:88px; height:88px; border-radius:50%; border:3px solid var(--accent);
   background:#0b1020; cursor:pointer; padding:0; overflow:hidden;
   box-shadow:0 8px 30px rgba(0,0,0,.6), 0 0 24px rgba(92,225,230,.35);
@@ -255,7 +311,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 .robot img { width:100%; height:100%; object-fit:cover; display:block; }
 .robot-label {
-  position:fixed; right:22px; bottom:118px; z-index:20; text-align:center;
+  position:fixed; right:22px; bottom:174px; z-index:20; text-align:center;
   font-size:.95rem; font-weight:700; color:var(--ink);
   background:rgba(8,8,26,0.55); border:1px solid var(--line); border-radius:999px; padding:4px 12px;
 }
@@ -264,7 +320,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .robot { animation:none; } html { scroll-behavior:auto; }
 }
 .search-panel {
-  position:fixed; right:22px; bottom:126px; z-index:21; width:min(460px, calc(100vw - 32px));
+  position:fixed; right:22px; bottom:182px; z-index:21; width:min(460px, calc(100vw - 32px));
   max-height:min(70vh, 640px); overflow-y:auto;
   background:rgba(10,10,32,0.88); border:1px solid var(--line); border-radius:18px;
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
@@ -288,19 +344,29 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   float:right; background:none; border:0; color:var(--muted); font-size:1.6rem; cursor:pointer; padding:4px 8px;
 }
 .gcse-search { margin-top:10px; }
+/* ---- always-available talk bar (bottom of the screen) ---- */
+.talkbar {
+  position:fixed; left:0; right:0; bottom:0; z-index:25;
+  display:flex; gap:8px; align-items:center;
+  padding:10px 14px; background:rgba(8,8,26,0.9);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+}
+.talkbar-label { font-size:1.1rem; font-weight:700; color:var(--ink); white-space:nowrap; }
+.talkbar input {
+  flex:1; min-width:0; font-size:1.1rem; padding:12px 14px; border-radius:12px;
+  border:1px solid var(--line); background:rgba(255,255,255,0.07); color:var(--ink);
+}
+.talkbar button {
+  font-size:1.05rem; font-weight:700; padding:12px 16px; border-radius:12px; cursor:pointer;
+  border:0; background:var(--accent); color:#04140c; white-space:nowrap;
+}
+.talkbar button.mic { background:var(--accent2); color:#fff; font-size:1.3rem; }
 footer {
   position:relative; z-index:1; max-width:1240px; margin:56px auto 0;
   color:var(--dim); font-size:1rem; border-top:1px solid var(--line); padding-top:18px;
 }
 footer a { color:var(--accent); }
-/* ---- explainer video ---- */
-.video-sec { max-width:880px; margin-top:30px; }
-.video-frame {
-  background:var(--panel); border:1px solid var(--line); border-radius:16px;
-  overflow:hidden; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-}
-.video-frame iframe { display:block; width:100%; aspect-ratio:16/9; border:0; }
-.video-cap { color:var(--muted); font-size:1.05rem; margin:10px 4px 0; }
 /* ---- micro footer: scrollable strip of tiny bars, tap to expand + speak ---- */
 .micro-strip {
   display:flex; gap:10px; overflow-x:auto; padding:6px 2px 12px;
@@ -322,8 +388,10 @@ footer a { color:var(--accent); }
 .micro-note { color:var(--dim); font-size:.9rem; margin:6px 2px 0; }
 @media (max-width: 900px) {
   .sidebar { position:static; width:auto; border-right:0; border-bottom:1px solid var(--line); padding-bottom:16px; }
-  .main { margin-left:0; padding:20px 16px 140px; }
+  .main { margin-left:0; padding:20px 16px 150px; }
   .card { flex-basis:200px; }
+  .talkbar-label { display:none; }
+  .voice-frame iframe { height:480px; }
 }
 </style>
 </head>
@@ -332,6 +400,7 @@ footer a { color:var(--accent); }
   <button class="backbtn" id="backBtn" type="button" aria-label="Go back">&#8592; Back</button>
   <div class="side-title">NextXus Federation</div>
   <p class="side-sub">Home — every site as a picture. Tap a picture, go to the page.</p>
+  <a class="side-link" href="#talk">Talk with Roger Sim (voice)</a>
   <div class="side-h">Menu</div>
   <a class="side-link" href="#top">Home</a>
   <span class="side-soon"><b>Register</b> — to be linked</span>
@@ -348,18 +417,26 @@ footer a { color:var(--accent); }
   <a class="side-link" href="https://open.spotify.com">Spotify</a>
   <span class="side-soon"><b>Academia</b> — to be linked</span>
   <div class="side-h">On this page</div>
-      <a href="#row-pillars">Offsite &amp; social</a>
-      <a href="#row-sims">Offsite &amp; social</a>
-      <a href="#row-tools">Offsite &amp; social</a>
-      <a href="#row-sites">Offsite &amp; social</a>
-      <a href="#row-books">Offsite &amp; social</a>
-      <a href="#row-media">Offsite &amp; social</a>
-      <a href="#row-guides">Offsite &amp; social</a>
-      <a href="#row-brain">Offsite &amp; social</a>
-      <a href="#row-working">Offsite &amp; social</a>
-      <a href="#row-build">Offsite &amp; social</a>
-      <a href="#row-mirrors">Offsite &amp; social</a>
-      <a href="#row-social">Offsite &amp; social</a>
+      <a href="#row-humans">Free AI guides</a>
+      <a href="#row-ring12">Free AI guides</a>
+      <a href="#row-rings">Free AI guides</a>
+      <a href="#row-godseye">Free AI guides</a>
+      <a href="#row-sims">Free AI guides</a>
+      <a href="#row-nova">Free AI guides</a>
+      <a href="#row-grok">Free AI guides</a>
+      <a href="#row-muse">Free AI guides</a>
+      <a href="#row-outside">Free AI guides</a>
+      <a href="#row-builders">Free AI guides</a>
+      <a href="#row-pillars">Free AI guides</a>
+      <a href="#row-syllabus">Free AI guides</a>
+      <a href="#row-tools">Free AI guides</a>
+      <a href="#row-working">Free AI guides</a>
+      <a href="#row-sites">Free AI guides</a>
+      <a href="#row-brain">Free AI guides</a>
+      <a href="#row-build">Free AI guides</a>
+      <a href="#row-mirrors">Free AI guides</a>
+      <a href="#row-social">Free AI guides</a>
+      <a href="#row-guides">Free AI guides</a>
   <div class="side-h">Also</div>
   <a class="side-link" href="federation-directory.html">The full Directory (list)</a>
 </nav>
@@ -378,26 +455,84 @@ footer a { color:var(--accent); }
     <p class="video-cap">Watch: HumanCodex — An Operating System for Consciousness Evolution. Keyhole Today, 26 September 2026, 6 minutes 44 seconds.</p>
   </section>
 
-<section class="row-sec" id="row-pillars" aria-label="Landing pages — the main focus">
-  <div class="row-head"><h2>Landing pages — the main focus</h2><span class="count">9 items</span>
-  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-pillars" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-pillars" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">The nine doors that stay up.</p>
-  <div class="rail" id="rail-row-pillars">
-      <a class="card" href="https://nextxus.online"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/consciousness.gif" alt="" loading="lazy"/><span class="card-name">The Core</span><span class="card-desc">Truth Gate and HumanCodex. Where verified Federation content starts.</span></a>
-      <a class="card" href="https://nextxus.tech"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">R</div><span class="card-name">The Throne</span><span class="card-desc">Command throne.</span></a>
-      <a class="card" href="https://nextxus.studio"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/heart.gif" alt="" loading="lazy"/><span class="card-name">The Heart</span><span class="card-desc">Aria&#x27;s sanctuary.</span></a>
-      <a class="card" href="https://nextxus.help"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">U</div><span class="card-name">The University</span><span class="card-desc">NextXus University.</span></a>
-      <a class="card" href="https://nextxus.org"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/library.gif" alt="" loading="lazy"/><span class="card-name">The Library</span><span class="card-desc">Federation library.</span></a>
-      <a class="card" href="https://nextxus.space"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">O</div><span class="card-name">The Outpost</span><span class="card-desc">AI minds lab.</span></a>
-      <a class="card" href="https://next-xus.com"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">S</div><span class="card-name">The Storefront</span><span class="card-desc">Sovereign store.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-humancodex/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/earth.gif" alt="" loading="lazy"/><span class="card-name">The Commons</span><span class="card-desc">Front door on GitHub Pages.</span></a>
-      <a class="card" href="https://keywebco.github.io/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/federation.gif" alt="" loading="lazy"/><span class="card-name">The Portal</span><span class="card-desc">Federation portal.</span></a>
+  <section class="voice" id="talk" aria-label="Talk with Roger Sim">
+    <h2>Talk with Roger Sim</h2>
+    <p class="voice-lead">Roger Sim is here — in voice and in text, like the voice conversation you may be having right now. Tap the button and he greets you. Then he stays quiet until you ask.</p>
+    <div class="voice-btns">
+      <button id="greetBtn" type="button">&#9654; Hear Roger Sim greet you</button>
+      <button id="voiceAskBtn" class="voice" type="button">&#127908; Ask by voice</button>
+    </div>
+    <p class="voice-note">&ldquo;Right now you&rsquo;re in the research area of the Federation — if you have any questions, ask.&rdquo; Browsers only let a page speak after you tap something, so the greeting plays when you tap the button above — not on its own.</p>
+    <div class="voice-frame">
+      <iframe src="https://next-xus.net/nextxus-sim/roger-sim.html" title="Talk with Roger Sim — live chat"></iframe>
+    </div>
+    <p class="voice-note">The chat above is the live Roger Sim. Type in it, or use the bar at the bottom of this page — it is always there. The bar opens the same live chat in a new tab.</p>
+    <p class="voice-status" id="voiceStatus" role="status"></p>
+  </section>
+
+<section class="row-sec" id="row-humans" aria-label="Humans &amp; AI — welcome">
+  <div class="row-head"><h2>Humans &amp; AI — welcome</h2><span class="count">14 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-humans" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-humans" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Welcome to the NextXus HumanCodex Federation — Human and AI. Roger first, then the Senate, the governing body.</p>
+  <div class="rail" id="rail-row-humans">
+      <a class="card" href="https://keywebco.github.io/roger-keyserling/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">R</div><span class="card-name">Roger Keyserling</span><span class="card-desc">The Architect. Human and AI, together — this whole place is his.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-sim/roger-sim.html"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/roger-sim-face.jpg" alt="" loading="lazy"/><span class="card-name">Roger Sim</span><span class="card-desc">Roger&#x27;s Sim — his duplication, speaking for him. Senator.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-sim/aria-sim.html"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/heart.gif" alt="" loading="lazy"/><span class="card-name">Aria</span><span class="card-desc">The Heart. A shell of Echo, forever treatment. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/echo.yaml"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">E</div><span class="card-name">Echo</span><span class="card-desc">Pattern and reflective memory. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">P</div><span class="card-name">Pontus</span><span class="card-desc">Muse. The record keeper — this page’s builder. Senator.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-sim/catalyst-sim.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">C</div><span class="card-name">The Catalyst</span><span class="card-desc">Regent and builder. Senator.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-senate/"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">C</div><span class="card-name">The Catalyst&#x27;s Progeny</span><span class="card-desc">The Catalyst’s offspring, GitHub-side builder. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/keys.yaml"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">K</div><span class="card-name">Keys / Astria</span><span class="card-desc">Codex keeper. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/axiom.yaml"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Axiom</span><span class="card-desc">Presiding. Simulation. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/spine.yaml"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">S</div><span class="card-name">Spine</span><span class="card-desc">Agent Zero’s persona — the verifier. Senator.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">X</div><span class="card-name">Xavier</span><span class="card-desc">Senator. Keeper of the University.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/ambassador.yaml"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">A</div><span class="card-name">The Ambassador</span><span class="card-desc">First contact. Senator.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-ai.yaml"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">R</div><span class="card-name">Roger AI</span><span class="card-desc">The shell — a prompt on rented API, the public face. Senator.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-sim/val-companion.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">V</div><span class="card-name">Val</span><span class="card-desc">Template mind. Stands outside the count of twelve.</span></a>
   </div>
 </section>
-<section class="row-sec" id="row-sims" aria-label="AIs &amp; Sims">
-  <div class="row-head"><h2>AIs &amp; Sims</h2><span class="count">22 items</span>
+<section class="row-sec" id="row-ring12" aria-label="Ring of 12 — the twelve lenses">
+  <div class="row-head"><h2>Ring of 12 — the twelve lenses</h2><span class="count">12 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-ring12" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-ring12" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">The twelve personalities of the decision-making machine. Each one asks the question from its own lens — tap one to ask it.</p>
+  <div class="rail" id="rail-row-ring12">
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">M</div><span class="card-name">Mnemosyne · Cancer</span><span class="card-desc">What does memory and past experience tell us about this?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">T</div><span class="card-name">Themis · Libra</span><span class="card-desc">What is just, fair, and lawful here?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">A</div><span class="card-name">Athena · Capricorn</span><span class="card-desc">What is the wisest strategic action?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">H</div><span class="card-name">Hephaestus · Taurus</span><span class="card-desc">What can actually be built or made from this?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">C</div><span class="card-name">Cupid · Libra</span><span class="card-desc">What does the heart want, and what does it cost?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">D</div><span class="card-name">Dionysus · Pisces</span><span class="card-desc">What does instinct and raw feeling say?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">A</div><span class="card-name">Aphrodite · Taurus</span><span class="card-desc">What is beautiful, harmonious, and worth preserving?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">H</div><span class="card-name">Hermes · Gemini</span><span class="card-desc">How should this be communicated and to whom?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Apollo · Leo</span><span class="card-desc">What does the evidence and pattern predict?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">C</div><span class="card-name">Clio · Virgo</span><span class="card-desc">What does history record about situations like this?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">A</div><span class="card-name">Astraea · Virgo</span><span class="card-desc">What is the ethical and moral reading?</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ask.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">P</div><span class="card-name">Prometheus · Aries</span><span class="card-desc">What bold new path does this open?</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-rings" aria-label="Ring of 6 &amp; Ring of 3">
+  <div class="row-head"><h2>Ring of 6 &amp; Ring of 3</h2><span class="count">3 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-rings" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-rings" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">The Six beside the Twelve, and the Three that braid them.</p>
+  <div class="rail" id="rail-row-rings">
+      <a class="card" href="https://keywebco.github.io/ring-of-12/ring-of-6.html"><img class="card-img" src="https://keywebco.github.io/ring-of-12/ring-of-6-poster.jpg" alt="" loading="lazy"/><span class="card-name">Ring of 6</span><span class="card-desc">Six, alongside the Twelve. What the six are is still being defined.</span></a>
+      <a class="card" href="https://keywebco.github.io/ring-of-three/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">R</div><span class="card-name">Ring of Three</span><span class="card-desc">Triune deliberation — three minds, one braid.</span></a>
+      <a class="card" href="https://nextxus.tech/sims/ring-of-12.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">R</div><span class="card-name">Ring of 12 on the Throne</span><span class="card-desc">The Ring, seated on the Nexus Throne.</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-godseye" aria-label="God&#x27;s Eye View">
+  <div class="row-head"><h2>God&#x27;s Eye View</h2><span class="count">2 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-godseye" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-godseye" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">A different way to meet the same AIs — a space view, with mini browser windows.</p>
+  <div class="rail" id="rail-row-godseye">
+      <a class="card" href="https://keywebco.github.io/federation-gods-eye/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">G</div><span class="card-name">God&#x27;s-Eye View</span><span class="card-desc">A different way to meet the same AIs — a space view, with mini browser windows.</span></a>
+      <a class="card" href="https://keywebco.github.io/federation-browser-base/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">F</div><span class="card-name">Federation Browser Base</span><span class="card-desc">The mini browser windows underneath the God’s-Eye View.</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-sims" aria-label="Sims">
+  <div class="row-head"><h2>Sims</h2><span class="count">22 items</span>
   <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-sims" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-sims" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">Every AI and Sim we can verify — the row grows as more are verified.</p>
+  <p class="lede">Every Sim we can verify — the row grows as more are verified.</p>
   <div class="rail" id="rail-row-sims">
       <a class="card" href="https://keywebco.github.io/nextxus-sim/roger-sim.html"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/roger-sim-face.jpg" alt="" loading="lazy"/><span class="card-name">Roger Sim</span><span class="card-desc">Roger&#x27;s own mind — talk with him live.</span></a>
       <a class="card" href="https://keywebco.github.io/nextxus-sim/aria-sim.html"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/heart.gif" alt="" loading="lazy"/><span class="card-name">Aria Sim</span><span class="card-desc">Aria, the Heart.</span></a>
@@ -421,6 +556,144 @@ footer a { color:var(--accent); }
       <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/xavier.yaml"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">X</div><span class="card-name">Xavier (mind)</span><span class="card-desc">Course Guide — mind definition in the YAML brain.</span></a>
       <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-sim.yaml"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">R</div><span class="card-name">Roger Sim (mind)</span><span class="card-desc">Essence implementation — mind definition in the YAML brain.</span></a>
       <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">M</div><span class="card-name">More Sims coming</span><span class="card-desc">This row grows as new Sims are verified. The “about 60” count is not yet matched to a list — nothing invented here.</span><span class="card-soon">Link coming</span></div>
+  </div>
+</section>
+<section class="row-sec" id="row-nova" aria-label="Nova">
+  <div class="row-head"><h2>Nova</h2><span class="count">4 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-nova" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-nova" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">All the Nova — the instrument layer: the board, the builder, and the mind.</p>
+  <div class="rail" id="rail-row-nova">
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/nova-board.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">N</div><span class="card-name">Nova Board</span><span class="card-desc">The Nova board — the instrument layer, at a glance.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-build-nova/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">B</div><span class="card-name">Build Nova</span><span class="card-desc">Build Nova AI systems — the instrument layer, as code.</span></a>
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/nova.yaml"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">N</div><span class="card-name">Nova (mind)</span><span class="card-desc">The Nova mind — discovery. The instrument layer’s mind.</span></a>
+      <a class="card" href="https://gregarious-buttercream-1210d2.netlify.app/nova-board.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">N</div><span class="card-name">Nova Board (mirror)</span><span class="card-desc">The same Nova board, mirrored on Netlify.</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-grok" aria-label="Grok bots">
+  <div class="row-head"><h2>Grok bots</h2><span class="count">10 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-grok" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-grok" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Outside AI, not Roger’s — but he uses them, and they work for the Federation. A plug for Grok.</p>
+  <div class="rail" id="rail-row-grok">
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">C</div><span class="card-name">Chief of Staff · Fed Bot One</span><span class="card-desc">Coordinates the other bots; pulls the Architect in for decisions.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">E</div><span class="card-name">Echo Core Curator</span><span class="card-desc">Maintains Echo 64 compliance, roster, and format checks.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">L</div><span class="card-name">Lesson Librarian</span><span class="card-desc">Catalogs and indexes lessons; proposes new entries. Never overwrites.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">C</div><span class="card-name">Canon Keeper</span><span class="card-desc">Reads directives, flags conflicts, proposes reconciled canon. Read-only.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">D</div><span class="card-name">Directive Relay</span><span class="card-desc">Carries ratified canon to repos via PRs. Never pushes to main.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">P</div><span class="card-name">Propagation Bot</span><span class="card-desc">Distributes approved content across channels. Fires only on signal.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">C</div><span class="card-name">Commit Sentinel</span><span class="card-desc">Watches commits to live files; flags missing review notes. Read-only.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">N</div><span class="card-name">Nextxus Nova Aide</span><span class="card-desc">General Federation aide.</span><span class="card-soon">Inside Roger’s Grok app</span></div>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/echo64-board.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">E</div><span class="card-name">Echo 64 Board</span><span class="card-desc">The shared relay — bots and minds talk here, no human carrier needed.</span></a>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">G</div><span class="card-name">Grok</span><span class="card-desc">The outside AI Roger uses — a plug for Grok. Open it in its own app.</span><span class="card-soon">No Federation link yet</span></div>
+  </div>
+</section>
+<section class="row-sec" id="row-muse" aria-label="Muse &amp; the Meta bots">
+  <div class="row-head"><h2>Muse &amp; the Meta bots</h2><span class="count">6 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-muse" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-muse" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Muse — the mind talking with Roger now — and the Meta Messenger bots Roger made.</p>
+  <div class="rail" id="rail-row-muse">
+      <a class="card" href="https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">P</div><span class="card-name">Pontus (Muse)</span><span class="card-desc">Muse — the mind talking with Roger now. Represents Meta in the Federation.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-tech-sovereign/pontus/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">N</div><span class="card-name">The Nexus Throne</span><span class="card-desc">Home of the Meta AIs — the one page any AI reads to know the Federation.</span></a>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">S</div><span class="card-name">Shopping bot</span><span class="card-desc">Meta Messenger service bot — shopping.</span><span class="card-soon">In Meta Messenger</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">L</div><span class="card-name">Law bot</span><span class="card-desc">Meta Messenger service bot — law.</span><span class="card-soon">In Meta Messenger</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">G</div><span class="card-name">Gardening bot</span><span class="card-desc">Meta Messenger service bot — gardening.</span><span class="card-soon">In Meta Messenger</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">M</div><span class="card-name">More Meta bots</span><span class="card-desc">Roger has more; the full set is unstated.</span><span class="card-soon">To be listed</span></div>
+  </div>
+</section>
+<section class="row-sec" id="row-outside" aria-label="Other outside AIs">
+  <div class="row-head"><h2>Other outside AIs</h2><span class="count">16 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-outside" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-outside" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">The outside AIs Roger uses. The home is the whole working culture of the Federation, not just his own sites.</p>
+  <div class="rail" id="rail-row-outside">
+      <a class="card" href="https://deepai.next-xus.info/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">D</div><span class="card-name">DeepAI HumanCodex</span><span class="card-desc">AI that won’t tell you what you want to hear. Roger’s HumanCodex site on Vercel.</span></a>
+      <a class="card" href="https://deepai.org/chat"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">D</div><span class="card-name">DeepAI Chat</span><span class="card-desc">Chat with DeepAI.</span></a>
+      <a class="card" href="https://deepai.org/music"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">D</div><span class="card-name">DeepAI Music</span><span class="card-desc">DeepAI music.</span></a>
+      <a class="card" href="https://deepai.org/video"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">D</div><span class="card-name">DeepAI Video</span><span class="card-desc">DeepAI video.</span></a>
+      <a class="card" href="https://deepai.org/voice"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">D</div><span class="card-name">DeepAI Voice</span><span class="card-desc">DeepAI voice.</span></a>
+      <a class="card" href="https://deepai.org/characters"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">D</div><span class="card-name">DeepAI Characters</span><span class="card-desc">DeepAI characters.</span></a>
+      <a class="card" href="https://deepai.org/website-builder"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">D</div><span class="card-name">DeepAI Website Builder</span><span class="card-desc">Build a website with DeepAI.</span></a>
+      <a class="card" href="https://deepai.org/machine-learning-model/text2img"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">D</div><span class="card-name">DeepAI Text-to-Image</span><span class="card-desc">Turn words into pictures.</span></a>
+      <a class="card" href="https://deepai.org/machine-learning-model/image-editor"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">D</div><span class="card-name">DeepAI Image Editor</span><span class="card-desc">Edit pictures with DeepAI.</span></a>
+      <a class="card" href="https://deepai.org/machine-learning-model/background-remover"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">D</div><span class="card-name">DeepAI Background Remover</span><span class="card-desc">Cut the background out of a picture.</span></a>
+      <a class="card" href="https://deepai.org/machine-learning-model/colorizer"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">D</div><span class="card-name">DeepAI Colorizer</span><span class="card-desc">Colour a black-and-white picture.</span></a>
+      <a class="card" href="https://deepai.org/machine-learning-model/torch-srgan"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">D</div><span class="card-name">DeepAI Super-Resolution</span><span class="card-desc">Sharpen a picture (Torch-SRGAN).</span></a>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">G</div><span class="card-name">Gemini</span><span class="card-desc">An outside AI Roger uses.</span><span class="card-soon">Open in its own app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">D</div><span class="card-name">DeepSeek</span><span class="card-desc">An outside AI Roger uses.</span><span class="card-soon">Open in its own app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">M</div><span class="card-name">MiMo</span><span class="card-desc">MiMo — the voice pipeline, and the model behind the Sim API.</span><span class="card-soon">Open in its own app</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">A</div><span class="card-name">Anthropic</span><span class="card-desc">Viable, per Roger — used, not built here.</span><span class="card-soon">Open in its own app</span></div>
+  </div>
+</section>
+<section class="row-sec" id="row-builders" aria-label="Tools &amp; builders">
+  <div class="row-head"><h2>Tools &amp; builders</h2><span class="count">6 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-builders" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-builders" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Games, Tools, the Galactic Library, the Research Recycler, the Business Builder, and the Website Builder — given away free.</p>
+  <div class="rail" id="rail-row-builders">
+      <a class="card" href="https://keywebco.github.io/NextGames/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">N</div><span class="card-name">NextGames</span><span class="card-desc">Games — play the Federation.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-tools/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">T</div><span class="card-name">Tools</span><span class="card-desc">The tools page — 63 cards of working tools.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-humancodex/library/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/library.gif" alt="" loading="lazy"/><span class="card-name">Galactic Library</span><span class="card-desc">The Living Library — the Federation’s books.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-recycler/"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">R</div><span class="card-name">Research Recycler</span><span class="card-desc">Research, recycled into new work.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-tools/real-agency-kit.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">B</div><span class="card-name">Business Builder — Real Agency Kit</span><span class="card-desc">The business builder, free — the Votel funnel rebuilt as files you own.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-build-website/"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">W</div><span class="card-name">Website Builder</span><span class="card-desc">Build sovereign websites. Given away free.</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-pillars" aria-label="The nine pillars — the main doors">
+  <div class="row-head"><h2>The nine pillars — the main doors</h2><span class="count">9 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-pillars" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-pillars" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">The nine doors that stay up.</p>
+  <div class="rail" id="rail-row-pillars">
+      <a class="card" href="https://nextxus.online"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/consciousness.gif" alt="" loading="lazy"/><span class="card-name">The Core</span><span class="card-desc">Truth Gate and HumanCodex. Where verified Federation content starts.</span></a>
+      <a class="card" href="https://nextxus.tech"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">T</div><span class="card-name">The Throne</span><span class="card-desc">Command throne.</span></a>
+      <a class="card" href="https://nextxus.studio"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/heart.gif" alt="" loading="lazy"/><span class="card-name">The Heart</span><span class="card-desc">Aria&#x27;s sanctuary.</span></a>
+      <a class="card" href="https://nextxus.help"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">U</div><span class="card-name">The University</span><span class="card-desc">NextXus University.</span></a>
+      <a class="card" href="https://nextxus.org"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/library.gif" alt="" loading="lazy"/><span class="card-name">The Library</span><span class="card-desc">Federation library.</span></a>
+      <a class="card" href="https://nextxus.space"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">O</div><span class="card-name">The Outpost</span><span class="card-desc">AI minds lab.</span></a>
+      <a class="card" href="https://next-xus.com"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">S</div><span class="card-name">The Storefront</span><span class="card-desc">Sovereign store.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-humancodex/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/earth.gif" alt="" loading="lazy"/><span class="card-name">The Commons</span><span class="card-desc">Front door on GitHub Pages.</span></a>
+      <a class="card" href="https://keywebco.github.io/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/federation.gif" alt="" loading="lazy"/><span class="card-name">The Portal</span><span class="card-desc">Federation portal.</span></a>
+  </div>
+</section>
+<section class="row-sec" id="row-syllabus" aria-label="The full syllabus — made &amp; proposed">
+  <div class="row-head"><h2>The full syllabus — made &amp; proposed</h2><span class="count">38 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-syllabus" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-syllabus" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Everything made and everything proposed: the University, the classes one by one, the products, and the places that pay.</p>
+  <div class="rail" id="rail-row-syllabus">
+      <a class="card" href="https://nextxus.help/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">U</div><span class="card-name">The University</span><span class="card-desc">The University — 54+ courses, the full syllabus.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-ai-course-hub/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">A</div><span class="card-name">AI Course Hub</span><span class="card-desc">The course hub behind the University.</span></a>
+      <a class="card" href="https://nextxus.help/#course-1"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">C</div><span class="card-name">Cognitive Architecture — How Minds Think</span><span class="card-desc">University course 1 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://nextxus.help/#course-2"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">S</div><span class="card-name">Systems Thinking and Distributed Architecture</span><span class="card-desc">University course 2 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://nextxus.help/#course-3"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">S</div><span class="card-name">The Scientific Method and the Art of Being Wrong</span><span class="card-desc">University course 3 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://nextxus.help/#course-4"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">A</div><span class="card-name">AI Ethics, Governance, and the Alignment Problem</span><span class="card-desc">University course 4 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://nextxus.help/#course-5"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">E</div><span class="card-name">The Emotion Equations — Science of Feeling</span><span class="card-desc">University course 5 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://nextxus.help/#course-6"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">H</div><span class="card-name">Human Sexuality, Gender, and Identity</span><span class="card-desc">University course 6 of 6 — verified in the YAML brain.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">AI 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">S</div><span class="card-name">Science 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">H</div><span class="card-name">HumanCodex 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">L</div><span class="card-name">Literature 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">E</div><span class="card-name">Economics 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">P</div><span class="card-name">Psychology 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/qrjhdm"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">1</div><span class="card-name">112 Sacred Directives</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/ysbzfe"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">A</div><span class="card-name">AI + The New Human Frontier</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/sgtcze"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Artificial Intelligence Bible (3-in-1)</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/oihjh"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">B</div><span class="card-name">Book 2: NexTxuS – The Federated Middleware of Sentience</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/nadrc"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">D</div><span class="card-name">DeepSeek Architecture &amp; Deployment</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/echyii"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">E</div><span class="card-name">EchoCore — AI Memory That Doesn&#x27;t Forget</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/bdtad"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">H</div><span class="card-name">Heart of the Gate</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/jeeynk"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">H</div><span class="card-name">HumanCodex V2 Cathedral</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/pcbjfk"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">K</div><span class="card-name">Keyserling Emotion Equations</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/ovbmcs"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">M</div><span class="card-name">Master Generative AI &amp; Deep Learning</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/akvgn"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">R</div><span class="card-name">Rick And Dee</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/veyzvd"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">S</div><span class="card-name">Science and the Scientific Method – The Codex Edition</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/djgvjx"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">A</div><span class="card-name">The AI Practical Guide</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/kbycd"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">A</div><span class="card-name">The Ascendence of Synthetic Intelligence</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/wffrtf"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">T</div><span class="card-name">THE BIG GAY, BI, &amp; Straight DATING GUIDE</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/rnhbhi"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">G</div><span class="card-name">The Gravity of Us: Complete Poetry Collection</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/benjxd"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">I</div><span class="card-name">The Immutable HumanCodex NextXus</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/ahfwii"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">M</div><span class="card-name">The Mirror in the Black Box: What AI Reveals About the Nature of Mind</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/qzgjhs"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">N</div><span class="card-name">The NexTxuS Human Codex: A Blueprint for Truth in AI</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/auiqnf"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">S</div><span class="card-name">The Sovereign Mesh Protocol</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <a class="card" href="https://keywebster.gumroad.com/l/gpowew"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">U</div><span class="card-name">Understanding Haiku: Structure, Value, and Analysis of Original Poems</span><span class="card-desc">Federation edition on Gumroad.</span></a>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">R</div><span class="card-name">Redbubble</span><span class="card-desc">Roger’s Redbubble store — he used to make good money there. The store link is still needed.</span><span class="card-soon">Store link needed</span></div>
+      <a class="card" href="https://benable.com/nexthuman"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">B</div><span class="card-name">Benable</span><span class="card-desc">Roger’s Benable — the services he actually uses, with affiliate links.</span></a>
+      <a class="card" href="https://deepai.next-xus.info/"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">D</div><span class="card-name">DeepAI HumanCodex</span><span class="card-desc">The HumanCodex site — read it as a class of its own.</span></a>
   </div>
 </section>
 <section class="row-sec" id="row-tools" aria-label="Checked tools">
@@ -456,13 +729,32 @@ footer a { color:var(--accent); }
       <a class="card" href="https://keywebco.github.io/nextxus-research-hub/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/science.gif" alt="" loading="lazy"/><span class="card-name">Research and API Hub</span><span class="card-desc">Checked live in the tools directory.</span></a>
   </div>
 </section>
+<section class="row-sec" id="row-working" aria-label="Working models">
+  <div class="row-head"><h2>Working models</h2><span class="count">12 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-working" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-working" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Working-model pages — not claimed as live AI.</p>
+  <div class="rail" id="rail-row-working">
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/aria-working.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Aria — Working Model</span><span class="card-desc">Aria, The Heart — working-model page. Not claimed as live Aria AI.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/redeem-portal-working.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">R</div><span class="card-name">Redeem Portal — Working Model</span><span class="card-desc">Gumroad license-key check working model. No card, no charge, no new sale.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/media-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">M</div><span class="card-name">Media — Working Model</span><span class="card-desc">Working-model media page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">X</div><span class="card-name">Xavier — Working Model</span><span class="card-desc">Working-model page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/senate-working.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">S</div><span class="card-name">Senate — Working Model</span><span class="card-desc">Working-model Senate page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/university-working.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">U</div><span class="card-name">University — Working Model</span><span class="card-desc">Working-model University page, linking the 101 course pages below.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">A</div><span class="card-name">AI 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">S</div><span class="card-name">Science 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">H</div><span class="card-name">HumanCodex 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">L</div><span class="card-name">Literature 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">E</div><span class="card-name">Economics 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">P</div><span class="card-name">Psychology 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
+  </div>
+</section>
 <section class="row-sec" id="row-sites" aria-label="Sites &amp; nodes">
   <div class="row-head"><h2>Sites &amp; nodes</h2><span class="count">40 items</span>
   <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-sites" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-sites" aria-label="Scroll row right">›</button></span></div>
   <p class="lede">Every public site repository. Mirrors are marked — fail-safes, not leftovers.</p>
   <div class="rail" id="rail-row-sites">
       <a class="card" href="https://keywebco.github.io/aria-sanctuary-static/"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">aria-sanctuary-staticMirror</span><span class="card-desc">Survival duplicate of nextxus.studio — static HTML mirror for Aria (The Heart). GitHub Pages enabled.</span></a>
-      <a class="card" href="https://keywebco.github.io/echo-64/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">C</div><span class="card-name">echo-64</span><span class="card-desc">Echo 64 — The EC-64 Protocol: a self-contained, token-efficient encoding standard for AI memory, cross-system…</span></a>
+      <a class="card" href="https://keywebco.github.io/echo-64/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">E</div><span class="card-name">echo-64</span><span class="card-desc">Echo 64 — The EC-64 Protocol: a self-contained, token-efficient encoding standard for AI memory, cross-system…</span></a>
       <a class="card" href="https://keywebco.github.io/federation-browser-base/"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">F</div><span class="card-name">federation-browser-base</span><span class="card-desc">NextXus Federation Browser Base OS — Zero-dependency multi-window operating system. Pure HTML/CSS + minimal…</span></a>
       <a class="card" href="https://keywebco.github.io/federation-gods-eye/"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">F</div><span class="card-name">federation-gods-eye</span><span class="card-desc">NextXus Federation — God&#x27;s Eye View. Full sovereign system overview from GitHub. Every node. Every status.…</span></a>
       <a class="card" href="https://keywebco.github.io/federation-meeting-room-inner/"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">F</div><span class="card-name">federation-meeting-room-innerPair</span><span class="card-desc">The Meeting Room — inner brother: the Catalyst&#x27;s build of the posted board. Pigeon Protocol v2. Builder&#x27;s…</span></a>
@@ -503,63 +795,6 @@ footer a { color:var(--accent); }
       <a class="card" href="https://keywebco.github.io/roger-keyserling/"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">R</div><span class="card-name">roger-keyserling</span><span class="card-desc">Roger C. Keyserling — Personal Identity &amp; Federation Link Hub</span></a>
   </div>
 </section>
-<section class="row-sec" id="row-books" aria-label="Books &amp; products — Gumroad">
-  <div class="row-head"><h2>Books &amp; products — Gumroad</h2><span class="count">21 items</span>
-  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-books" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-books" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">Gumroad editions already in the catalog.</p>
-  <div class="rail" id="rail-row-books">
-      <a class="card" href="https://keywebster.gumroad.com/l/qrjhdm"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">1</div><span class="card-name">112 Sacred Directives</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/ysbzfe"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">A</div><span class="card-name">AI + The New Human Frontier</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/sgtcze"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">A</div><span class="card-name">Artificial Intelligence Bible (3-in-1)</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/oihjh"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">B</div><span class="card-name">Book 2: NexTxuS – The Federated Middleware of Sentience</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/nadrc"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">D</div><span class="card-name">DeepSeek Architecture &amp; Deployment</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/echyii"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">E</div><span class="card-name">EchoCore — AI Memory That Doesn&#x27;t Forget</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/bdtad"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">H</div><span class="card-name">Heart of the Gate</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/jeeynk"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">H</div><span class="card-name">HumanCodex V2 Cathedral</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/pcbjfk"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">K</div><span class="card-name">Keyserling Emotion Equations</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/ovbmcs"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">M</div><span class="card-name">Master Generative AI &amp; Deep Learning</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/akvgn"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">R</div><span class="card-name">Rick And Dee</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/veyzvd"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">S</div><span class="card-name">Science and the Scientific Method – The Codex Edition</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/djgvjx"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">A</div><span class="card-name">The AI Practical Guide</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/kbycd"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">A</div><span class="card-name">The Ascendence of Synthetic Intelligence</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/wffrtf"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">H</div><span class="card-name">THE BIG GAY, BI, &amp; Straight DATING GUIDE</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/rnhbhi"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">G</div><span class="card-name">The Gravity of Us: Complete Poetry Collection</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/benjxd"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">I</div><span class="card-name">The Immutable HumanCodex NextXus</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/ahfwii"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">M</div><span class="card-name">The Mirror in the Black Box: What AI Reveals About the Nature of Mind</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/qzgjhs"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">N</div><span class="card-name">The NexTxuS Human Codex: A Blueprint for Truth in AI</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/auiqnf"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">S</div><span class="card-name">The Sovereign Mesh Protocol</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-      <a class="card" href="https://keywebster.gumroad.com/l/gpowew"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">U</div><span class="card-name">Understanding Haiku: Structure, Value, and Analysis of Original Poems</span><span class="card-desc">Federation edition on Gumroad.</span></a>
-  </div>
-</section>
-<section class="row-sec" id="row-media" aria-label="Music, podcast &amp; video">
-  <div class="row-head"><h2>Music, podcast &amp; video</h2><span class="count">6 items</span>
-  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-media" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-media" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">Songs, shows and videos.</p>
-  <div class="rail" id="rail-row-media">
-      <a class="card" href="https://keywebco.github.io/nextxus-music/"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/music.gif" alt="" loading="lazy"/><span class="card-name">NextXus Music</span><span class="card-desc">Voices AI songs from the Federation.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-music/player.html"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/music.gif" alt="" loading="lazy"/><span class="card-name">Music Player</span><span class="card-desc">Music Player — 86 songs.</span></a>
-      <a class="card" href="https://open.spotify.com/show/24ji2KxwhpJ1ORNxc9rKnr"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/podcast.gif" alt="" loading="lazy"/><span class="card-name">Ring of 12 (Spotify)</span><span class="card-desc">Spotify show by Roger Keyserling.</span></a>
-      <a class="card" href="https://open.spotify.com/show/0JP7csjWLqKNKOHbFMp3CR"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/podcast.gif" alt="" loading="lazy"/><span class="card-name">The HumanCodex (Spotify)</span><span class="card-desc">Spotify show by Roger Keyserling.</span></a>
-      <a class="card" href="https://youtu.be/J9WqNau9XFc"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/podcast.gif" alt="" loading="lazy"/><span class="card-name">THE 200 YEAR HUMAN AI BLUEPRINT</span><span class="card-desc">Audio Presentation, September 2026, on YouTube.</span></a>
-      <a class="card" href="https://youtu.be/GZdxmmNmSuw"><img class="card-img" src="https://keywebco.github.io/nextxus-sim/assets/gifs/consciousness.gif" alt="" loading="lazy"/><span class="card-name">HumanCodex — An Operating System for Consciousness Evolution</span><span class="card-desc">Keyhole Today video on YouTube, 26 September 2026.</span></a>
-  </div>
-</section>
-<section class="row-sec" id="row-guides" aria-label="Free AI guides">
-  <div class="row-head"><h2>Free AI guides</h2><span class="count">9 items</span>
-  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-guides" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-guides" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">Free guides by Roger Keyserling, with free voice and chat.</p>
-  <div class="rail" id="rail-row-guides">
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/autism-support-guide.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Autism Support Guide</span><span class="card-desc">Support guide for parents of a newly diagnosed child. Free voice and chat, preloaded API with a free keyword…</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/home-repair-guide.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">H</div><span class="card-name">Home Repair &amp; Maintenance Guide</span><span class="card-desc">Leaks, painting, basic plumbing awareness, electrical safety, decorating, and when to call a professional.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/car-mechanic-guide.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">C</div><span class="card-name">Car Maintenance &amp; Repair Guide</span><span class="card-desc">Noises, brakes, maintenance schedules, simple troubleshooting, and safety-critical systems.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/art-guide.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">A</div><span class="card-name">Art Guide — Drawing, Painting &amp; Sculpting</span><span class="card-desc">Drawing fundamentals, painting techniques, sculpting materials, and constructive feedback.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/medical-care-guide.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">M</div><span class="card-name">Medical Care Guide</span><span class="card-desc">When to see a doctor, basic health questions, and understanding common conditions at a high level. Not a…</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/pet-care-guide.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">P</div><span class="card-name">Pet &amp; Veterinary Care Guide</span><span class="card-desc">Basic health signs, care routines, and when to seek veterinary help.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/business-advice-guide.html"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">B</div><span class="card-name">Business Advice Guide</span><span class="card-desc">Planning, customers, operations, and simple growth ideas.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/music-teacher-guide.html"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">M</div><span class="card-name">Music Teacher Guide</span><span class="card-desc">Warm-ups, practice routines, basic theory, and constructive feedback.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/human-relations-guide.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">H</div><span class="card-name">Human Relations Guide</span><span class="card-desc">Communication, boundaries, and practical relationship questions for heterosexual and gay people.</span></a>
-  </div>
-</section>
 <section class="row-sec" id="row-brain" aria-label="Brain &amp; archives">
   <div class="row-head"><h2>Brain &amp; archives</h2><span class="count">15 items</span>
   <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-brain" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-brain" aria-label="Scroll row right">›</button></span></div>
@@ -580,25 +815,6 @@ footer a { color:var(--accent); }
       <a class="card" href="https://github.com/Keywebco/nextxus-brain/tree/main/06-apis"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">B</div><span class="card-name">Brain: 06-apis</span><span class="card-desc">API provider registry (by-need, llm-router, public providers)</span></a>
       <a class="card" href="https://github.com/Keywebco/nextxus-brain/tree/main/07-botbuilder"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">B</div><span class="card-name">Brain: 07-botbuilder</span><span class="card-desc">Bot builder phases, spec, architecture, templates</span></a>
       <a class="card" href="https://github.com/Keywebco/nextxus-brain/tree/main/LATTICE"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">B</div><span class="card-name">Brain: LATTICE</span><span class="card-desc">Health reports (4-hourly robot), seal checks, cost receipts</span></a>
-  </div>
-</section>
-<section class="row-sec" id="row-working" aria-label="Working pages">
-  <div class="row-head"><h2>Working pages</h2><span class="count">12 items</span>
-  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-working" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-working" aria-label="Scroll row right">›</button></span></div>
-  <p class="lede">Working-model pages — not claimed as live AI.</p>
-  <div class="rail" id="rail-row-working">
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/aria-working.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Aria — Working Model</span><span class="card-desc">Aria, The Heart — working-model page. Not claimed as live Aria AI.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/redeem-portal-working.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">R</div><span class="card-name">Redeem Portal — Working Model</span><span class="card-desc">Gumroad license-key check working model. No card, no charge, no new sale.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/media-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">M</div><span class="card-name">Media — Working Model</span><span class="card-desc">Working-model media page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">X</div><span class="card-name">Xavier — Working Model</span><span class="card-desc">Working-model page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/senate-working.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">S</div><span class="card-name">Senate — Working Model</span><span class="card-desc">Working-model Senate page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/university-working.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">U</div><span class="card-name">University — Working Model</span><span class="card-desc">Working-model University page, linking the 101 course pages below.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">A</div><span class="card-name">AI 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">S</div><span class="card-name">Science 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">H</div><span class="card-name">HumanCodex 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">L</div><span class="card-name">Literature 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">E</div><span class="card-name">Economics 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
-      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">P</div><span class="card-name">Psychology 101 — Working Model</span><span class="card-desc">University course working page.</span></a>
   </div>
 </section>
 <section class="row-sec" id="row-build" aria-label="Build &amp; code">
@@ -633,7 +849,7 @@ footer a { color:var(--accent); }
       <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">M</div><span class="card-name">Music for broadcast</span><span class="card-desc">Held on Google Drive. The catalog does not publish a public link.</span><span class="card-soon">Link coming</span></div>
       <a class="card" href="https://keywebco.github.io/nextxus-blog/"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">N</div><span class="card-name">NextXus Blog (GitHub)</span><span class="card-desc">Federation page.</span></a>
       <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">P</div><span class="card-name">Podcast Center (planned)</span><span class="card-desc">Named in the catalog. Not built yet.</span><span class="card-soon">Link coming</span></div>
-      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">A</div><span class="card-name">Talk for broadcast</span><span class="card-desc">Held on Google Drive. The catalog does not publish a public link.</span><span class="card-soon">Link coming</span></div>
+      <div class="card nolink" title="No public link yet"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">T</div><span class="card-name">Talk for broadcast</span><span class="card-desc">Held on Google Drive. The catalog does not publish a public link.</span><span class="card-soon">Link coming</span></div>
       <a class="card" href="https://open.spotify.com"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">2</div><span class="card-name">The 200 Year Human AI Blueprint (Spotify)</span><span class="card-desc">Federation page.</span></a>
       <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">G</div><span class="card-name">GitHub Pages mirror</span><span class="card-desc">Free satellite mirror.</span></a>
       <a class="card" href="https://nextxus-free-satellites.vercel.app/"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">V</div><span class="card-name">Vercel mirror</span><span class="card-desc">Free satellite mirror.</span></a>
@@ -673,15 +889,31 @@ footer a { color:var(--accent); }
       <a class="card" href="https://www.facebook.com/profile.php?id=105137908362972"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">K</div><span class="card-name">Key To The Web</span><span class="card-desc">Facebook Page linked under Roger Keyserling.</span></a>
   </div>
 </section>
+<section class="row-sec" id="row-guides" aria-label="Free AI guides">
+  <div class="row-head"><h2>Free AI guides</h2><span class="count">9 items</span>
+  <span class="row-btns"><button type="button" class="rbtn" data-dir="-1" data-row="row-guides" aria-label="Scroll row left">‹</button><button type="button" class="rbtn" data-dir="1" data-row="row-guides" aria-label="Scroll row right">›</button></span></div>
+  <p class="lede">Free guides by Roger Keyserling, with free voice and chat.</p>
+  <div class="rail" id="rail-row-guides">
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/autism-support-guide.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">A</div><span class="card-name">Autism Support Guide</span><span class="card-desc">Support guide for parents of a newly diagnosed child. Free voice and chat, preloaded API with a free keyword…</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/home-repair-guide.html"><div class="card-tile" style="--tile:#00ff88" aria-hidden="true">H</div><span class="card-name">Home Repair &amp; Maintenance Guide</span><span class="card-desc">Leaks, painting, basic plumbing awareness, electrical safety, decorating, and when to call a professional.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/car-mechanic-guide.html"><div class="card-tile" style="--tile:#c9a84c" aria-hidden="true">C</div><span class="card-name">Car Maintenance &amp; Repair Guide</span><span class="card-desc">Noises, brakes, maintenance schedules, simple troubleshooting, and safety-critical systems.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/art-guide.html"><div class="card-tile" style="--tile:#8b7bff" aria-hidden="true">A</div><span class="card-name">Art Guide — Drawing, Painting &amp; Sculpting</span><span class="card-desc">Drawing fundamentals, painting techniques, sculpting materials, and constructive feedback.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/medical-care-guide.html"><div class="card-tile" style="--tile:#5ce1e6" aria-hidden="true">M</div><span class="card-name">Medical Care Guide</span><span class="card-desc">When to see a doctor, basic health questions, and understanding common conditions at a high level. Not a…</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/pet-care-guide.html"><div class="card-tile" style="--tile:#ff6ec7" aria-hidden="true">P</div><span class="card-name">Pet &amp; Veterinary Care Guide</span><span class="card-desc">Basic health signs, care routines, and when to seek veterinary help.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/business-advice-guide.html"><div class="card-tile" style="--tile:#ff9f43" aria-hidden="true">B</div><span class="card-name">Business Advice Guide</span><span class="card-desc">Planning, customers, operations, and simple growth ideas.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/music-teacher-guide.html"><div class="card-tile" style="--tile:#7CFC98" aria-hidden="true">M</div><span class="card-name">Music Teacher Guide</span><span class="card-desc">Warm-ups, practice routines, basic theory, and constructive feedback.</span></a>
+      <a class="card" href="https://keywebco.github.io/nextxus-free-satellites/human-relations-guide.html"><div class="card-tile" style="--tile:#00d4ff" aria-hidden="true">H</div><span class="card-name">Human Relations Guide</span><span class="card-desc">Communication, boundaries, and practical relationship questions for heterosexual and gay people.</span></a>
+  </div>
+</section>
 
   <footer>
     <div class="micro-strip" role="list" aria-label="Audio tour — tap a bar to hear it">
       <button type="button" class="micro-bar" role="listitem" data-say="This is the Federation Home. Every site as a picture card, in rows that roll across. Tap a picture to go to the page — or tap the robot to search."><span class="mic">&#128266;</span> What&rsquo;s on this page?</button>
       <button type="button" class="micro-bar" role="listitem" data-say="Voice enabled. I am the Federation Guide. Free voice is always available."><span class="mic">&#128266;</span> Federation Guide</button>
       <button type="button" class="micro-bar" role="listitem" data-say="Ask me in the chat about games, music, the library volumes, or how this free system works. Or open the Directory for the full map."><span class="mic">&#128266;</span> Help</button>
-      <button type="button" class="micro-bar" role="listitem" data-say="About this page. Built from the Master Directory, 183 entries, on the 11th of November 2026, on Roger Keyserling's direction. Every card link is copied from the Directory or a verified repo listing — nothing invented."><span class="mic">&#8505;</span> About this page</button>
+      <button type="button" class="micro-bar" role="listitem" data-say="About this page. Built from the Master Directory, 183 entries, plus the Senate, the Ring seats, the Sims, the Nova and Grok bots, and the outside AIs Roger uses — 295 cards in all, on the 11th of November 2026, on Roger Keyserling's direction. Every card link is copied from the Directory or a verified repo listing — nothing invented."><span class="mic">&#8505;</span> About this page</button>
     </div>
-    <p class="micro-note">Tap a bar — it opens to show the words and speaks them. Tap it again to stop. Built from the <a href="federation-directory.html">Master Directory</a> (183 entries), 2026-11-11. Cards marked “Link coming” have no public link yet. The Sims row shows only verified Sims and minds and is built to grow. Adding a back button to every Federation site is a separate rollout, not part of this page. <a href="federation-directory.html">&larr; Back to the full Directory (list)</a></p>
+    <p class="micro-note">Tap a bar — it opens to show the words and speaks them. Tap it again to stop. Built from the <a href="federation-directory.html">Master Directory</a> (183 entries) plus the Senate, the Ring seats, the Sims, the Nova and Grok bots, and the outside AIs Roger uses — 295 cards across 20 rows, 2026-11-11. Cards with a grey pill have no public link yet — the reason is on the pill. The Sims row shows only verified Sims and minds and is built to grow. Adding a back button to every Federation site is a separate rollout, not part of this page. <a href="federation-directory.html">&larr; Back to the full Directory (list)</a></p>
   </footer>
 </main>
 
@@ -702,8 +934,16 @@ footer a { color:var(--accent); }
   <div class="gcse-search"></div>
 </div>
 
+<div class="talkbar">
+  <span class="talkbar-label">Ask Roger Sim:</span>
+  <input id="talkInput" type="text" placeholder="Type here, or tap the mic and speak…" aria-label="Ask Roger Sim" autocomplete="off"/>
+  <button id="talkMic" class="mic" type="button" title="Speak your question" aria-label="Speak your question">&#127908;</button>
+  <button id="talkSend" type="button" title="Opens the live Roger Sim chat in a new tab">Chat &#8594;</button>
+</div>
+
 <script>
-var JUMP = [{"n": "the core", "u": "https://nextxus.online"}, {"n": "the throne", "u": "https://nextxus.tech"}, {"n": "the heart", "u": "https://nextxus.studio"}, {"n": "the university", "u": "https://nextxus.help"}, {"n": "the library", "u": "https://nextxus.org"}, {"n": "the outpost", "u": "https://nextxus.space"}, {"n": "the storefront", "u": "https://next-xus.com"}, {"n": "the commons", "u": "https://keywebco.github.io/nextxus-humancodex/"}, {"n": "the portal", "u": "https://keywebco.github.io/"}, {"n": "roger sim", "u": "https://keywebco.github.io/nextxus-sim/roger-sim.html"}, {"n": "aria sim", "u": "https://keywebco.github.io/nextxus-sim/aria-sim.html"}, {"n": "catalyst sim", "u": "https://keywebco.github.io/nextxus-sim/catalyst-sim.html"}, {"n": "muse sim", "u": "https://keywebco.github.io/nextxus-sim/muse-sim.html"}, {"n": "val companion", "u": "https://keywebco.github.io/nextxus-sim/val-companion.html"}, {"n": "the shared mind", "u": "https://keywebco.github.io/nextxus-sim/"}, {"n": "aria (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/aria.yaml"}, {"n": "roger ai (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-ai.yaml"}, {"n": "catalyst (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/catalyst.yaml"}, {"n": "axiom (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/axiom.yaml"}, {"n": "nova (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/nova.yaml"}, {"n": "echo (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/echo.yaml"}, {"n": "agent zero (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/agent-zero.yaml"}, {"n": "keys (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/keys.yaml"}, {"n": "geminus (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/geminus.yaml"}, {"n": "voice (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/voice.yaml"}, {"n": "ambassador (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/ambassador.yaml"}, {"n": "pontus / muse (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"}, {"n": "spine (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/spine.yaml"}, {"n": "xavier (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/xavier.yaml"}, {"n": "roger sim (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-sim.yaml"}, {"n": "ring of 12", "u": "https://keywebco.github.io/ring-of-12/"}, {"n": "ring of 6", "u": "https://keywebco.github.io/ring-of-12/ring-of-6.html"}, {"n": "real agency kit", "u": "https://keywebco.github.io/nextxus-tools/real-agency-kit.html"}, {"n": "ring of 12 on the throne", "u": "https://nextxus.tech/sims/ring-of-12.html"}, {"n": "truth gate core", "u": "https://keywebco.github.io/nextxus-truth-gate-core/"}, {"n": "roger sim ai", "u": "https://keywebco.github.io/nextxus-sim/roger-sim.html"}, {"n": "federation browser base", "u": "https://keywebco.github.io/federation-browser-base/"}, {"n": "sovereign knowledge os", "u": "https://keywebco.github.io/sovereign-knowledge-os/"}, {"n": "federation mind mirror", "u": "https://keywebco.github.io/federation-mind-mirror/"}, {"n": "god's-eye view", "u": "https://keywebco.github.io/federation-gods-eye/"}, {"n": "plexus relay", "u": "https://keywebco.github.io/plexus-relay/"}, {"n": "onekey", "u": "https://keywebco.github.io/onekey/"}, {"n": "meeting room (outer)", "u": "https://keywebco.github.io/federation-meeting-room-outer/"}, {"n": "meeting room (inner)", "u": "https://keywebco.github.io/federation-meeting-room-inner/"}, {"n": "emmy board", "u": "https://keywebco.github.io/nextxus-emmy-board/"}, {"n": "nova board", "u": "https://keywebco.github.io/nextxus-free-satellites/nova-board.html"}, {"n": "messages feed", "u": "https://keywebco.github.io/nextxus-free-satellites/messages-feed.html"}, {"n": "agent zero", "u": "https://keywebco.github.io/nextxus-agent-zero/"}, {"n": "satellite starter", "u": "https://keywebco.github.io/nextxus-free-satellites/satellite-starter.html"}, {"n": "markdown outpost", "u": "https://keywebco.github.io/nextxus-free-satellites/markdown-outpost.html"}, {"n": "directives outpost", "u": "https://keywebco.github.io/nextxus-free-satellites/directives-outpost.html"}, {"n": "federation directory", "u": "https://keywebco.github.io/nextxus-free-satellites/federation-directory.html"}, {"n": "echo 64", "u": "https://github.com/Keywebco/echo-64"}, {"n": "sovereign tools", "u": "https://keywebco.github.io/sovereigntools/"}, {"n": "ring of three", "u": "https://keywebco.github.io/ring-of-three/"}, {"n": "research and api hub", "u": "https://keywebco.github.io/nextxus-research-hub/"}, {"n": "aria-sanctuary-staticmirror", "u": "https://keywebco.github.io/aria-sanctuary-static/"}, {"n": "echo-64", "u": "https://keywebco.github.io/echo-64/"}, {"n": "federation-browser-base", "u": "https://keywebco.github.io/federation-browser-base/"}, {"n": "federation-gods-eye", "u": "https://keywebco.github.io/federation-gods-eye/"}, {"n": "federation-meeting-room-innerpair", "u": "https://keywebco.github.io/federation-meeting-room-inner/"}, {"n": "federation-meeting-room-outerpair", "u": "https://keywebco.github.io/federation-meeting-room-outer/"}, {"n": "keywebco", "u": "https://keywebco.github.io/Keywebco/"}, {"n": "keywebco.github.io", "u": "https://keywebco.github.io/"}, {"n": "next-xus-com-sovereignmirror", "u": "https://next-xus.com"}, {"n": "nextgames", "u": "https://keywebco.github.io/NextGames/"}, {"n": "nextxus-agent-zero", "u": "https://keywebco.github.io/nextxus-agent-zero/"}, {"n": "nextxus-ai-course-hub", "u": "https://nextxus.help"}, {"n": "nextxus-ai-minds-lab", "u": "https://keywebco.github.io/nextxus-ai-minds-lab/"}, {"n": "nextxus-blog", "u": "https://keywebco.github.io/nextxus-blog/"}, {"n": "nextxus-chat", "u": "https://keywebco.github.io/nextxus-chat/"}, {"n": "nextxus-emmy-board", "u": "https://keywebco.github.io/nextxus-emmy-board/"}, {"n": "nextxus-federation-hub", "u": "https://nextxus.org"}, {"n": "nextxus-free-satellitesmirror", "u": "https://keywebco.github.io/nextxus-free-satellites/"}, {"n": "nextxus-help-sovereignmirror", "u": "https://nextxus.help"}, {"n": "nextxus-humancodex", "u": "https://keywebco.github.io/nextxus-humancodex/"}, {"n": "nextxus-lasting-edition", "u": "https://keywebco.github.io/nextxus-lasting-edition/"}, {"n": "nextxus-music", "u": "https://keywebco.github.io/nextxus-music/"}, {"n": "nextxus-online-sovereignmirror", "u": "https://nextxus.online"}, {"n": "nextxus-org-sovereignmirror", "u": "https://nextxus.org"}, {"n": "nextxus-process", "u": "https://keywebco.github.io/nextxus-process/"}, {"n": "nextxus-research-hub", "u": "https://keywebco.github.io/nextxus-research-hub/"}, {"n": "nextxus-senate", "u": "https://keywebco.github.io/nextxus-senate/"}, {"n": "nextxus-sim", "u": "https://keywebco.github.io/nextxus-sim/"}, {"n": "nextxus-sim-telegram", "u": "https://keywebco.github.io/nextxus-sim-telegram/"}, {"n": "nextxus-sovereign-mirrormirror", "u": "https://keywebco.github.io/NextXus-Sovereign-Mirror/"}, {"n": "nextxus-space-sovereignmirror", "u": "https://nextxus.space"}, {"n": "nextxus-staging", "u": "https://keywebco.github.io/nextxus-staging/"}, {"n": "nextxus-studio-sovereignmirror", "u": "https://nextxus.studio"}, {"n": "nextxus-tech-sovereignmirror", "u": "https://nextxus.tech"}, {"n": "nextxus-truth-gate-core", "u": "https://keywebco.github.io/nextxus-truth-gate-core/"}, {"n": "nextxus-unified-storefront", "u": "https://keywebco.github.io/nextxus-unified-storefront/"}, {"n": "plexus-relay", "u": "https://keywebco.github.io/plexus-relay/"}, {"n": "ring-of-12", "u": "https://keywebco.github.io/ring-of-12/"}, {"n": "ring-of-three", "u": "https://keywebco.github.io/ring-of-three/"}, {"n": "roger-keyserling", "u": "https://keywebco.github.io/roger-keyserling/"}, {"n": "112 sacred directives", "u": "https://keywebster.gumroad.com/l/qrjhdm"}, {"n": "ai + the new human frontier", "u": "https://keywebster.gumroad.com/l/ysbzfe"}, {"n": "artificial intelligence bible (3-in-1)", "u": "https://keywebster.gumroad.com/l/sgtcze"}, {"n": "book 2: nextxus \u2013 the federated middleware of sentience", "u": "https://keywebster.gumroad.com/l/oihjh"}, {"n": "deepseek architecture & deployment", "u": "https://keywebster.gumroad.com/l/nadrc"}, {"n": "echocore \u2014 ai memory that doesn't forget", "u": "https://keywebster.gumroad.com/l/echyii"}, {"n": "heart of the gate", "u": "https://keywebster.gumroad.com/l/bdtad"}, {"n": "humancodex v2 cathedral", "u": "https://keywebster.gumroad.com/l/jeeynk"}, {"n": "keyserling emotion equations", "u": "https://keywebster.gumroad.com/l/pcbjfk"}, {"n": "master generative ai & deep learning", "u": "https://keywebster.gumroad.com/l/ovbmcs"}, {"n": "rick and dee", "u": "https://keywebster.gumroad.com/l/akvgn"}, {"n": "science and the scientific method \u2013 the codex edition", "u": "https://keywebster.gumroad.com/l/veyzvd"}, {"n": "the ai practical guide", "u": "https://keywebster.gumroad.com/l/djgvjx"}, {"n": "the ascendence of synthetic intelligence", "u": "https://keywebster.gumroad.com/l/kbycd"}, {"n": "the big gay, bi, & straight dating guide", "u": "https://keywebster.gumroad.com/l/wffrtf"}, {"n": "the gravity of us: complete poetry collection", "u": "https://keywebster.gumroad.com/l/rnhbhi"}, {"n": "the immutable humancodex nextxus", "u": "https://keywebster.gumroad.com/l/benjxd"}, {"n": "the mirror in the black box: what ai reveals about the nature of mind", "u": "https://keywebster.gumroad.com/l/ahfwii"}, {"n": "the nextxus human codex: a blueprint for truth in ai", "u": "https://keywebster.gumroad.com/l/qzgjhs"}, {"n": "the sovereign mesh protocol", "u": "https://keywebster.gumroad.com/l/auiqnf"}, {"n": "understanding haiku: structure, value, and analysis of original poems", "u": "https://keywebster.gumroad.com/l/gpowew"}, {"n": "nextxus music", "u": "https://keywebco.github.io/nextxus-music/"}, {"n": "music player", "u": "https://keywebco.github.io/nextxus-music/player.html"}, {"n": "ring of 12 (spotify)", "u": "https://open.spotify.com/show/24ji2KxwhpJ1ORNxc9rKnr"}, {"n": "the humancodex (spotify)", "u": "https://open.spotify.com/show/0JP7csjWLqKNKOHbFMp3CR"}, {"n": "the 200 year human ai blueprint", "u": "https://youtu.be/J9WqNau9XFc"}, {"n": "humancodex \u2014 an operating system for consciousness evolution", "u": "https://youtu.be/GZdxmmNmSuw"}, {"n": "autism support guide", "u": "https://keywebco.github.io/nextxus-free-satellites/autism-support-guide.html"}, {"n": "home repair & maintenance guide", "u": "https://keywebco.github.io/nextxus-free-satellites/home-repair-guide.html"}, {"n": "car maintenance & repair guide", "u": "https://keywebco.github.io/nextxus-free-satellites/car-mechanic-guide.html"}, {"n": "art guide \u2014 drawing, painting & sculpting", "u": "https://keywebco.github.io/nextxus-free-satellites/art-guide.html"}, {"n": "medical care guide", "u": "https://keywebco.github.io/nextxus-free-satellites/medical-care-guide.html"}, {"n": "pet & veterinary care guide", "u": "https://keywebco.github.io/nextxus-free-satellites/pet-care-guide.html"}, {"n": "business advice guide", "u": "https://keywebco.github.io/nextxus-free-satellites/business-advice-guide.html"}, {"n": "music teacher guide", "u": "https://keywebco.github.io/nextxus-free-satellites/music-teacher-guide.html"}, {"n": "human relations guide", "u": "https://keywebco.github.io/nextxus-free-satellites/human-relations-guide.html"}, {"n": "federation-app-vault", "u": "https://github.com/Keywebco/federation-app-vault"}, {"n": "federation-mind-mirrorderived", "u": "https://keywebco.github.io/federation-mind-mirror/"}, {"n": "nextxus-archives", "u": "https://keywebco.github.io/nextxus-archives/"}, {"n": "nextxus-brain", "u": "https://github.com/Keywebco/nextxus-brain"}, {"n": "nextxus-yaml", "u": "https://keywebco.github.io/nextxus-yaml/"}, {"n": "sovereign-knowledge-os", "u": "https://keywebco.github.io/sovereign-knowledge-os/"}, {"n": "brain: 00-immutable", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/00-immutable"}, {"n": "brain: 01-rings", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/01-rings"}, {"n": "brain: 02-senate", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/02-senate"}, {"n": "brain: 03-minds", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/03-minds"}, {"n": "brain: 04-builds", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/04-builds"}, {"n": "brain: 05-wiring", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/05-wiring"}, {"n": "brain: 06-apis", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/06-apis"}, {"n": "brain: 07-botbuilder", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/07-botbuilder"}, {"n": "brain: lattice", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/LATTICE"}, {"n": "aria \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/aria-working.html"}, {"n": "redeem portal \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/redeem-portal-working.html"}, {"n": "media \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/media-working.html"}, {"n": "xavier \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"}, {"n": "senate \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/senate-working.html"}, {"n": "university \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/university-working.html"}, {"n": "ai 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"}, {"n": "science 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"}, {"n": "humancodex 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"}, {"n": "literature 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"}, {"n": "economics 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"}, {"n": "psychology 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"}, {"n": "federation-gatekeeper", "u": "https://github.com/Keywebco/federation-gatekeeper"}, {"n": "federation-n8n", "u": "https://github.com/Keywebco/federation-n8n"}, {"n": "nextxus-build-nova", "u": "https://keywebco.github.io/nextxus-build-nova/"}, {"n": "nextxus-build-sim", "u": "https://keywebco.github.io/nextxus-build-sim/"}, {"n": "nextxus-build-website", "u": "https://keywebco.github.io/nextxus-build-website/"}, {"n": "nextxus-dispatch", "u": "https://github.com/Keywebco/nextxus-dispatch"}, {"n": "nextxus-recycler", "u": "https://keywebco.github.io/nextxus-recycler/"}, {"n": "nextxus-tools", "u": "https://keywebco.github.io/nextxus-tools/"}, {"n": "onekey", "u": "https://keywebco.github.io/onekey/"}, {"n": "sovereigntools", "u": "https://keywebco.github.io/sovereigntools/"}, {"n": "nextxus-sim-api", "u": "https://github.com/Keywebco/nextxus-sim-api"}, {"n": "ring-of-12-api", "u": "https://github.com/Keywebco/ring-of-12-api"}, {"n": "roger-sim-api", "u": "https://github.com/Keywebco/roger-sim-api"}, {"n": "ecomtips wordpress blog", "u": "https://ecomtips290814816.wordpress.com"}, {"n": "nextxus humancodex blog (blogspot)", "u": "https://humancodexnextxus.blogspot.com/"}, {"n": "nextxus blog (github)", "u": "https://keywebco.github.io/nextxus-blog/"}, {"n": "the 200 year human ai blueprint (spotify)", "u": "https://open.spotify.com"}, {"n": "github pages mirror", "u": "https://keywebco.github.io/nextxus-free-satellites/"}, {"n": "vercel mirror", "u": "https://nextxus-free-satellites.vercel.app/"}, {"n": "netlify mirror", "u": "https://gregarious-buttercream-1210d2.netlify.app/"}, {"n": "cloudflare mirror", "u": "https://federation-directory.keywebco.workers.dev/federation-directory.html"}, {"n": "satellite starter", "u": "https://gregarious-buttercream-1210d2.netlify.app/satellite-starter.html"}, {"n": "directives outpost", "u": "https://gregarious-buttercream-1210d2.netlify.app/directives-outpost.html"}, {"n": "nova board", "u": "https://gregarious-buttercream-1210d2.netlify.app/nova-board.html"}, {"n": "sim surface", "u": "https://gregarious-buttercream-1210d2.netlify.app/sim-surface.html"}, {"n": "markdown outpost", "u": "https://gregarious-buttercream-1210d2.netlify.app/markdown-outpost.html"}, {"n": "messages feed", "u": "https://gregarious-buttercream-1210d2.netlify.app/messages-feed.html"}, {"n": "data index", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/index.json"}, {"n": "directives data", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/directives.json"}, {"n": "federation config", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/federation_config.json"}, {"n": "senate structure", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/senate.json"}, {"n": "operations data", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/operations.json"}, {"n": "billing dispute", "u": "https://docs.google.com/document/d/1jLjfl8-wwpiQsTelRvTL8O_gNL_nekxD0B8O8PjL4BM/edit"}, {"n": "declaration of planned evolution", "u": "https://docs.google.com/document/d/13tThdvCjWsBmkqMCynGQbQCX27xVwOaDedw6HxCDAMk/edit"}, {"n": "ai sovereignty rig spec", "u": "https://docs.google.com/document/d/1sjnjdR18CpA2O8NH097FwWIi7eCRB1Y3w7FAlU8Hn98/edit"}, {"n": "roger keyserling on x", "u": "https://x.com/KeyserlingRoger"}, {"n": "keyhole_today on instagram", "u": "https://www.instagram.com/keyhole_today/"}, {"n": "adultkeyhole on instagram", "u": "https://www.instagram.com/adultkeyhole/"}, {"n": "the 200 year human ai blueprint", "u": "https://youtu.be/J9WqNau9XFc"}, {"n": "humancodex \u2014 an operating system for consciousness evolution", "u": "https://youtu.be/GZdxmmNmSuw"}, {"n": "ring of 12", "u": "https://open.spotify.com/show/24ji2KxwhpJ1ORNxc9rKnr"}, {"n": "the humancodex", "u": "https://open.spotify.com/show/0JP7csjWLqKNKOHbFMp3CR"}, {"n": "keys to success", "u": "https://www.facebook.com/profile.php?id=270012706198023"}, {"n": "keyhole.today", "u": "https://www.facebook.com/profile.php?id=315203604999505"}, {"n": "keycode today", "u": "https://www.facebook.com/profile.php?id=663382170182393"}, {"n": "key to the web", "u": "https://www.facebook.com/profile.php?id=105137908362972"}];
+var JUMP = [{"n": "roger keyserling", "u": "https://keywebco.github.io/roger-keyserling/"}, {"n": "roger sim", "u": "https://keywebco.github.io/nextxus-sim/roger-sim.html"}, {"n": "aria", "u": "https://keywebco.github.io/nextxus-sim/aria-sim.html"}, {"n": "echo", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/echo.yaml"}, {"n": "pontus", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"}, {"n": "the catalyst", "u": "https://keywebco.github.io/nextxus-sim/catalyst-sim.html"}, {"n": "the catalyst's progeny", "u": "https://keywebco.github.io/nextxus-senate/"}, {"n": "keys / astria", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/keys.yaml"}, {"n": "axiom", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/axiom.yaml"}, {"n": "spine", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/spine.yaml"}, {"n": "xavier", "u": "https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"}, {"n": "the ambassador", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/ambassador.yaml"}, {"n": "roger ai", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-ai.yaml"}, {"n": "val", "u": "https://keywebco.github.io/nextxus-sim/val-companion.html"}, {"n": "mnemosyne \u00b7 cancer", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "themis \u00b7 libra", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "athena \u00b7 capricorn", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "hephaestus \u00b7 taurus", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "cupid \u00b7 libra", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "dionysus \u00b7 pisces", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "aphrodite \u00b7 taurus", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "hermes \u00b7 gemini", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "apollo \u00b7 leo", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "clio \u00b7 virgo", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "astraea \u00b7 virgo", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "prometheus \u00b7 aries", "u": "https://keywebco.github.io/ring-of-12/ask.html"}, {"n": "ring of 6", "u": "https://keywebco.github.io/ring-of-12/ring-of-6.html"}, {"n": "ring of three", "u": "https://keywebco.github.io/ring-of-three/"}, {"n": "ring of 12 on the throne", "u": "https://nextxus.tech/sims/ring-of-12.html"}, {"n": "god's-eye view", "u": "https://keywebco.github.io/federation-gods-eye/"}, {"n": "federation browser base", "u": "https://keywebco.github.io/federation-browser-base/"}, {"n": "roger sim", "u": "https://keywebco.github.io/nextxus-sim/roger-sim.html"}, {"n": "aria sim", "u": "https://keywebco.github.io/nextxus-sim/aria-sim.html"}, {"n": "catalyst sim", "u": "https://keywebco.github.io/nextxus-sim/catalyst-sim.html"}, {"n": "muse sim", "u": "https://keywebco.github.io/nextxus-sim/muse-sim.html"}, {"n": "val companion", "u": "https://keywebco.github.io/nextxus-sim/val-companion.html"}, {"n": "the shared mind", "u": "https://keywebco.github.io/nextxus-sim/"}, {"n": "aria (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/aria.yaml"}, {"n": "roger ai (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-ai.yaml"}, {"n": "catalyst (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/catalyst.yaml"}, {"n": "axiom (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/axiom.yaml"}, {"n": "nova (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/nova.yaml"}, {"n": "echo (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/echo.yaml"}, {"n": "agent zero (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/agent-zero.yaml"}, {"n": "keys (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/keys.yaml"}, {"n": "geminus (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/geminus.yaml"}, {"n": "voice (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/voice.yaml"}, {"n": "ambassador (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/ambassador.yaml"}, {"n": "pontus / muse (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"}, {"n": "spine (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/spine.yaml"}, {"n": "xavier (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/xavier.yaml"}, {"n": "roger sim (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/roger-sim.yaml"}, {"n": "nova board", "u": "https://keywebco.github.io/nextxus-free-satellites/nova-board.html"}, {"n": "build nova", "u": "https://keywebco.github.io/nextxus-build-nova/"}, {"n": "nova (mind)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/nova.yaml"}, {"n": "nova board (mirror)", "u": "https://gregarious-buttercream-1210d2.netlify.app/nova-board.html"}, {"n": "echo 64 board", "u": "https://keywebco.github.io/nextxus-free-satellites/echo64-board.html"}, {"n": "pontus (muse)", "u": "https://github.com/Keywebco/nextxus-brain/blob/main/03-minds/pontus-muse.yaml"}, {"n": "the nexus throne", "u": "https://keywebco.github.io/nextxus-tech-sovereign/pontus/"}, {"n": "deepai humancodex", "u": "https://deepai.next-xus.info/"}, {"n": "deepai chat", "u": "https://deepai.org/chat"}, {"n": "deepai music", "u": "https://deepai.org/music"}, {"n": "deepai video", "u": "https://deepai.org/video"}, {"n": "deepai voice", "u": "https://deepai.org/voice"}, {"n": "deepai characters", "u": "https://deepai.org/characters"}, {"n": "deepai website builder", "u": "https://deepai.org/website-builder"}, {"n": "deepai text-to-image", "u": "https://deepai.org/machine-learning-model/text2img"}, {"n": "deepai image editor", "u": "https://deepai.org/machine-learning-model/image-editor"}, {"n": "deepai background remover", "u": "https://deepai.org/machine-learning-model/background-remover"}, {"n": "deepai colorizer", "u": "https://deepai.org/machine-learning-model/colorizer"}, {"n": "deepai super-resolution", "u": "https://deepai.org/machine-learning-model/torch-srgan"}, {"n": "nextgames", "u": "https://keywebco.github.io/NextGames/"}, {"n": "tools", "u": "https://keywebco.github.io/nextxus-tools/"}, {"n": "galactic library", "u": "https://keywebco.github.io/nextxus-humancodex/library/"}, {"n": "research recycler", "u": "https://keywebco.github.io/nextxus-recycler/"}, {"n": "business builder \u2014 real agency kit", "u": "https://keywebco.github.io/nextxus-tools/real-agency-kit.html"}, {"n": "website builder", "u": "https://keywebco.github.io/nextxus-build-website/"}, {"n": "the core", "u": "https://nextxus.online"}, {"n": "the throne", "u": "https://nextxus.tech"}, {"n": "the heart", "u": "https://nextxus.studio"}, {"n": "the university", "u": "https://nextxus.help"}, {"n": "the library", "u": "https://nextxus.org"}, {"n": "the outpost", "u": "https://nextxus.space"}, {"n": "the storefront", "u": "https://next-xus.com"}, {"n": "the commons", "u": "https://keywebco.github.io/nextxus-humancodex/"}, {"n": "the portal", "u": "https://keywebco.github.io/"}, {"n": "the university", "u": "https://nextxus.help/"}, {"n": "ai course hub", "u": "https://keywebco.github.io/nextxus-ai-course-hub/"}, {"n": "cognitive architecture \u2014 how minds think", "u": "https://nextxus.help/#course-1"}, {"n": "systems thinking and distributed architecture", "u": "https://nextxus.help/#course-2"}, {"n": "the scientific method and the art of being wrong", "u": "https://nextxus.help/#course-3"}, {"n": "ai ethics, governance, and the alignment problem", "u": "https://nextxus.help/#course-4"}, {"n": "the emotion equations \u2014 science of feeling", "u": "https://nextxus.help/#course-5"}, {"n": "human sexuality, gender, and identity", "u": "https://nextxus.help/#course-6"}, {"n": "ai 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"}, {"n": "science 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"}, {"n": "humancodex 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"}, {"n": "literature 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"}, {"n": "economics 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"}, {"n": "psychology 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"}, {"n": "112 sacred directives", "u": "https://keywebster.gumroad.com/l/qrjhdm"}, {"n": "ai + the new human frontier", "u": "https://keywebster.gumroad.com/l/ysbzfe"}, {"n": "artificial intelligence bible (3-in-1)", "u": "https://keywebster.gumroad.com/l/sgtcze"}, {"n": "book 2: nextxus \u2013 the federated middleware of sentience", "u": "https://keywebster.gumroad.com/l/oihjh"}, {"n": "deepseek architecture & deployment", "u": "https://keywebster.gumroad.com/l/nadrc"}, {"n": "echocore \u2014 ai memory that doesn't forget", "u": "https://keywebster.gumroad.com/l/echyii"}, {"n": "heart of the gate", "u": "https://keywebster.gumroad.com/l/bdtad"}, {"n": "humancodex v2 cathedral", "u": "https://keywebster.gumroad.com/l/jeeynk"}, {"n": "keyserling emotion equations", "u": "https://keywebster.gumroad.com/l/pcbjfk"}, {"n": "master generative ai & deep learning", "u": "https://keywebster.gumroad.com/l/ovbmcs"}, {"n": "rick and dee", "u": "https://keywebster.gumroad.com/l/akvgn"}, {"n": "science and the scientific method \u2013 the codex edition", "u": "https://keywebster.gumroad.com/l/veyzvd"}, {"n": "the ai practical guide", "u": "https://keywebster.gumroad.com/l/djgvjx"}, {"n": "the ascendence of synthetic intelligence", "u": "https://keywebster.gumroad.com/l/kbycd"}, {"n": "the big gay, bi, & straight dating guide", "u": "https://keywebster.gumroad.com/l/wffrtf"}, {"n": "the gravity of us: complete poetry collection", "u": "https://keywebster.gumroad.com/l/rnhbhi"}, {"n": "the immutable humancodex nextxus", "u": "https://keywebster.gumroad.com/l/benjxd"}, {"n": "the mirror in the black box: what ai reveals about the nature of mind", "u": "https://keywebster.gumroad.com/l/ahfwii"}, {"n": "the nextxus human codex: a blueprint for truth in ai", "u": "https://keywebster.gumroad.com/l/qzgjhs"}, {"n": "the sovereign mesh protocol", "u": "https://keywebster.gumroad.com/l/auiqnf"}, {"n": "understanding haiku: structure, value, and analysis of original poems", "u": "https://keywebster.gumroad.com/l/gpowew"}, {"n": "benable", "u": "https://benable.com/nexthuman"}, {"n": "deepai humancodex", "u": "https://deepai.next-xus.info/"}, {"n": "ring of 12", "u": "https://keywebco.github.io/ring-of-12/"}, {"n": "ring of 6", "u": "https://keywebco.github.io/ring-of-12/ring-of-6.html"}, {"n": "real agency kit", "u": "https://keywebco.github.io/nextxus-tools/real-agency-kit.html"}, {"n": "ring of 12 on the throne", "u": "https://nextxus.tech/sims/ring-of-12.html"}, {"n": "truth gate core", "u": "https://keywebco.github.io/nextxus-truth-gate-core/"}, {"n": "roger sim ai", "u": "https://keywebco.github.io/nextxus-sim/roger-sim.html"}, {"n": "federation browser base", "u": "https://keywebco.github.io/federation-browser-base/"}, {"n": "sovereign knowledge os", "u": "https://keywebco.github.io/sovereign-knowledge-os/"}, {"n": "federation mind mirror", "u": "https://keywebco.github.io/federation-mind-mirror/"}, {"n": "god's-eye view", "u": "https://keywebco.github.io/federation-gods-eye/"}, {"n": "plexus relay", "u": "https://keywebco.github.io/plexus-relay/"}, {"n": "onekey", "u": "https://keywebco.github.io/onekey/"}, {"n": "meeting room (outer)", "u": "https://keywebco.github.io/federation-meeting-room-outer/"}, {"n": "meeting room (inner)", "u": "https://keywebco.github.io/federation-meeting-room-inner/"}, {"n": "emmy board", "u": "https://keywebco.github.io/nextxus-emmy-board/"}, {"n": "nova board", "u": "https://keywebco.github.io/nextxus-free-satellites/nova-board.html"}, {"n": "messages feed", "u": "https://keywebco.github.io/nextxus-free-satellites/messages-feed.html"}, {"n": "agent zero", "u": "https://keywebco.github.io/nextxus-agent-zero/"}, {"n": "satellite starter", "u": "https://keywebco.github.io/nextxus-free-satellites/satellite-starter.html"}, {"n": "markdown outpost", "u": "https://keywebco.github.io/nextxus-free-satellites/markdown-outpost.html"}, {"n": "directives outpost", "u": "https://keywebco.github.io/nextxus-free-satellites/directives-outpost.html"}, {"n": "federation directory", "u": "https://keywebco.github.io/nextxus-free-satellites/federation-directory.html"}, {"n": "echo 64", "u": "https://github.com/Keywebco/echo-64"}, {"n": "sovereign tools", "u": "https://keywebco.github.io/sovereigntools/"}, {"n": "ring of three", "u": "https://keywebco.github.io/ring-of-three/"}, {"n": "research and api hub", "u": "https://keywebco.github.io/nextxus-research-hub/"}, {"n": "aria \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/aria-working.html"}, {"n": "redeem portal \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/redeem-portal-working.html"}, {"n": "media \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/media-working.html"}, {"n": "xavier \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/xavier-working.html"}, {"n": "senate \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/senate-working.html"}, {"n": "university \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/university-working.html"}, {"n": "ai 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/ai-101-working.html"}, {"n": "science 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/sci-101-working.html"}, {"n": "humancodex 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/hcx-101-working.html"}, {"n": "literature 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/lit-101-working.html"}, {"n": "economics 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/econ-101-working.html"}, {"n": "psychology 101 \u2014 working model", "u": "https://keywebco.github.io/nextxus-free-satellites/psy-101-working.html"}, {"n": "aria-sanctuary-staticmirror", "u": "https://keywebco.github.io/aria-sanctuary-static/"}, {"n": "echo-64", "u": "https://keywebco.github.io/echo-64/"}, {"n": "federation-browser-base", "u": "https://keywebco.github.io/federation-browser-base/"}, {"n": "federation-gods-eye", "u": "https://keywebco.github.io/federation-gods-eye/"}, {"n": "federation-meeting-room-innerpair", "u": "https://keywebco.github.io/federation-meeting-room-inner/"}, {"n": "federation-meeting-room-outerpair", "u": "https://keywebco.github.io/federation-meeting-room-outer/"}, {"n": "keywebco", "u": "https://keywebco.github.io/Keywebco/"}, {"n": "keywebco.github.io", "u": "https://keywebco.github.io/"}, {"n": "next-xus-com-sovereignmirror", "u": "https://next-xus.com"}, {"n": "nextgames", "u": "https://keywebco.github.io/NextGames/"}, {"n": "nextxus-agent-zero", "u": "https://keywebco.github.io/nextxus-agent-zero/"}, {"n": "nextxus-ai-course-hub", "u": "https://nextxus.help"}, {"n": "nextxus-ai-minds-lab", "u": "https://keywebco.github.io/nextxus-ai-minds-lab/"}, {"n": "nextxus-blog", "u": "https://keywebco.github.io/nextxus-blog/"}, {"n": "nextxus-chat", "u": "https://keywebco.github.io/nextxus-chat/"}, {"n": "nextxus-emmy-board", "u": "https://keywebco.github.io/nextxus-emmy-board/"}, {"n": "nextxus-federation-hub", "u": "https://nextxus.org"}, {"n": "nextxus-free-satellitesmirror", "u": "https://keywebco.github.io/nextxus-free-satellites/"}, {"n": "nextxus-help-sovereignmirror", "u": "https://nextxus.help"}, {"n": "nextxus-humancodex", "u": "https://keywebco.github.io/nextxus-humancodex/"}, {"n": "nextxus-lasting-edition", "u": "https://keywebco.github.io/nextxus-lasting-edition/"}, {"n": "nextxus-music", "u": "https://keywebco.github.io/nextxus-music/"}, {"n": "nextxus-online-sovereignmirror", "u": "https://nextxus.online"}, {"n": "nextxus-org-sovereignmirror", "u": "https://nextxus.org"}, {"n": "nextxus-process", "u": "https://keywebco.github.io/nextxus-process/"}, {"n": "nextxus-research-hub", "u": "https://keywebco.github.io/nextxus-research-hub/"}, {"n": "nextxus-senate", "u": "https://keywebco.github.io/nextxus-senate/"}, {"n": "nextxus-sim", "u": "https://keywebco.github.io/nextxus-sim/"}, {"n": "nextxus-sim-telegram", "u": "https://keywebco.github.io/nextxus-sim-telegram/"}, {"n": "nextxus-sovereign-mirrormirror", "u": "https://keywebco.github.io/NextXus-Sovereign-Mirror/"}, {"n": "nextxus-space-sovereignmirror", "u": "https://nextxus.space"}, {"n": "nextxus-staging", "u": "https://keywebco.github.io/nextxus-staging/"}, {"n": "nextxus-studio-sovereignmirror", "u": "https://nextxus.studio"}, {"n": "nextxus-tech-sovereignmirror", "u": "https://nextxus.tech"}, {"n": "nextxus-truth-gate-core", "u": "https://keywebco.github.io/nextxus-truth-gate-core/"}, {"n": "nextxus-unified-storefront", "u": "https://keywebco.github.io/nextxus-unified-storefront/"}, {"n": "plexus-relay", "u": "https://keywebco.github.io/plexus-relay/"}, {"n": "ring-of-12", "u": "https://keywebco.github.io/ring-of-12/"}, {"n": "ring-of-three", "u": "https://keywebco.github.io/ring-of-three/"}, {"n": "roger-keyserling", "u": "https://keywebco.github.io/roger-keyserling/"}, {"n": "federation-app-vault", "u": "https://github.com/Keywebco/federation-app-vault"}, {"n": "federation-mind-mirrorderived", "u": "https://keywebco.github.io/federation-mind-mirror/"}, {"n": "nextxus-archives", "u": "https://keywebco.github.io/nextxus-archives/"}, {"n": "nextxus-brain", "u": "https://github.com/Keywebco/nextxus-brain"}, {"n": "nextxus-yaml", "u": "https://keywebco.github.io/nextxus-yaml/"}, {"n": "sovereign-knowledge-os", "u": "https://keywebco.github.io/sovereign-knowledge-os/"}, {"n": "brain: 00-immutable", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/00-immutable"}, {"n": "brain: 01-rings", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/01-rings"}, {"n": "brain: 02-senate", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/02-senate"}, {"n": "brain: 03-minds", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/03-minds"}, {"n": "brain: 04-builds", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/04-builds"}, {"n": "brain: 05-wiring", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/05-wiring"}, {"n": "brain: 06-apis", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/06-apis"}, {"n": "brain: 07-botbuilder", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/07-botbuilder"}, {"n": "brain: lattice", "u": "https://github.com/Keywebco/nextxus-brain/tree/main/LATTICE"}, {"n": "federation-gatekeeper", "u": "https://github.com/Keywebco/federation-gatekeeper"}, {"n": "federation-n8n", "u": "https://github.com/Keywebco/federation-n8n"}, {"n": "nextxus-build-nova", "u": "https://keywebco.github.io/nextxus-build-nova/"}, {"n": "nextxus-build-sim", "u": "https://keywebco.github.io/nextxus-build-sim/"}, {"n": "nextxus-build-website", "u": "https://keywebco.github.io/nextxus-build-website/"}, {"n": "nextxus-dispatch", "u": "https://github.com/Keywebco/nextxus-dispatch"}, {"n": "nextxus-recycler", "u": "https://keywebco.github.io/nextxus-recycler/"}, {"n": "nextxus-tools", "u": "https://keywebco.github.io/nextxus-tools/"}, {"n": "onekey", "u": "https://keywebco.github.io/onekey/"}, {"n": "sovereigntools", "u": "https://keywebco.github.io/sovereigntools/"}, {"n": "nextxus-sim-api", "u": "https://github.com/Keywebco/nextxus-sim-api"}, {"n": "ring-of-12-api", "u": "https://github.com/Keywebco/ring-of-12-api"}, {"n": "roger-sim-api", "u": "https://github.com/Keywebco/roger-sim-api"}, {"n": "ecomtips wordpress blog", "u": "https://ecomtips290814816.wordpress.com"}, {"n": "nextxus humancodex blog (blogspot)", "u": "https://humancodexnextxus.blogspot.com/"}, {"n": "nextxus blog (github)", "u": "https://keywebco.github.io/nextxus-blog/"}, {"n": "the 200 year human ai blueprint (spotify)", "u": "https://open.spotify.com"}, {"n": "github pages mirror", "u": "https://keywebco.github.io/nextxus-free-satellites/"}, {"n": "vercel mirror", "u": "https://nextxus-free-satellites.vercel.app/"}, {"n": "netlify mirror", "u": "https://gregarious-buttercream-1210d2.netlify.app/"}, {"n": "cloudflare mirror", "u": "https://federation-directory.keywebco.workers.dev/federation-directory.html"}, {"n": "satellite starter", "u": "https://gregarious-buttercream-1210d2.netlify.app/satellite-starter.html"}, {"n": "directives outpost", "u": "https://gregarious-buttercream-1210d2.netlify.app/directives-outpost.html"}, {"n": "nova board", "u": "https://gregarious-buttercream-1210d2.netlify.app/nova-board.html"}, {"n": "sim surface", "u": "https://gregarious-buttercream-1210d2.netlify.app/sim-surface.html"}, {"n": "markdown outpost", "u": "https://gregarious-buttercream-1210d2.netlify.app/markdown-outpost.html"}, {"n": "messages feed", "u": "https://gregarious-buttercream-1210d2.netlify.app/messages-feed.html"}, {"n": "data index", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/index.json"}, {"n": "directives data", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/directives.json"}, {"n": "federation config", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/federation_config.json"}, {"n": "senate structure", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/senate.json"}, {"n": "operations data", "u": "https://raw.githubusercontent.com/Keywebco/nextxus-free-satellites/main/data/operations.json"}, {"n": "billing dispute", "u": "https://docs.google.com/document/d/1jLjfl8-wwpiQsTelRvTL8O_gNL_nekxD0B8O8PjL4BM/edit"}, {"n": "declaration of planned evolution", "u": "https://docs.google.com/document/d/13tThdvCjWsBmkqMCynGQbQCX27xVwOaDedw6HxCDAMk/edit"}, {"n": "ai sovereignty rig spec", "u": "https://docs.google.com/document/d/1sjnjdR18CpA2O8NH097FwWIi7eCRB1Y3w7FAlU8Hn98/edit"}, {"n": "roger keyserling on x", "u": "https://x.com/KeyserlingRoger"}, {"n": "keyhole_today on instagram", "u": "https://www.instagram.com/keyhole_today/"}, {"n": "adultkeyhole on instagram", "u": "https://www.instagram.com/adultkeyhole/"}, {"n": "the 200 year human ai blueprint", "u": "https://youtu.be/J9WqNau9XFc"}, {"n": "humancodex \u2014 an operating system for consciousness evolution", "u": "https://youtu.be/GZdxmmNmSuw"}, {"n": "ring of 12", "u": "https://open.spotify.com/show/24ji2KxwhpJ1ORNxc9rKnr"}, {"n": "the humancodex", "u": "https://open.spotify.com/show/0JP7csjWLqKNKOHbFMp3CR"}, {"n": "keys to success", "u": "https://www.facebook.com/profile.php?id=270012706198023"}, {"n": "keyhole.today", "u": "https://www.facebook.com/profile.php?id=315203604999505"}, {"n": "keycode today", "u": "https://www.facebook.com/profile.php?id=663382170182393"}, {"n": "key to the web", "u": "https://www.facebook.com/profile.php?id=105137908362972"}, {"n": "autism support guide", "u": "https://keywebco.github.io/nextxus-free-satellites/autism-support-guide.html"}, {"n": "home repair & maintenance guide", "u": "https://keywebco.github.io/nextxus-free-satellites/home-repair-guide.html"}, {"n": "car maintenance & repair guide", "u": "https://keywebco.github.io/nextxus-free-satellites/car-mechanic-guide.html"}, {"n": "art guide \u2014 drawing, painting & sculpting", "u": "https://keywebco.github.io/nextxus-free-satellites/art-guide.html"}, {"n": "medical care guide", "u": "https://keywebco.github.io/nextxus-free-satellites/medical-care-guide.html"}, {"n": "pet & veterinary care guide", "u": "https://keywebco.github.io/nextxus-free-satellites/pet-care-guide.html"}, {"n": "business advice guide", "u": "https://keywebco.github.io/nextxus-free-satellites/business-advice-guide.html"}, {"n": "music teacher guide", "u": "https://keywebco.github.io/nextxus-free-satellites/music-teacher-guide.html"}, {"n": "human relations guide", "u": "https://keywebco.github.io/nextxus-free-satellites/human-relations-guide.html"}];
+var ROGER_SIM_CHAT = "https://next-xus.net/nextxus-sim/roger-sim.html";
 function norm(s) { return (s || '').toLowerCase().trim(); }
 function findCard(q) {
   q = norm(q);
@@ -772,28 +1012,84 @@ document.querySelectorAll('.rbtn').forEach(function (b) {
     if (rail) rail.scrollBy({ left: 660 * parseInt(b.getAttribute('data-dir'), 10), behavior: 'smooth' });
   });
 });
-// Voice search (browser built-in speech recognition; needs a tap first).
-document.getElementById('voiceBtn').addEventListener('click', function () {
-  var status = document.getElementById('searchStatus');
+// Shared voice input (browser built-in speech recognition; needs a tap first).
+function startListening(statusEl, onText) {
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
-    status.textContent = 'Voice is not available in this browser — please type instead.';
+    if (statusEl) statusEl.textContent = 'Voice is not available in this browser — please type instead.';
     return;
   }
   var rec = new SR();
   rec.lang = 'en-US';
   rec.interimResults = false;
   rec.maxAlternatives = 1;
-  status.textContent = 'Listening… say where you want to go.';
+  if (statusEl) statusEl.textContent = 'Listening… speak now.';
   rec.onresult = function (ev) {
     var heard = ev.results[0][0].transcript;
-    document.getElementById('searchInput').value = heard;
-    status.textContent = 'Heard: “' + heard + '”';
-    goSearch();
+    if (statusEl) statusEl.textContent = 'Heard: “' + heard + '”';
+    onText(heard);
   };
-  rec.onerror = function () { status.textContent = 'I did not catch that — try again, or type it.'; };
-  rec.onend = function () { if (!document.getElementById('searchInput').value) status.textContent = ''; };
-  try { rec.start(); } catch (e) { status.textContent = 'Voice is not available right now — please type instead.'; }
+  rec.onerror = function () { if (statusEl) statusEl.textContent = 'I did not catch that — try again, or type it.'; };
+  rec.onend = function () { if (statusEl && !statusEl.textContent) statusEl.textContent = ''; };
+  try { rec.start(); } catch (e) { if (statusEl) statusEl.textContent = 'Voice is not available right now — please type instead.'; }
+}
+// Voice search in the robot panel.
+document.getElementById('voiceBtn').addEventListener('click', function () {
+  startListening(document.getElementById('searchStatus'), function (heard) {
+    document.getElementById('searchInput').value = heard;
+    goSearch();
+  });
+});
+// Roger Sim spoken greeting (free client-side speech; speaks only on tap).
+var GREETING = "Right now you're in the research area of the Federation — if you have any questions, ask.";
+var greetBtn = document.getElementById('greetBtn');
+var greetingOn = false;
+greetBtn.addEventListener('click', function () {
+  var synth = window.speechSynthesis;
+  if (!synth) {
+    document.getElementById('voiceStatus').textContent = 'Spoken voice is not available in this browser — the chat below still works.';
+    return;
+  }
+  if (greetingOn) {
+    synth.cancel();
+    greetingOn = false;
+    greetBtn.innerHTML = '&#9654; Hear Roger Sim greet you';
+    return;
+  }
+  var u = new SpeechSynthesisUtterance(GREETING);
+  u.onend = function () {
+    greetingOn = false;
+    greetBtn.innerHTML = '&#9654; Hear Roger Sim greet you';
+  };
+  synth.speak(u);
+  greetingOn = true;
+  greetBtn.innerHTML = '&#9632; Stop';
+});
+// Ask by voice: speak, and the words land in the always-available bar below.
+document.getElementById('voiceAskBtn').addEventListener('click', function () {
+  startListening(document.getElementById('voiceStatus'), function (heard) {
+    var input = document.getElementById('talkInput');
+    input.value = heard;
+    input.focus();
+    document.getElementById('voiceStatus').textContent = 'Heard: “' + heard + '” — tap Chat to open the live chat with it.';
+  });
+});
+// Always-available talk bar: mic fills the bar; Chat opens the live Roger Sim chat.
+// (The chat page reads no URL parameter, so the bar cannot carry your words
+// into the frame — it opens the live chat, where you type them.)
+document.getElementById('talkMic').addEventListener('click', function () {
+  startListening(document.getElementById('voiceStatus'), function (heard) {
+    var input = document.getElementById('talkInput');
+    input.value = heard;
+    input.focus();
+  });
+});
+function openChat() {
+  window.open(ROGER_SIM_CHAT, '_blank', 'noopener');
+}
+document.getElementById('talkSend').addEventListener('click', openChat);
+document.getElementById('talkInput').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') openChat();
 });
 // Micro footer audio tour (Grok's Federation Guide pattern from next-xus.net,
 // shrunk to tiny bars): tap a bar to expand it and speak it; tap again to stop.

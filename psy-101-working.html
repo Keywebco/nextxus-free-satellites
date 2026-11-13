@@ -1,4 +1,62 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>PSY-101 — Psychology — Working Model</title><style>body{font-family:Georgia,serif;background:#0a0a0a;color:#e8e8e8;max-width:760px;margin:0 auto;padding:24px} a{color:#00d4ff}</style></head><body>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>PSY-101 — Psychology — Working Model</title><style>body{font-family:Georgia,serif;background:#0a0a0a;color:#e8e8e8;max-width:760px;margin:0 auto;padding:24px} a{color:#00d4ff}
+/* Little guide bot — same on every Federation site. */
+.guide-bot-btn{position:fixed;bottom:16px;right:16px;z-index:20;width:64px;height:64px;border-radius:50%;background:#000;border:2px solid #00ff88;padding:0;overflow:hidden;cursor:pointer}
+.guide-bot-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.guide-panel{position:fixed;bottom:92px;right:16px;z-index:25;width:340px;max-width:calc(100vw - 32px);max-height:70vh;overflow:auto;background:rgba(0,0,0,.97);border:2px solid #00ff88;border-radius:12px;padding:12px;display:none;flex-direction:column;gap:8px;font-family:system-ui,sans-serif;font-size:.9rem;line-height:1.45;color:#e8e8e8}
+.guide-panel.open{display:flex}
+.guide-panel .gp-head{display:flex;justify-content:space-between;align-items:center;color:#c9a84c;font-weight:700;font-size:.9rem}
+.guide-panel .gp-close{background:none;border:none;color:#00ff88;font-size:1rem;cursor:pointer;padding:0 4px}
+.guide-panel .gp-face{color:#a8b3ad;font-size:.85rem;margin:0}
+.guide-panel h3{margin:6px 0 0;color:#c9a84c;font-size:.85rem}
+.guide-panel p{margin:0}
+.guide-panel a{color:#00ff88}
+.guide-panel .gp-note{color:#a8b3ad;font-size:.85rem}
+.guide-panel .gp-chatlog{max-height:180px;overflow:auto;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.04);border:1px solid #222;border-radius:8px;padding:8px}
+.guide-panel .gp-msg{font-size:.85rem;overflow-wrap:break-word}
+.guide-panel .gp-you{color:#e8e8e8}
+.guide-panel .gp-sim{color:#00ff88}
+.guide-panel .gp-chatrow{display:flex;gap:6px}
+.guide-panel .gp-chatrow input{flex:1;min-width:0;background:#111;color:#e8e8e8;border:1px solid #00ff88;border-radius:8px;padding:8px;font-size:.9rem}
+.guide-panel .gp-chatrow button{background:#00ff88;color:#04140c;font-weight:700;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+.guide-panel .gp-chatrow button:disabled{opacity:.45;cursor:default}
+</style></head><body>
 <h1>PSY-101 — Psychology — Working Model</h1><p>Working model course text, created now, Keywebco only, Emergent removed, not claimed as a verbatim Emergent text. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds.</p>
 <h2>Chapter 1</h2><p>Working model chapter 1 for PSY-101 — Psychology. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds. This chapter is created now as working material, not claimed as a verbatim Emergent text, and is intended to function as a course chapter in the working model.</p><h2>Chapter 2</h2><p>Working model chapter 2 for PSY-101 — Psychology. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds. This chapter is created now as working material, not claimed as a verbatim Emergent text, and is intended to function as a course chapter in the working model.</p><h2>Chapter 3</h2><p>Working model chapter 3 for PSY-101 — Psychology. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds. This chapter is created now as working material, not claimed as a verbatim Emergent text, and is intended to function as a course chapter in the working model.</p><h2>Chapter 4</h2><p>Working model chapter 4 for PSY-101 — Psychology. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds. This chapter is created now as working material, not claimed as a verbatim Emergent text, and is intended to function as a course chapter in the working model.</p><h2>Chapter 5</h2><p>Working model chapter 5 for PSY-101 — Psychology. Mind and pattern, perception and memory, behavior and habit, collaboration and teams, Federation minds. This chapter is created now as working material, not claimed as a verbatim Emergent text, and is intended to function as a course chapter in the working model.</p>
-<p><a href="https://keywebco.github.io/nextxus-free-satellites/university-working.html">University Working</a> · <a href="https://keywebco.github.io/nextxus-free-satellites/federation-directory.html">Directory</a></p></body></html>
+<p><a href="https://keywebco.github.io/nextxus-free-satellites/university-working.html">University Working</a> · <a href="https://keywebco.github.io/nextxus-free-satellites/federation-directory.html">Directory</a></p><!-- Little guide bot — same on every Federation site. Tapping it opens this guide panel. -->
+<button class="guide-bot-btn" id="guideBotBtn" type="button" aria-label="Open the Federation guide — the little blue guide bot" aria-expanded="false" aria-controls="guidePanel"><img src="guide-bot.jpg" alt="Guide bot — a little blue and silver AI robot with yellow crescent eyes, AI on its chest"></button>
+<div class="guide-panel" id="guidePanel" role="dialog" aria-label="Federation guide">
+<div class="gp-head"><span>Federation guide</span><button type="button" class="gp-close" id="guidePanelClose" aria-label="Close the Federation guide">✕</button></div>
+<p class="gp-face">This is the Federation&rsquo;s guide &mdash; a mini Federation. Ask it a question and it answers from the Federation.</p><p class="gp-face">Answers come from Roger Sim, the Federation&rsquo;s working model, answering from Federation material.</p>
+<p>The four doors: <a href="https://next-xus.net/">Tools</a> (live) &middot; <a href="https://next-xus.info/">Guides</a> (live &mdash; you are here) &middot; <a href="https://next-xus.org/">Maps</a> (live) &middot; <a href="https://next-xus.biz/">Systems</a> (live)</p>
+<h3>On this site</h3>
+<p><a href="university-working.html">NextXus University</a> &middot; <a href="federation-directory.html">Federation Directory</a></p>
+<h3>Ask the guide</h3><div class="gp-chatlog" id="guideChatLog" role="log" aria-live="polite"></div><div class="gp-chatrow"><input id="guideChatInput" type="text" placeholder="Ask about the Federation&hellip;" aria-label="Ask the guide a question"><button type="button" id="guideChatSend">Send</button></div>
+<p class="gp-note">If the live Sim cannot be reached from this page, the guide says so and answers from this site&rsquo;s own pages instead &mdash; it never pretends a local answer is the Sim speaking.</p>
+<p class="gp-note">Messages from Roger: Message recording to be supplied by Roger.</p>
+</div>
+<script>
+(function(){var b=document.getElementById('guideBotBtn'),p=document.getElementById('guidePanel');b.addEventListener('click',function(){var o=p.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});document.getElementById('guidePanelClose').addEventListener('click',function(){p.classList.remove('open');b.setAttribute('aria-expanded','false');});})();
+</script>
+<script>
+(function(){
+var log=document.getElementById('guideChatLog'),input=document.getElementById('guideChatInput'),send=document.getElementById('guideChatSend');
+var FALLBACK="This page is PSY-101, a working-model course text on psychology, in five chapters, part of <a href=\"university-working.html\">NextXus University</a>. Search the whole Federation: <a href=\"https://cse.google.com/cse?cx=b75161449de954fbb\">Federation search</a>.";
+function addText(who,text){var d=document.createElement('div');d.className='gp-msg gp-'+who;d.textContent=(who==='you'?'You: ':'Roger Sim: ')+text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
+function ask(){
+var q=input.value.trim();if(!q){return;}
+addText('you',q);input.value='';
+var think=document.createElement('div');think.className='gp-msg gp-sim';think.textContent='Roger Sim: thinking\u2026';log.appendChild(think);log.scrollTop=log.scrollHeight;
+input.disabled=true;send.disabled=true;
+var ctl=null,to=null;
+try{ctl=new AbortController();to=setTimeout(function(){ctl.abort();},30000);}catch(e){}
+fetch('https://roger-sim-api.onrender.com/proxy/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:q}]}),signal:ctl?ctl.signal:undefined})
+.then(function(res){if(!res.ok){throw new Error('HTTP '+res.status);}return res.json();})
+.then(function(data){var ans=data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;if(!ans){throw new Error('empty answer');}think.textContent='Roger Sim: '+ans;})
+.catch(function(){think.innerHTML='Guide: The live Sim could not be reached from this page &mdash; here is what the Federation&rsquo;s own pages say:<br>'+FALLBACK;})
+.then(function(){if(to){clearTimeout(to);}log.scrollTop=log.scrollHeight;input.disabled=false;send.disabled=false;input.focus();});
+}
+send.addEventListener('click',ask);
+input.addEventListener('keydown',function(e){if(e.key==='Enter'){ask();}});
+})();
+</script>
+</body></html>

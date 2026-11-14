@@ -8,7 +8,7 @@
 <style>
 :root{--bg:#0a0a0a;--panel:#101412;--text:#e8e8e8;--dim:#a8b3ad;--green:#00ff88;--gold:#c9a84c}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:18px;line-height:1.65;padding-bottom:130px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:18px;line-height:1.65;padding-bottom:20px}
 .wrap{max-width:920px;margin:0 auto;padding:20px}
 .ai-greeting{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:18px;margin:20px auto}
 .ai-greeting h2{margin:0 0 6px;color:var(--gold)}
@@ -22,7 +22,26 @@ h2{color:var(--green);margin-top:0}
 .chat-input{display:flex;border-top:1px solid #1f3a24}
 .chat-input input{flex:1;background:#000;color:#fff;border:none;padding:10px}
 .chat-input button{background:var(--green);border:none;padding:10px 14px;font-weight:700}
-.voice-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.96);border-top:2px solid var(--gold);z-index:20;padding:8px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+/* Little guide bot — same on every Federation site. The voice bar is now the bot's panel. */
+.guide-bot-btn{position:fixed;bottom:16px;right:16px;z-index:20;width:64px;height:64px;border-radius:50%;background:#000;border:2px solid #00ff88;padding:0;overflow:hidden;cursor:pointer}
+.guide-bot-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.voice-bar{position:fixed;bottom:92px;right:16px;z-index:25;width:300px;max-width:calc(100vw - 32px);max-height:70vh;overflow:auto;background:rgba(0,0,0,.97);border:2px solid var(--gold);border-radius:12px;padding:10px;display:none;flex-direction:column;gap:6px;font-family:system-ui,sans-serif;font-size:.9rem;line-height:1.45;color:#e8e8e8}
+.voice-bar.open{display:flex}
+.voice-bar .panel-head{display:flex;justify-content:space-between;align-items:center;color:var(--gold);font-weight:700;font-size:.85rem}
+.voice-bar .panel-head button{background:none;border:none;color:var(--gold);font-size:1rem;cursor:pointer;padding:0 4px}
+.voice-bar .gp-face{color:#a8b3ad;font-size:.85rem;margin:0}
+.voice-bar h3{margin:6px 0 0;color:var(--gold);font-size:.85rem}
+.voice-bar p{margin:0}
+.voice-bar a{color:#00ff88}
+.voice-bar .gp-note{color:#a8b3ad;font-size:.85rem}
+.voice-bar .gp-chatlog{max-height:180px;overflow:auto;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.04);border:1px solid #222;border-radius:8px;padding:8px}
+.voice-bar .gp-msg{font-size:.85rem;overflow-wrap:break-word}
+.voice-bar .gp-you{color:#e8e8e8}
+.voice-bar .gp-sim{color:#00ff88}
+.voice-bar .gp-chatrow{display:flex;gap:6px}
+.voice-bar .gp-chatrow input{flex:1;min-width:0;background:#111;color:#e8e8e8;border:1px solid #00ff88;border-radius:8px;padding:8px;font-size:.9rem}
+.voice-bar .gp-chatrow button{background:#00ff88;color:#04140c;font-weight:700;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+.voice-bar .gp-chatrow button:disabled{opacity:.45;cursor:default}
 .voice-bar button{background:var(--gold);color:#000;border:none;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:700;cursor:pointer}
 .voice-bar button.alt{background:transparent;color:var(--gold);border:1px solid var(--gold)}
 .note{font-size:0.9rem;color:var(--dim);margin-top:20px}
@@ -87,10 +106,12 @@ h2{color:var(--green);margin-top:0}
 <button id="sendChat">Send</button>
 </div>
 </div>
-<div class="voice-bar">
+<div class="voice-bar" id="voicePanel">
+<div class="panel-head"><span>Voice guide</span><button type="button" id="voicePanelClose" aria-label="Close the voice guide menu">✕</button></div>
 <span id="voiceStatus">Voice off</span>
 <button id="btnEnable">Enable Voice</button>
 <button class="alt" id="btnThisPage" disabled>What’s on this page?</button>
+<h3>Guide</h3><p class="gp-face">This is the Federation&rsquo;s guide &mdash; a mini Federation. Ask it a question and it answers from the Federation.</p><p class="gp-face">Answers come from Roger Sim, the Federation&rsquo;s working model, answering from Federation material.</p><p>The four doors: <a href="https://next-xus.net/">Tools</a> (live) &middot; <a href="https://next-xus.info/">Guides</a> (live &mdash; you are here) &middot; <a href="https://next-xus.org/">Maps</a> (live) &middot; <a href="https://next-xus.biz/">Systems</a> (live)</p><h3>On this site</h3><p><a href="guides-index.html">Free AI Guides</a> &middot; <a href="federation-directory.html">Federation Directory</a> &middot; <a href="index.html">Free Satellites home</a> &middot; <a href="#" onclick="document.getElementById('chatPanel').classList.add('open');return false;">Open chat on this page</a></p><h3>Ask the guide</h3><div class="gp-chatlog" id="guideChatLog" role="log" aria-live="polite"></div><div class="gp-chatrow"><input id="guideChatInput" type="text" placeholder="Ask about the Federation&hellip;" aria-label="Ask the guide a question"><button type="button" id="guideChatSend">Send</button></div><p class="gp-note">If the live Sim cannot be reached from this page, the guide says so and answers from this site&rsquo;s own pages instead &mdash; it never pretends a local answer is the Sim speaking.</p><p class="gp-note">Messages from Roger: Message recording to be supplied by Roger.</p>
 </div>
 <script>
 const synth = window.speechSynthesis;
@@ -177,6 +198,35 @@ if (persSaveCustom) { persSaveCustom.onclick = () => { customPersonality = persI
 const keyInputCustom = document.getElementById('grokKeyInput');
 const keyBtnCustom = document.getElementById('saveKeyBtn');
 if (keyInputCustom && keyBtnCustom) { keyBtnCustom.onclick = () => { const v = keyInputCustom.value.trim(); const st = document.getElementById('keyStatus'); if (v) { apiKey = v; localStorage.setItem('nextxus_api_key', v); if (st) st.textContent = 'Your key saved. It will be used for DeepSeek answers in this browser.'; } else if (st) st.textContent = 'Paste a key first.'; }; }
+</script>
+
+<!-- Little guide bot — same on every Federation site. Tapping it opens this page's own voice menu. -->
+<button class="guide-bot-btn" id="guideBotBtn" type="button" aria-label="Open the voice guide menu — the little blue guide bot" aria-expanded="false" aria-controls="voicePanel"><img src="guide-bot.jpg" alt="Guide bot — a little blue and silver AI robot with yellow crescent eyes, AI on its chest"></button>
+<script>
+// Little guide bot: tapping it opens this page's own voice menu panel.
+(function(){var b=document.getElementById('guideBotBtn'),p=document.getElementById('voicePanel');b.addEventListener('click',function(){var o=p.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});document.getElementById('voicePanelClose').addEventListener('click',function(){p.classList.remove('open');b.setAttribute('aria-expanded','false');});})();
+</script>
+<script>
+(function(){
+var log=document.getElementById('guideChatLog'),input=document.getElementById('guideChatInput'),send=document.getElementById('guideChatSend');
+var FALLBACK="This page is a free guide for pet and veterinary care. It has free voice (Enable Voice, in this panel) and a chat on the page (Open chat, in this panel). The other eight guides are on the <a href=\"guides-index.html\">Free AI Guides</a> page. Search the whole Federation: <a href=\"https://cse.google.com/cse?cx=b75161449de954fbb\">Federation search</a>.";
+function addText(who,text){var d=document.createElement('div');d.className='gp-msg gp-'+who;d.textContent=(who==='you'?'You: ':'Roger Sim: ')+text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
+function ask(){
+var q=input.value.trim();if(!q){return;}
+addText('you',q);input.value='';
+var think=document.createElement('div');think.className='gp-msg gp-sim';think.textContent='Roger Sim: thinking\u2026';log.appendChild(think);log.scrollTop=log.scrollHeight;
+input.disabled=true;send.disabled=true;
+var ctl=null,to=null;
+try{ctl=new AbortController();to=setTimeout(function(){ctl.abort();},30000);}catch(e){}
+fetch('https://roger-sim-api.onrender.com/proxy/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:q}]}),signal:ctl?ctl.signal:undefined})
+.then(function(res){if(!res.ok){throw new Error('HTTP '+res.status);}return res.json();})
+.then(function(data){var ans=data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;if(!ans){throw new Error('empty answer');}think.textContent='Roger Sim: '+ans;})
+.catch(function(){think.innerHTML='Guide: The live Sim could not be reached from this page &mdash; here is what the Federation&rsquo;s own pages say:<br>'+FALLBACK;})
+.then(function(){if(to){clearTimeout(to);}log.scrollTop=log.scrollHeight;input.disabled=false;send.disabled=false;input.focus();});
+}
+send.addEventListener('click',ask);
+input.addEventListener('keydown',function(e){if(e.key==='Enter'){ask();}});
+})();
 </script>
 </body>
 </html>

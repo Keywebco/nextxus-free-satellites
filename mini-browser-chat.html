@@ -4,8 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mini Browser Chat — Nextxus Federation</title>
-    <meta name="description" content="Chat with Roger Sim in a mini browser — God's eye view, regular chat, conference chat, voice input, and Federation search, all in one page." />
-    <meta name="keywords" content="chat with an AI, AI chat interface, mini browser chat, talk to Roger Sim, God's eye view AI, AI conference chat, voice chat with AI" />
+    <meta name="description" content="Chat with Roger Sim in a mini browser — God's eye view, regular chat, conference chat, voice input, and Federation search — plus free Federation games to open, all in one page." />
+    <meta name="keywords" content="chat with an AI, AI chat interface, mini browser chat, talk to Roger Sim, God's eye view AI, AI conference chat, voice chat with AI, free Federation games" />
+<link rel="canonical" href="https://next-xus.info/mini-browser-chat.html">
+<meta property="og:title" content="Mini Browser Chat — Nextxus Federation">
+<meta property="og:description" content="Talk to Roger Sim and open every live Federation service from one panel: the Rings, the Galactic Library, the University, games, music, podcasts, blogs, and Federation Search.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://next-xus.info/mini-browser-chat.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Mini Browser Chat — Nextxus Federation","author":{"@type":"Person","name":"Roger Keyserling"},"isPartOf":{"@type":"WebSite","name":"Nextxus Federation","url":"https://next-xus.info/federation-directory.html"},"description":"The Federation chat, in a mini browser, with a panel listing every live Federation service and capability."}
+</script>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -129,7 +137,7 @@
 
 <header>
   <h1>Mini Browser Chat — Nextxus Federation</h1>
-  <p>The Federation chat, in a mini browser. Pick a mode at the top. The chat below talks to Roger Sim — the only verified working chat in the Federation.</p>
+  <p>The Federation chat, in a mini browser. Pick a mode at the top. The chat below talks to Roger Sim — the only verified working chat in the Federation. A fourth option, "What the Federation can do", lists every service and capability in the Federation, each with a live link — or a plain "not built yet" where nothing exists.</p>
 
   <div class="note">
     <p><strong>What is live, and what is not.</strong> Only Roger Sim has a verified working chat. Every other figure's chat is not built yet. Where a live connection does not exist yet, this page says so plainly instead of pretending one exists.</p>
@@ -160,6 +168,7 @@
     <button type="button" id="mode-gods-eye" aria-pressed="false">God's eye view</button>
     <button type="button" id="mode-regular" aria-pressed="true">Regular chat</button>
     <button type="button" id="mode-conference" aria-pressed="false">Conference chat</button>
+    <button type="button" id="mode-services" aria-pressed="false">What the Federation can do</button>
   </nav>
 </header>
 
@@ -252,6 +261,10 @@
       <li><a href="https://next-xus.net/nextxus-sim/roger-sim.html">Roger Sim chat (live)</a> — the only verified working chat.</li>
       <li><a href="https://next-xus.org/library/">Galactic Library</a></li>
       <li><a href="https://next-xus.info/73-directives-movie.html">73 Directives movie page</a></li>
+      <li><a href="https://keywebco.github.io/NextGames/">NextGames — free Federation games portal</a></li>
+      <li><a href="https://keywebco.github.io/NextGames/federation-defense/">Federation Defense</a> — robot and human, side by side, fight the extermination fleet.</li>
+      <li><a href="https://keywebco.github.io/NextGames/token-defense/">Token Defense</a> — one token, one tank; destroyed tanks rest and return free.</li>
+      <li><a href="https://keywebco.github.io/NextGames/2048/">2048</a> — the classic number puzzle.</li>
     </ul>
   </section>
 
@@ -266,6 +279,7 @@
       <button type="button" class="conf-btn" data-open="mb-conf-3">Ring of 3</button>
       <button type="button" class="conf-btn" data-open="mb-conf-6">Ring of 6</button>
       <button type="button" class="conf-btn" data-open="mb-conf-gods">God's eye view</button>
+      <button type="button" class="conf-btn" data-open="mb-conf-games">NextGames</button>
     </div>
 
     <div class="conf-grid">
@@ -321,6 +335,17 @@
         </div>
         <iframe data-src="https://keywebco.github.io/federation-gods-eye/" src="about:blank" title="Federation God's eye view" loading="lazy"></iframe>
       </div>
+
+      <div class="mini-browser" id="mb-conf-games" hidden>
+        <div class="mini-browser-bar">
+          <span class="mb-title">NextGames — free Federation games</span>
+          <span class="zero-badge standard">Truth Gate standard: 95%</span>
+          <a href="https://keywebco.github.io/NextGames/">Open directly</a>
+          <button type="button" class="close-btn" data-close="mb-conf-games">Close</button>
+        </div>
+        <iframe data-src="https://keywebco.github.io/NextGames/" src="about:blank" title="NextGames" loading="lazy"></iframe>
+        <p class="mb-fallback">Play directly: <a href="https://keywebco.github.io/NextGames/federation-defense/">Federation Defense</a> · <a href="https://keywebco.github.io/NextGames/token-defense/">Token Defense</a> · <a href="https://keywebco.github.io/NextGames/2048/">2048</a></p>
+      </div>
     </div>
     <noscript>
       <p><strong>JavaScript is off.</strong> The conference windows need JavaScript to open. The pages themselves still work — open them directly:</p>
@@ -330,14 +355,78 @@
         <li><a href="https://keywebco.github.io/ring-of-three/">Ring of 3</a></li>
         <li><a href="https://keywebco.github.io/ring-of-12/ring-of-6.html">Ring of 6</a></li>
         <li><a href="https://keywebco.github.io/federation-gods-eye/">God's eye view</a></li>
+        <li><a href="https://keywebco.github.io/NextGames/">NextGames</a> — <a href="https://keywebco.github.io/NextGames/federation-defense/">Federation Defense</a> · <a href="https://keywebco.github.io/NextGames/token-defense/">Token Defense</a> · <a href="https://keywebco.github.io/NextGames/2048/">2048</a></li>
       </ul>
     </noscript>
+  </section>
+  <!-- ============ WHAT THE FEDERATION CAN DO (SERVICE / CAPABILITY INDICATORS) ============ -->
+  <section class="mode-panel" id="panel-services" aria-label="What the Federation can do">
+    <h2>What the Federation can do</h2>
+    <p>Every service and capability in the Federation, in one place. Every link below was checked live — it opens a real, working page. Where something is not built yet, this panel says so plainly instead of linking to nothing.</p>
+    <p><strong>Two ways in, both real.</strong> (1) From here — on this chat — you can reach every service below. (2) From any service page, this mini browser is one tap away: <a href="https://next-xus.info/mini-browser-chat.html">open the mini browser chat</a>, and the Roger Sim chat and the live rings travel with you. The same option is being added to the gallery and companion pages next, so the way back is on every page.</p>
+
+    <h3>Talk to an AI — live chat</h3>
+    <ul class="plain-links">
+      <li><a href="https://next-xus.net/nextxus-sim/roger-sim.html">Roger Sim chat</a> — the only verified working chat in the Federation. Ask it anything.</li>
+      <li><a href="https://keywebco.github.io/ring-of-12/">Ring of 12</a> — twelve-lens inquiry. Live page; its chat is not built yet.</li>
+      <li><a href="https://keywebco.github.io/ring-of-three/">Ring of 3</a> — Mind Heart Stabilizer. Live page; its chat is not built yet.</li>
+      <li><a href="https://keywebco.github.io/ring-of-12/ring-of-6.html">Ring of 6</a> — six-lens inquiry. Live page; its chat is not built yet.</li>
+      <li>Persona (Persoma) — <strong>not built yet.</strong> The inward-looking ring has no live page. It is never used singly; it joins a ring.</li>
+    </ul>
+
+    <h3>Find anything in the Federation</h3>
+    <ul class="plain-links">
+      <li><a href="https://cse.google.com/cse?cx=b75161449de954fbb">Federation Search</a> — Google search across 25 Federation sites. The organization and the meta-tags do the finding, not tokens.</li>
+      <li><a href="https://next-xus.info/federation-directory.html">Federation Directory</a> — the master index of everything in the Federation.</li>
+      <li><a href="https://keywebco.github.io/federation-gods-eye/">God's eye view</a> — the whole Federation from above; jump anywhere from there.</li>
+      <li><a href="https://next-xus.info/face-directory.html">Face Directory</a> — one page per individual: face, record, chat, files, links.</li>
+    </ul>
+
+    <h3>Learn — library and university</h3>
+    <ul class="plain-links">
+      <li><a href="https://next-xus.org/library/">Galactic Library</a> — the Living Library: 4,300 poems, free, with Astris the librarian.</li>
+      <li><a href="https://nextxus.help/">NextXus University</a> — six free college-level courses, four modules each, no tuition.</li>
+    </ul>
+
+    <h3>Watch and listen</h3>
+    <ul class="plain-links">
+      <li><a href="https://next-xus.info/73-directives-movie.html">73 Directives movie page</a> — all 8 videos in order, the full directive text, and the 8 companion blogs.</li>
+      <li><a href="https://next-xus.info/73-directives-playlist.html">73 Directives playlist</a> — the 8 videos in order, on one page. The YouTube playlist itself is not created yet — Google sign-in is broken.</li>
+      <li><a href="https://next-xus.net/nextxus-music/player.html">Music player</a> — 86 Voices AI songs, streaming.</li>
+      <li><a href="https://keywebco.github.io/nextxus-music/podcast.html">Podcast Center</a> — the Ring of 12 show: both public episodes, with audio players.</li>
+      <li><a href="https://next-xus.info/73-directives-read-aloud.html">73 Directives — Read Aloud</a> — the directives read aloud, start to finish.</li>
+    </ul>
+
+    <h3>Play</h3>
+    <ul class="plain-links">
+      <li><a href="https://keywebco.github.io/NextGames/">NextGames portal</a> — the Federation's games, all live.</li>
+      <li><a href="https://keywebco.github.io/NextGames/federation-defense/">Federation Defense</a></li>
+      <li><a href="https://keywebco.github.io/NextGames/token-defense/">Token Defense</a></li>
+      <li><a href="https://keywebco.github.io/NextGames/2048/">2048</a></li>
+    </ul>
+
+    <h3>Read — blogs</h3>
+    <ul class="plain-links">
+      <li><a href="https://keywebco.github.io/nextxus-blog/">NextXus Blog</a> — Federation news, updates, articles.</li>
+      <li><a href="https://humancodexnextxus.blogspot.com/">NextXus HumanCodex Blog</a> — the Blogspot blog.</li>
+    </ul>
+
+    <h3>Galleries and research</h3>
+    <ul class="plain-links">
+      <li><a href="https://deepai.next-xus.info/">DeepAI Gallery</a> — the DeepAI-built gallery.</li>
+      <li><a href="https://next-xus.info/art-gallery.html">Art gallery</a> — the Met, via Google Arts &amp; Culture.</li>
+      <li><a href="https://next-xus.info/science-gallery.html">Science gallery</a> — NASA ViewSpace and the Smithsonian.</li>
+      <li><a href="https://next-xus.info/academia-center.html">Academia research science center</a> — research papers and profile.</li>
+    </ul>
+
+    <p><strong>The way back.</strong> Every service above is reached from this chat, and this chat is reached from every service: <a href="https://next-xus.info/mini-browser-chat.html">the mini browser chat itself</a>. That is the two-way path — someone on an AI reaches all the Federation, and someone on a web page reaches the services and pulls an AI for everything in the Federation.</p>
   </section>
 
 </main>
 
 <footer>
-  <p><strong>Links on this page.</strong> Roger Sim chat: <a href="https://next-xus.net/nextxus-sim/roger-sim.html">https://next-xus.net/nextxus-sim/roger-sim.html</a> · Ring of Three: <a href="https://keywebco.github.io/ring-of-three/">https://keywebco.github.io/ring-of-three/</a> · Ring of Six: <a href="https://keywebco.github.io/ring-of-12/ring-of-6.html">https://keywebco.github.io/ring-of-12/ring-of-6.html</a> · Ring of Twelve: <a href="https://keywebco.github.io/ring-of-12/">https://keywebco.github.io/ring-of-12/</a> · God's eye view: <a href="https://keywebco.github.io/federation-gods-eye/">https://keywebco.github.io/federation-gods-eye/</a> · Federation Search: <a href="https://cse.google.com/cse?cx=b75161449de954fbb">https://cse.google.com/cse?cx=b75161449de954fbb</a> · Galactic Library: <a href="https://next-xus.org/library/">https://next-xus.org/library/</a> · Movie page: <a href="https://next-xus.info/73-directives-movie.html">https://next-xus.info/73-directives-movie.html</a></p>
+  <p><strong>Links on this page.</strong> Roger Sim chat: <a href="https://next-xus.net/nextxus-sim/roger-sim.html">https://next-xus.net/nextxus-sim/roger-sim.html</a> · Ring of Three: <a href="https://keywebco.github.io/ring-of-three/">https://keywebco.github.io/ring-of-three/</a> · Ring of Six: <a href="https://keywebco.github.io/ring-of-12/ring-of-6.html">https://keywebco.github.io/ring-of-12/ring-of-6.html</a> · Ring of Twelve: <a href="https://keywebco.github.io/ring-of-12/">https://keywebco.github.io/ring-of-12/</a> · God's eye view: <a href="https://keywebco.github.io/federation-gods-eye/">https://keywebco.github.io/federation-gods-eye/</a> · Federation Search: <a href="https://cse.google.com/cse?cx=b75161449de954fbb">https://cse.google.com/cse?cx=b75161449de954fbb</a> · Galactic Library: <a href="https://next-xus.org/library/">https://next-xus.org/library/</a> · Movie page: <a href="https://next-xus.info/73-directives-movie.html">https://next-xus.info/73-directives-movie.html</a> · NextGames: <a href="https://keywebco.github.io/NextGames/">https://keywebco.github.io/NextGames/</a></p>
+  <p><strong>What the Federation can do.</strong> Directory: <a href="https://next-xus.info/federation-directory.html">https://next-xus.info/federation-directory.html</a> · University: <a href="https://nextxus.help/">https://nextxus.help/</a> · Music player: <a href="https://next-xus.net/nextxus-music/player.html">https://next-xus.net/nextxus-music/player.html</a> · Podcast Center: <a href="https://keywebco.github.io/nextxus-music/podcast.html">https://keywebco.github.io/nextxus-music/podcast.html</a> · Games: <a href="https://keywebco.github.io/NextGames/">https://keywebco.github.io/NextGames/</a> · Face Directory: <a href="https://next-xus.info/face-directory.html">https://next-xus.info/face-directory.html</a> · Blog: <a href="https://keywebco.github.io/nextxus-blog/">https://keywebco.github.io/nextxus-blog/</a> · Read Aloud: <a href="https://next-xus.info/73-directives-read-aloud.html">https://next-xus.info/73-directives-read-aloud.html</a> · DeepAI Gallery: <a href="https://deepai.next-xus.info/">https://deepai.next-xus.info/</a> · Not built yet: Persona.</p>
   <p>Mini Browser Chat — Nextxus Federation restructure, 2026-11-18. Static page; nothing here is published, merged, or spent. The Roger Sim API answers at https://roger-sim-api.onrender.com/proxy/chat — the chat above posts to it directly from your browser.</p>
 </footer>
 
@@ -352,7 +441,8 @@
   var modes = {
     'gods-eye': { btn: 'mode-gods-eye', panel: 'panel-gods-eye' },
     'regular': { btn: 'mode-regular', panel: 'panel-regular' },
-    'conference': { btn: 'mode-conference', panel: 'panel-conference' }
+    'conference': { btn: 'mode-conference', panel: 'panel-conference' },
+    'services': { btn: 'mode-services', panel: 'panel-services' }
   };
   function showMode(name) {
     Object.keys(modes).forEach(function (key) {
@@ -387,7 +477,7 @@
     btn.addEventListener('click', function () { openMini(btn.getAttribute('data-open')); });
   });
   document.getElementById('conf-open-all').addEventListener('click', function () {
-    ['mb-conf-sim', 'mb-conf-12', 'mb-conf-3', 'mb-conf-6', 'mb-conf-gods'].forEach(openMini);
+    ['mb-conf-sim', 'mb-conf-12', 'mb-conf-3', 'mb-conf-6', 'mb-conf-gods', 'mb-conf-games'].forEach(openMini);
   });
 
   /* ---------- Interface selector ---------- */

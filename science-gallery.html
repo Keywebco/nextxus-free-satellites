@@ -120,6 +120,11 @@
   .mini-browser-bar a { font-size: 1.1rem; }
   .mini-browser iframe { display: block; width: 100%; height: 70vh; min-height: 420px; border: 0; background: #fff; }
   .mini-browser .mb-fallback { padding: 1rem; }
+  .mini-browser .mb-body { padding: 1rem 1rem 1.25rem; }
+  .fullsize-btn {
+    display: inline-block; font-size: 1.15rem; font-weight: 700; padding: .6rem 1.2rem;
+    border-radius: 8px; border: 2px solid #8fe3a0; background: #1d3a24; color: #fff;
+  }
 
   /* Conference grid */
   .conf-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
@@ -185,10 +190,13 @@
       <div class="mini-browser-bar">
         <span class="mb-title">NASA ViewSpace — interactive image tours</span>
         <span class="zero-badge standard">Truth Gate standard: 95%</span>
-        <a href="https://viewspace.org/">Open directly</a>
+        <a href="https://viewspace.org/" target="_blank" rel="noopener">Open directly</a>
       </div>
-      <iframe src="https://viewspace.org/" title="NASA ViewSpace — interactive image tours" loading="lazy"></iframe>
-      <p class="mb-fallback">If the window above is empty, <a href="https://viewspace.org/">open ViewSpace directly</a>.</p>
+      <div class="mb-body">
+        <p>ViewSpace won&rsquo;t show inside a page, so it opens on its own.</p>
+        <p><a class="fullsize-btn" href="https://viewspace.org/" target="_blank" rel="noopener">Make it full size</a></p>
+        <p>When you close the ViewSpace tab, this gallery is still here.</p>
+      </div>
     </div>
     <h3>The three ViewSpace Image Tours — verified live 2026-11-19</h3>
     <ul>
@@ -200,10 +208,13 @@
       <div class="mini-browser-bar">
         <span class="mb-title">Smithsonian National Air and Space Museum — virtual tours</span>
         <span class="zero-badge standard">Truth Gate standard: 95%</span>
-        <a href="https://airandspace.si.edu/virtual-tour">Open directly</a>
+        <a href="https://airandspace.si.edu/virtual-tour" target="_blank" rel="noopener">Open directly</a>
       </div>
-      <iframe src="https://airandspace.si.edu/virtual-tour" title="National Air and Space Museum virtual tours" loading="lazy"></iframe>
-      <p class="mb-fallback">If the window above is empty, <a href="https://airandspace.si.edu/virtual-tour">open the Air and Space virtual tours directly</a>.</p>
+      <div class="mb-body">
+        <p>The Air and Space virtual tours won&rsquo;t show inside a page, so they open on their own.</p>
+        <p><a class="fullsize-btn" href="https://airandspace.si.edu/virtual-tour" target="_blank" rel="noopener">Make it full size</a></p>
+        <p>When you close the virtual tours tab, this gallery is still here.</p>
+      </div>
     </div>
     <p>Featured tours there, verified live 2026-11-19: The Wright Brothers &amp; the Invention of the Aerial Age; Destination Moon; Barron Hilton Pioneers of Flight; Boeing Milestones of Flight Hall; America by Air; Early Flight; Futures in Space; Kenneth C. Griffin Exploring the Planets; Nation of Speed; One World Connected; Thomas W. Haas We All Fly; World War I: The Birth of Military Aviation. Admission is always free.</p>
     <div class="note">
@@ -584,10 +595,14 @@
         <div class="mini-browser-bar">
           <span class="mb-title">Science gallery — NASA ViewSpace</span>
           <span class="zero-badge standard">Truth Gate standard: 95%</span>
-          <a href="https://viewspace.org/">Open directly</a>
+          <a href="https://viewspace.org/" target="_blank" rel="noopener">Open directly</a>
           <button type="button" class="close-btn" data-close="mb-conf-gallery">Close</button>
         </div>
-        <iframe data-src="https://viewspace.org/" src="about:blank" title="NASA ViewSpace" loading="lazy"></iframe>
+        <div class="mb-body">
+          <p>ViewSpace won&rsquo;t show inside a page, so it opens on its own.</p>
+          <p><a class="fullsize-btn" href="https://viewspace.org/" target="_blank" rel="noopener">Make it full size</a></p>
+          <p>When you close the ViewSpace tab, this gallery is still here.</p>
+        </div>
       </div>
       <div class="mini-browser" id="mb-conf-sim" hidden>
         <div class="mini-browser-bar">

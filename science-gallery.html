@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="The Federation science gallery: NASA ViewSpace interactive image tours of the cosmos and the Smithsonian National Air and Space Museum virtual tours, in mini browser windows, with Roger Sim to answer scientific questions.">
+<meta name="description" content="The Federation science gallery: a live orbital solar system graphic with planet statistics, NASA Eyes and APOD, free underwater tours and a free flight simulator, and immersive education — How It's Made, a nuclear reactor, and a microscope — in mini browser windows, with Roger Sim to answer scientific questions.">
 <link rel="canonical" href="https://keywebco.github.io/nextxus-free-satellites/science-gallery.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Science Gallery — Nextxus Federation">
-<meta property="og:description" content="The Federation science gallery: NASA ViewSpace interactive image tours of the cosmos and the Smithsonian National Air and Space Museum virtual tours, in mini browser windows, with Roger Sim to answer scientific questions.">
+<meta property="og:description" content="The Federation science gallery: a live orbital solar system graphic with planet statistics, NASA Eyes and APOD, free underwater tours and a free flight simulator, and immersive education — How It's Made, a nuclear reactor, and a microscope — in mini browser windows, with Roger Sim to answer scientific questions.">
 <meta property="og:url" content="https://keywebco.github.io/nextxus-free-satellites/science-gallery.html">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Science Gallery \u2014 Nextxus Federation", "description": "The Federation science gallery: NASA ViewSpace interactive image tours of the cosmos and the Smithsonian National Air and Space Museum virtual tours, in mini browser windows, with Roger Sim to answer scientific questions.", "url": "https://keywebco.github.io/nextxus-free-satellites/science-gallery.html", "author": {"@type": "Person", "name": "Roger Keyserling"}, "isPartOf": {"@type": "WebSite", "name": "Nextxus Federation", "url": "https://keywebco.github.io/nextxus-free-satellites/federation-directory.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Science Gallery \u2014 Nextxus Federation", "description": "The Federation science gallery: a live orbital solar system graphic with planet statistics, NASA Eyes and APOD, free underwater tours and a free flight simulator, and immersive education — How It's Made, a nuclear reactor, and a microscope — in mini browser windows, with Roger Sim to answer scientific questions.", "url": "https://keywebco.github.io/nextxus-free-satellites/science-gallery.html", "author": {"@type": "Person", "name": "Roger Keyserling"}, "isPartOf": {"@type": "WebSite", "name": "Nextxus Federation", "url": "https://keywebco.github.io/nextxus-free-satellites/federation-directory.html"}}</script>
 <title>Science Gallery — Nextxus Federation</title>
 <style>
   :root { color-scheme: dark; }
@@ -33,6 +33,12 @@
     padding: 1rem 1.25rem; margin: 1rem 0;
   }
   .note strong { color: #ffd479; }
+
+  /* Solar system graphic */
+  #solar-canvas { max-width: 100%; height: auto; background: #0b0e17; border: 2px solid #3a4a66; border-radius: 10px; display: block; margin: 1rem 0; }
+  #solar-stats { border-collapse: collapse; margin: 1rem 0; }
+  #solar-stats th, #solar-stats td { border: 1px solid #3a4a66; padding: .4rem .8rem; text-align: left; }
+  #solar-stats th { background: #16233a; }
 
   /* Selector bar */
   .selector-bar {
@@ -205,6 +211,215 @@
     </div>
     <p>Direct links (work with JavaScript off): <a href="https://viewspace.org/">ViewSpace</a> &middot; <a href="https://airandspace.si.edu/virtual-tour">Air and Space virtual tours</a> &middot; <a href="https://science.nasa.gov/learning-resources/science-activation/take-a-tour-of-the-cosmos-with-new-interactives-from-nasas-universe-of-learning/">NASA on the ViewSpace Image Tours</a></p>
   </section>
+
+  <!-- ============ ORBITAL SOLAR SYSTEM — LIVE GRAPHIC ============ -->
+  <section id="solar-system" aria-label="Orbital solar system graphic">
+    <h2>Orbital Solar System — live graphic with statistics</h2>
+    <p>An animated orbital graphic of the eight planets, with live statistics: elapsed simulated days, orbital distance in AU, and orbital speed in km/s. The planet data come from the Python script Roger brought in (<a href="solar-system-stats.py">solar-system-stats.py</a>, filed as the source): Mercury through Neptune, same distances, periods, speeds, and radii. The web version below runs in this page; the script itself is a desktop program (Python + matplotlib).</p>
+    <canvas id="solar-canvas" width="900" height="560" role="img" aria-label="Animated orbits of the eight planets around the Sun">Your browser does not support the canvas element. The table below lists the same statistics.</canvas>
+    <p><button type="button" id="solar-play" aria-pressed="true">Pause</button> <button type="button" id="solar-reset">Reset to day 0</button> <label for="solar-speed">Speed</label> <select id="solar-speed"><option value="1" selected>1&times; — 15 days per step</option><option value="4">4&times;</option><option value="16">16&times;</option></select></p>
+    <p id="solar-elapsed"><strong>Elapsed time: 0 days (0.00 years).</strong></p>
+    <table id="solar-stats">
+      <caption>Planet statistics (from the source script)</caption>
+      <thead><tr><th>Planet</th><th>Distance (AU)</th><th>Orbital speed (km/s)</th><th>Radius (km)</th></tr></thead>
+      <tbody>
+        <tr><td>Mercury</td><td>0.39</td><td>47.36</td><td>2,440</td></tr>
+        <tr><td>Venus</td><td>0.72</td><td>35.02</td><td>6,052</td></tr>
+        <tr><td>Earth</td><td>1.00</td><td>29.78</td><td>6,371</td></tr>
+        <tr><td>Mars</td><td>1.52</td><td>24.07</td><td>3,390</td></tr>
+        <tr><td>Jupiter</td><td>5.20</td><td>13.07</td><td>69,911</td></tr>
+        <tr><td>Saturn</td><td>9.58</td><td>9.68</td><td>58,232</td></tr>
+        <tr><td>Uranus</td><td>19.20</td><td>6.80</td><td>25,362</td></tr>
+        <tr><td>Neptune</td><td>30.05</td><td>5.43</td><td>24,622</td></tr>
+      </tbody>
+    </table>
+    <noscript><p><strong>JavaScript is off.</strong> The animation needs JavaScript, but the table above lists every planet&rsquo;s distance, speed, and radius, and the <a href="solar-system-stats.py">Python source</a> draws the same graphic on a desktop.</p></noscript>
+    <p>Planet dot sizes are enlarged for visibility and are not to scale; orbit distances are to scale in AU, as in the source script. Dot colours match the source.</p>
+  </section>
+  <script>
+  (function () {
+    var PLANETS = [
+      {name: 'Mercury', au: 0.39, period: 87.97, speed: 47.36, radius: 2439.7, color: '#A5A5A5'},
+      {name: 'Venus', au: 0.72, period: 224.70, speed: 35.02, radius: 6051.8, color: '#E3BB76'},
+      {name: 'Earth', au: 1.00, period: 365.25, speed: 29.78, radius: 6371.0, color: '#4F94CD'},
+      {name: 'Mars', au: 1.52, period: 686.98, speed: 24.07, radius: 3389.5, color: '#D95F43'},
+      {name: 'Jupiter', au: 5.20, period: 4332.59, speed: 13.07, radius: 69911.0, color: '#D8CA9D'},
+      {name: 'Saturn', au: 9.58, period: 10759.22, speed: 9.68, radius: 58232.0, color: '#EAD6B8'},
+      {name: 'Uranus', au: 19.20, period: 30688.50, speed: 6.80, radius: 25362.0, color: '#72B5C4'},
+      {name: 'Neptune', au: 30.05, period: 60195.00, speed: 5.43, radius: 24622.0, color: '#3E66F9'}
+    ];
+    var canvas = document.getElementById('solar-canvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height, CX = W / 2, CY = H / 2, SCALE = 7.6;
+    var days = 0, playing = true, speed = 1;
+    var elapsedEl = document.getElementById('solar-elapsed');
+    function dotRadius(km) { return 3 + Math.log(km / 2000) * 1.6; }
+    function draw() {
+      var i, a, x, y;
+      ctx.fillStyle = '#0b0e17'; ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = 1;
+      for (i = 0; i < PLANETS.length; i++) {
+        ctx.beginPath(); ctx.arc(CX, CY, PLANETS[i].au * SCALE, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.fillStyle = '#fdb813';
+      ctx.beginPath(); ctx.arc(CX, CY, 13, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff'; ctx.font = '14px system-ui, sans-serif';
+      ctx.fillText('Sun', CX + 18, CY + 5);
+      for (i = 0; i < PLANETS.length; i++) {
+        a = 2 * Math.PI * (days / PLANETS[i].period);
+        x = CX + PLANETS[i].au * SCALE * Math.cos(a);
+        y = CY + PLANETS[i].au * SCALE * Math.sin(a);
+        ctx.fillStyle = PLANETS[i].color;
+        ctx.beginPath(); ctx.arc(x, y, Math.max(3, dotRadius(PLANETS[i].radius)), 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#e6edf3'; ctx.fillText(PLANETS[i].name, x + 9, y + 4);
+      }
+      elapsedEl.innerHTML = '<strong>Elapsed time: ' + Math.round(days).toLocaleString('en-US') + ' days (' + (days / 365.25).toFixed(2) + ' years).</strong>';
+    }
+    setInterval(function () { if (!playing) return; days += 15 * speed; draw(); }, 50);
+    draw();
+    document.getElementById('solar-play').addEventListener('click', function () {
+      playing = !playing;
+      this.textContent = playing ? 'Pause' : 'Play';
+      this.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    });
+    document.getElementById('solar-reset').addEventListener('click', function () { days = 0; draw(); });
+    document.getElementById('solar-speed').addEventListener('change', function () { speed = parseInt(this.value, 10) || 1; });
+  })();
+  </script>
+
+  <!-- ============ NASA FREE SYSTEMS ============ -->
+  <section id="nasa-systems" aria-label="NASA free systems">
+    <h2>NASA free systems</h2>
+    <p>NASA&rsquo;s own free tools, alongside the solar system graphic above. All free. The one thing that needs a key is the NASA APIs — and that key is free; getting one is a step for Roger, below.</p>
+    <h3>Eyes on the Solar System — NASA/JPL</h3>
+    <p>Fly the real solar system in 3D. Eyes on the Solar System is a free interactive visualization from NASA&rsquo;s Jet Propulsion Laboratory (verified live 2026-11-19 — the app itself loads in its own window).</p>
+    <div class="mini-browser" id="mb-eyes">
+      <div class="mini-browser-bar">
+        <span class="mb-title">NASA Eyes on the Solar System</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://eyes.nasa.gov/apps/solar-system/">Open directly</a>
+      </div>
+      <iframe src="https://eyes.nasa.gov/apps/solar-system/" title="NASA Eyes on the Solar System" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://eyes.nasa.gov/apps/solar-system/">open Eyes on the Solar System directly</a>.</p>
+    </div>
+    <h3>NASA APIs and the Astronomy Picture of the Day</h3>
+    <p>NASA&rsquo;s open APIs are free — APOD (a new astronomy picture every day), Mars photos, Earth imagery, and more. A free API key is needed, and getting one is Roger&rsquo;s step: sign up at <a href="https://api.nasa.gov/">api.nasa.gov</a> (verified live 2026-11-19). No key is invented here, and none is needed to look at today&rsquo;s picture:</p>
+    <div class="mini-browser" id="mb-apod">
+      <div class="mini-browser-bar">
+        <span class="mb-title">Astronomy Picture of the Day — NASA</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://apod.nasa.gov/apod/">Open directly</a>
+      </div>
+      <iframe src="https://apod.nasa.gov/apod/" title="NASA Astronomy Picture of the Day" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://apod.nasa.gov/apod/">open APOD directly</a>.</p>
+    </div>
+    <p>Today&rsquo;s picture, 2026-11-19: the Horsehead and Flame Nebulas (verified live 2026-11-19).</p>
+    <h3>NASA Image and Video Library</h3>
+    <p><a href="https://images.nasa.gov/">NASA&rsquo;s Image and Video Library</a> — the agency&rsquo;s free collection of images, video, and audio. Not verified by text fetch from this workspace (the page is a JavaScript app with no extractable text); the link is listed plainly as unverified.</p>
+    <h3>NASA Worldview — the living planet, top down</h3>
+    <p>Worldview is NASA&rsquo;s free satellite view of the whole Earth, updated daily — fires, storms, ice, and dust, as they are happening (verified live 2026-11-19, showing today&rsquo;s date). This is the God&rsquo;s-eye view of the living planet. No key, no account.</p>
+    <div class="mini-browser" id="mb-worldview">
+      <div class="mini-browser-bar">
+        <span class="mb-title">NASA Worldview — Earth today</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://worldview.earthdata.nasa.gov/">Open directly</a>
+      </div>
+      <iframe src="https://worldview.earthdata.nasa.gov/" title="NASA Worldview" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://worldview.earthdata.nasa.gov/">open NASA Worldview directly</a>.</p>
+    </div>
+    <p>Direct links (work with JavaScript off): <a href="https://eyes.nasa.gov/apps/solar-system/">Eyes on the Solar System</a> &middot; <a href="https://api.nasa.gov/">NASA APIs</a> &middot; <a href="https://apod.nasa.gov/apod/">APOD</a> &middot; <a href="https://images.nasa.gov/">NASA Image Library</a> &middot; <a href="https://worldview.earthdata.nasa.gov/">NASA Worldview</a></p>
+  </section>
+
+  <!-- ============ FREE TOURS: UNDERWATER AND FLIGHT ============ -->
+  <section id="tours" aria-label="Free tours">
+    <h2>Free tours — underwater and flight</h2>
+    <p>Other free tours, alongside the NASA systems: under the ocean and above the Earth.</p>
+    <h3>Underwater — dive the reefs</h3>
+    <p>Google&rsquo;s Street View went underwater with the Catlin Seaview Survey: six coral reefs you can swim through from your screen, including the Great Barrier Reef, Molokini Crater in Hawaii, and Apo Island in the Philippines (verified live 2026-11-19). Google&rsquo;s pages do not load inside a window here, so this one opens directly:</p>
+    <p><a href="https://www.google.com/intl/en-GB/maps/about/behind-the-scenes/streetview/treks/oceans/">Google Street View treks: Oceans — dive the Great Barrier Reef and five more reefs</a></p>
+    <p>Google Earth on the web carries the same ocean imagery — drop down to the reefs from above, in the God&rsquo;s-eye view below.</p>
+    <h3>Flight simulator — God&rsquo;s-eye view from the cockpit</h3>
+    <p>GeoFS is a free flight simulator that runs in a web browser with nothing to install: global satellite images, 30+ aircraft, multiplayer, real-life air traffic, and real weather (verified live 2026-11-19). The free tier flies on standard-resolution imagery; HD imagery is a paid subscription, said plainly — the free tier is the whole simulator.</p>
+    <div class="mini-browser" id="mb-geofs">
+      <div class="mini-browser-bar">
+        <span class="mb-title">GeoFS — free flight simulator</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://www.geo-fs.com/">Open directly</a>
+      </div>
+      <iframe src="https://www.geo-fs.com/" title="GeoFS free flight simulator" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://www.geo-fs.com/">open GeoFS directly</a>.</p>
+    </div>
+    <p>And the God&rsquo;s-eye view itself: <a href="https://earth.google.com/web/">Google Earth on the web</a> — zoom in anywhere on the planet and see what is going on (verified live 2026-11-19; it needs Chrome and WebGL, and it does not load inside a window here, so it opens directly). Google Earth on the web also carries its own flight simulator, added in June 2026 per Google&rsquo;s announcement as covered in the press.</p>
+    <p>Direct links (work with JavaScript off): <a href="https://www.google.com/intl/en-GB/maps/about/behind-the-scenes/streetview/treks/oceans/">Street View Oceans</a> &middot; <a href="https://www.geo-fs.com/">GeoFS</a> &middot; <a href="https://earth.google.com/web/">Google Earth</a> &middot; <a href="https://worldview.earthdata.nasa.gov/">NASA Worldview</a></p>
+  </section>
+
+  <!-- ============ DOCUMENT SYSTEM + IMMERSIVE EDUCATION ============ -->
+  <section id="education" aria-label="Document system and immersive education">
+    <h2>Learn by being there — documents and immersive visuals</h2>
+    <p>If we are going to have educators, they might as well really be able to educate. The method is simple: pick a free video, do a voice-over with it, and let other people&rsquo;s work fill the gaps. Nothing here is rebuilt that already exists for free.</p>
+    <h3>The document system — How It&rsquo;s Made, and systems like it</h3>
+    <p><a href="https://www.youtube.com/channel/UCVm1q99qzcdgFMFvqpNqtLA">The official How It&rsquo;s Made channel on YouTube</a> (run by Cineflix, verified live 2026-11-19) carries hundreds of free segments — how things are made, five minutes at a time. Full episodes are not free there; they stream free with ads on Tubi and Plex, and by subscription on Max and Discovery+ (see the <a href="https://reelgood.com/us/show/how-its-made-2001">where-to-watch listing</a>). The document system works the same way for any subject: link the free material, and voice-over it.</p>
+    <h3>Float inside a nuclear reactor</h3>
+    <p>When a professor tutors about a nuclear reaction, the learner should be able to float around inside a reactor — or a graphic of one:</p>
+    <ul>
+      <li><a href="https://virtualniprohlidky.cez.cz/cez-temelin-aj/">Temel&iacute;n Nuclear Power Plant virtual tour</a> — a free virtual walk through a real working plant in Czechia: the control room, the reactor hall, the containment building, and the cooling towers (VVER-1000 reactors, verified live 2026-11-19).</li>
+      <li><a href="https://inl.gov/feature-story/visit-the-worlds-first-nuclear-power-plant-virtually/">EBR-I at Idaho National Laboratory</a> — free virtual tours of the world&rsquo;s first nuclear power plant, the reactor that first made usable electricity in 1951; live guided tours by email, and 360-degree photos to explore alone (verified live 2026-11-19).</li>
+      <li><a href="https://tikgame.org/game/chernobyl-atlas/">Chernobyl Atlas</a> — a free 3D model of the RBMK reactor&rsquo;s power block in your browser: drag to turn it, open it in five stages into 26 systems and about 7,200 pieces (verified live 2026-11-19). A stylised model, not a survey of the real plant, and it does not show the 1986 accident.</li>
+    </ul>
+    <div class="mini-browser" id="mb-temelin">
+      <div class="mini-browser-bar">
+        <span class="mb-title">Temel&iacute;n Nuclear Power Plant — virtual tour</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://virtualniprohlidky.cez.cz/cez-temelin-aj/">Open directly</a>
+      </div>
+      <iframe src="https://virtualniprohlidky.cez.cz/cez-temelin-aj/" title="Temelin Nuclear Power Plant virtual tour" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://virtualniprohlidky.cez.cz/cez-temelin-aj/">open the Temel&iacute;n virtual tour directly</a>.</p>
+    </div>
+    <div class="mini-browser" id="mb-chernobyl">
+      <div class="mini-browser-bar">
+        <span class="mb-title">Chernobyl Atlas — RBMK power block in 3D</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://tikgame.org/game/chernobyl-atlas/">Open directly</a>
+      </div>
+      <iframe src="https://tikgame.org/game/chernobyl-atlas/" title="Chernobyl Atlas 3D reactor model" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://tikgame.org/game/chernobyl-atlas/">open Chernobyl Atlas directly</a>.</p>
+    </div>
+    <h3>Biology — zoom in on a microscope</h3>
+    <p><a href="https://visualizebiology.com/tools/virtual-microscope/?slide=elodea">A free virtual microscope in the browser</a> — focus it with the coarse and fine knobs, switch 4&times;, 10&times;, 40&times;, and 100&times; objectives, and examine 11 slides at true scale, from onion cells to living pond water. Free, no account, no download (verified live 2026-11-19). The University of Delaware&rsquo;s classic virtual microscope is older and on plain http (<a href="http://www.udel.edu/biology/ketcham/microscope/scope.html">UD classic virtual microscope</a>); the one above is the modern one.</p>
+    <div class="mini-browser" id="mb-microscope">
+      <div class="mini-browser-bar">
+        <span class="mb-title">Virtual microscope — free 3D simulator</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://visualizebiology.com/tools/virtual-microscope/?slide=elodea">Open directly</a>
+      </div>
+      <iframe src="https://visualizebiology.com/tools/virtual-microscope/?slide=elodea" title="Virtual microscope" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://visualizebiology.com/tools/virtual-microscope/?slide=elodea">open the virtual microscope directly</a>.</p>
+    </div>
+    <p>And a journey inside a cell: <a href="https://xvivo.com/case-studies/the-inner-life-of-the-cell-series/">The Inner Life of the Cell</a> — Harvard and XVIVO&rsquo;s 8.5-minute animation of the molecular world inside a white blood cell, free to watch (verified live 2026-11-19). Other educators, such as Dr. Tydell, have already added their own narration over the clip — that is the voice-over pattern, working.</p>
+    <h3>The voice-over pattern</h3>
+    <p>Pick a free video. Record a voice-over — the same pattern as the Federation&rsquo;s movie narrations. The video teaches; the voice makes it ours. When a gap appears — a subject with no good free material — that is the list of what to build next, not a reason to rebuild what already exists.</p>
+    <div class="note"><p><strong>No education AI yet.</strong> Roger Sim in Regular chat below is the only live chat. A dedicated tutor AI for these rooms is a later build, on Roger&rsquo;s word.</p></div>
+    <p>Direct links (work with JavaScript off): <a href="https://www.youtube.com/channel/UCVm1q99qzcdgFMFvqpNqtLA">How It&rsquo;s Made on YouTube</a> &middot; <a href="https://virtualniprohlidky.cez.cz/cez-temelin-aj/">Temel&iacute;n tour</a> &middot; <a href="https://inl.gov/feature-story/visit-the-worlds-first-nuclear-power-plant-virtually/">EBR-I tours</a> &middot; <a href="https://tikgame.org/game/chernobyl-atlas/">Chernobyl Atlas</a> &middot; <a href="https://visualizebiology.com/tools/virtual-microscope/?slide=elodea">Virtual microscope</a> &middot; <a href="https://xvivo.com/case-studies/the-inner-life-of-the-cell-series/">Inner Life of the Cell</a></p>
+  </section>
+
+  <!-- ============ FREE MEDIA — PIXABAY ============ -->
+  <section id="free-media" aria-label="Free media from Pixabay">
+    <h2>Free media — Pixabay</h2>
+    <p>When a gallery page needs an image or a video, other people&rsquo;s free work fills the gap: <a href="https://pixabay.com/">Pixabay</a> is a free system of stock photos, illustrations, videos, and music. Under the Pixabay license, the material is free to use with no attribution required. That is Roger&rsquo;s direction for this source.</p>
+    <div class="mini-browser" id="mb-pixabay">
+      <div class="mini-browser-bar">
+        <span class="mb-title">Pixabay — free stock photos, videos, and music</span>
+        <span class="zero-badge standard">Truth Gate standard: 95%</span>
+        <a href="https://pixabay.com/">Open directly</a>
+      </div>
+      <iframe src="https://pixabay.com/" title="Pixabay free media" loading="lazy"></iframe>
+      <p class="mb-fallback">If the window above is empty, <a href="https://pixabay.com/">open Pixabay directly</a>.</p>
+    </div>
+    <p><strong>License, plainly:</strong> Pixabay content is free to use with no attribution required under the Pixabay license. <strong>Not verified by text fetch from this workspace</strong> (the domain is blocked by the fetch policy here), so the link is listed from Roger&rsquo;s direction and marked as unverified — check it in your own browser.</p>
+    <p>Direct link (works with JavaScript off): <a href="https://pixabay.com/">Pixabay</a></p>
+  </section>
+
 
   <!-- ============ GOD'S EYE VIEW ============ -->
   <section class="mode-panel" id="panel-gods-eye" aria-label="God's eye view">

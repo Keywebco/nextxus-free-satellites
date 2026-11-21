@@ -14,7 +14,7 @@ Seven static HTML outposts + this playbook. They load the central YAML knowledge
 
 `https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js`
 
-Critical directives DIR-000 / 001 / 015 / 033 / 042 / 071 are embedded so each page still works if the lattice is down.
+**Directives (updated 2026-11-20, Roger's spoken decision):** the directive pages (directives outpost, satellite starter, Nova board, Sim surface) now read the official list through `official-directives.js`, which fetches `https://raw.githubusercontent.com/Keywebco/nextxus-brain/main/directives/sacred-directives.json`: 73 Sacred Directives plus DIR-000, the 95% Truth Gate (not counted), 74 in all. The sealed Cathedral file in the YAML brain is the final word on wording. If that fetch fails, the pages show the Truth Gate only. The old six-item shortcut (DIR-000 / 001 / 015 / 033 / 042 / 071, old numbering) from the December 2025 YAML database is history and no longer used for directives. The loader above is still used for messages and other non-directive data.
 
 | File | Role |
 |------|------|
@@ -75,7 +75,8 @@ FREE SATELLITES (add)
 
 Knowledge base stays one source:
 
-- Canonical YAML: https://github.com/keyhole-creator/nextxus-yaml-database
+- Official directives list: https://github.com/Keywebco/nextxus-brain/tree/main/directives (since 2026-11-20)
+- Older YAML database (history for directives; still serves messages and other data): https://github.com/keyhole-creator/nextxus-yaml-database
 - Loader CDN: jsDelivr URL above
 
 ---
@@ -217,7 +218,7 @@ Add one line on each Cathedral footer:
 
 Do not fork a second competing YAML canon.
 
-- Keep writing canon into `keyhole-creator/nextxus-yaml-database` (or the Architect’s chosen master)
+- The Architect’s chosen master for the Sacred Directives is the YAML brain, `Keywebco/nextxus-brain` `directives/` (Roger, 2026-11-20). The older `keyhole-creator/nextxus-yaml-database` directives list is history only
 - Satellites only *read* it
 - Drive markdown should be exported into that repo or the free-satellites repo as raw files
 

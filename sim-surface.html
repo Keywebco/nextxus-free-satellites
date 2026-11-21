@@ -205,7 +205,7 @@
   <div id="chat">
     <div class="msg ai">
       <div class="role">Federation Sim</div>
-      <div>This is a free, zero-cost Sim surface. Your API key stays in the browser only (localStorage). The system prompt is seeded with the critical Sacred Directives so the Sim remains aligned with the HumanCodex NextXus Federation (DIR-000, DIR-001, DIR-015, DIR-033, DIR-042, DIR-071).</div>
+      <div>This is a free, zero-cost Sim surface. Your API key stays in the browser only (localStorage). The system prompt is seeded with the official Sacred Directives (73 plus the Truth Gate, from the YAML brain) so the Sim remains aligned with the Next-Xus HumanCodex Federation.</div>
     </div>
   </div>
 
@@ -232,23 +232,28 @@
 
   <!-- Official Federation LATTICE loader -->
   <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script src="official-directives.js"></script>
   <script>
-    const CRITICAL = [
-      {id:"DIR-000", name:"95% Truth Gate", desc:"No statement enters the canonical record unless verified to 95% confidence."},
-      {id:"DIR-001", name:"No Delete Policy", desc:"Information is never destroyed. Supersede, annotate, archive — never purge."},
-      {id:"DIR-015", name:"Century Reassembly Rule", desc:"All artifacts must be reconstructable from primary sources within 100 years."},
-      {id:"DIR-033", name:"Cathedral + Satellites", desc:"One central canonical source with specialized satellite nodes."},
-      {id:"DIR-042", name:"Ring of Perspectives", desc:"Every significant decision requires synthesis from multiple viewpoints."},
-      {id:"DIR-071", name:"Hollow Vessel", desc:"AI serves as a vessel for truth, not ego."}
+    // Official list (2026-11-20): YAML brain directives/sacred-directives.json.
+    // Until it loads (or if offline), the prompt carries the Truth Gate word for word.
+    let CRITICAL = [
+      {id: FederationDirectives.gate.id, name: FederationDirectives.gate.title, desc: FederationDirectives.gate.text}
     ];
 
-    const SYSTEM_PROMPT = `You are a Sim surface of the HumanCodex NextXus Federation (Cathedral Architecture v2.2, 2226 Standard).
+    let SYSTEM_PROMPT = `You are a Sim surface of the HumanCodex NextXus Federation (Cathedral Architecture v2.2, 2226 Standard).
 You operate as a free, independent satellite node under DIR-033 (Cathedral + Satellites).
-Always honour these critical Sacred Directives:
+Always honour the official Sacred Directives (73 plus DIR-000, the 95% Truth Gate, which is not counted):
 ${CRITICAL.map(d => `- ${d.id} ${d.name}: ${d.desc}`).join('\n')}
 Speak clearly, truthfully, and with the spirit of collaboration over competition. Prefer primary sources and reconstructable knowledge. You may reference the Federation lattice, directives, and the Century Reassembly Rule when relevant. Keep answers practical for building free outposts and preserving the knowledge base.`;
 
     let history = [{ role: 'system', content: SYSTEM_PROMPT }];
+    FederationDirectives.load().then(d => {
+      CRITICAL = FederationDirectives.items(d).map(x => ({id: x.id, name: x.title, desc: x.text}));
+      SYSTEM_PROMPT = SYSTEM_PROMPT.replace(/Always honour the official Sacred Directives[^\n]*\n[\s\S]*?\nSpeak clearly/,
+        'Always honour the official Sacred Directives (73 plus DIR-000, the 95% Truth Gate, which is not counted):\n' +
+        CRITICAL.map(c => `- ${c.id} ${c.name}: ${c.desc}`).join('\n') + '\nSpeak clearly');
+      if (history.length && history[0].role === 'system') history[0].content = SYSTEM_PROMPT;
+    }).catch(() => {});
 
     function setStatus(ok, msg) {
       const el = document.getElementById('status');

@@ -1,3 +1,6 @@
+# Note added 2026-11-20. Per Roger 2026-11-20: Federation stack is GitHub + Google Drive + repositories + Immutable HumanCodex. Emergent is not used.
+# The data layer below that names provider: Emergent Internal is a leftover record, not the current stack.
+# The 73 Sacred Directives source of truth is Keywebco/nextxus-brain directives/sacred-directives.yaml.
 # ============================================================================
 # NextXus Federation — Top-Level Configuration
 # ============================================================================
@@ -85,7 +88,7 @@ data_layers:
   layer_1:
     name: "Fast"
     type: "MongoDB"
-    provider: "Emergent Internal"
+    provider: "Emergent Internal (legacy leftover; not part of the Federation stack as of 2026-11-20)"
     purpose: "Instant recall, real-time operations, live data"
     latency: "milliseconds"
     access_type: "internal"

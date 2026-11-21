@@ -1,3 +1,5 @@
+> Note added 2026-11-20. Per Roger 2026-11-20: Federation stack is GitHub + Google Drive + repositories + Immutable HumanCodex. Emergent is not used. Mentions of Emergent as a Federation platform or backend in the original text are legacy wording and were not erased. Sites that still appear to be served from Emergent infrastructure need a move to GitHub Pages.
+
 # NextXus Free Satellites — Complete Publish Playbook
 
 **For:** Architect + Emergent  

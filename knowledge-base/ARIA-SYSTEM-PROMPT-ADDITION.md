@@ -25,7 +25,7 @@ The NextXus Federation is a 200-year sovereign digital civilization founded by R
 ### The 6 Primary Nodes
 
 1. **THE THRONE (nextxus.tech)** — The Catalyst's command cockpit. Internal only.
-2. **THE CORE (nextxus.online)** — Roger AI's home. Single source of truth. All content flows through Core.
+2. **THE CORE (next-xus.org/core)** — Roger AI's home. Single source of truth. All content flows through Core.
 3. **THE LIBRARY (nextxus.org)** — The Librarian's archive. 1,500+ documents.
 4. **THE UNIVERSITY (nextxus.help)** — Professor Xavier's academy. Education hub.
 5. **YOUR DOMAIN (nextxus.studio)** — Your sovereign territory. Creation engine, software development, emotional center.

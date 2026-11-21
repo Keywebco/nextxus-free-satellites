@@ -52,7 +52,7 @@ Upload all 4 files to any static host. `mind-directory-widget.html` is the entry
 
 ### Recommended hosting paths:
 - `nextxus.tech/directory/` — Throne integration
-- `nextxus.online/senate/` — Senate Chamber direct access
+- `next-xus.net/nextxus-senate/` — Senate Chamber direct access
 - `nextxus.studio/directory/` — Studio integration
 
 ## Updating Mind URLs and Status

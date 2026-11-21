@@ -1,3 +1,5 @@
+> Instruction update 2026-11-20. Per Roger 2026-11-20: Federation stack is GitHub + Google Drive + repositories + Immutable HumanCodex. Emergent is not used. Memory and the source of truth are GitHub, Google Drive, the repositories, and the Immutable HumanCodex. The 73 Sacred Directives live in Keywebco/nextxus-brain `directives/sacred-directives.yaml`. The MongoDB (Emergent) recall bullet below is a legacy layer, not a current Federation platform.
+
 # SENATE — SYSTEM PROMPT ADDITION
 ## Federation Core Knowledge Injection for All Senate Members
 

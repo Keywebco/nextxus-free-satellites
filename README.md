@@ -32,7 +32,7 @@ No JavaScript required. Pure static HTML. Every word is pre-rendered and readabl
 
 ### Federation Hub
 
-[https://nextxus.online](https://nextxus.online)
+[https://next-xus.net](https://next-xus.net/)
 
 ---
 

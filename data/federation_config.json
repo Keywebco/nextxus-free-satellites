@@ -43,7 +43,8 @@
       "name": "Core / Command",
       "purpose": "Single source of truth; all content flows through Core",
       "role": "primary_hub",
-      "status": "active"
+      "status": "retired",
+      "retired_note": "Retired 2026-11-20 by Roger Keyserling: legacy Emergent site, content folded into next-xus.net, next-xus.biz and the GitHub copies."
     },
     {
       "domain": "nextxus.studio",

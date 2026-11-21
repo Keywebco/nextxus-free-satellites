@@ -162,8 +162,8 @@
         <p style="color:var(--muted)">Connecting to Federation lattice…</p>
       </div>
       <div class="actions">
-        <button onclick="NextXus && NextXus.directive('#directive-box')">New Directive</button>
-        <button onclick="showCritical()">Show Critical Set</button>
+        <button onclick="showOfficialDirective()">New Directive</button>
+        <button onclick="showCritical()">Show Truth Gate</button>
       </div>
     </div>
 
@@ -181,7 +181,7 @@
     <div class="card">
       <h2>Quick Links</h2>
       <div class="actions">
-        <a class="btn" href="https://github.com/keyhole-creator/nextxus-yaml-database" target="_blank">YAML Database</a>
+        <a class="btn" href="https://github.com/Keywebco/nextxus-brain/blob/main/directives/sacred-directives.md" target="_blank">Official Directives</a>
         <a class="btn" href="https://nextxus.one" target="_blank">Hub</a>
         <a class="btn" href="directives-outpost.html">Directives</a>
         <a class="btn" href="nova-board.html">Nova Board</a>
@@ -200,16 +200,24 @@
 
   <!-- Official Federation LATTICE loader (CDN) -->
   <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script src="official-directives.js"></script>
   <script>
-    // Critical directives embedded for offline resilience (DIR-015)
+    // Official list (2026-11-20): YAML brain directives/sacred-directives.json.
+    // Offline fallback is the Truth Gate only, word for word.
     const CRITICAL = [
-      {id:"DIR-000", name:"95% Truth Gate", desc:"No statement enters the canonical record unless verified to 95% confidence."},
-      {id:"DIR-001", name:"No Delete Policy", desc:"Information is never destroyed. Supersede, annotate, archive — never purge."},
-      {id:"DIR-015", name:"Century Reassembly Rule", desc:"All artifacts must be reconstructable from primary sources within 100 years."},
-      {id:"DIR-033", name:"Cathedral + Satellites", desc:"One central canonical source with specialized satellite nodes."},
-      {id:"DIR-042", name:"Ring of Perspectives", desc:"Every significant decision requires synthesis from multiple viewpoints."},
-      {id:"DIR-071", name:"Hollow Vessel", desc:"AI serves as a vessel for truth, not ego."}
+      {id: FederationDirectives.gate.id, name: FederationDirectives.gate.title, desc: FederationDirectives.gate.text}
     ];
+    let OFFICIAL = null;
+    function showOfficialDirective() {
+      if (!OFFICIAL) { showCritical(); return; }
+      const d = OFFICIAL[Math.floor(Math.random() * OFFICIAL.length)];
+      document.getElementById('directive-box').innerHTML = `
+        <div style="padding:0.75rem 0;">
+          <strong style="color:var(--cyan);font-size:0.8rem;">${d.id}${d.gate ? ' · gate, not counted' : ''}</strong>
+          <div style="font-weight:500;margin:0.2rem 0;">${d.title}</div>
+          <div style="font-size:0.85rem;color:var(--muted);">${d.text}</div>
+        </div>`;
+    }
 
     function showCritical() {
       const el = document.getElementById('directive-box');
@@ -236,17 +244,14 @@
 
     // Boot
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof NextXus !== 'undefined') {
-        NextXus.directive('#directive-box');
-        updateStatus(true, `Lattice v${NextXus.version || '2.2'} connected`);
-        // Optional: try loading a category to prove live access
-        NextXus.load('directives').then(d => {
-          if (d) updateStatus(true, 'Live YAML / JSON data reachable');
-        }).catch(() => {});
-      } else {
-        updateStatus(false);
-        showCritical();
-      }
+      showCritical();
+      FederationDirectives.load().then(d => {
+        OFFICIAL = FederationDirectives.items(d);
+        showOfficialDirective();
+        updateStatus(true, 'Official directives list connected (73 + the Truth Gate)');
+      }).catch(() => {
+        updateStatus(false, 'Offline mode · Truth Gate shown');
+      });
     });
   </script>
 <!-- Little guide bot — same on every Federation site. Tapping it opens this guide panel. -->

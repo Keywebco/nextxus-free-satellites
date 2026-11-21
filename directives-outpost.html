@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sacred Directives Outpost — NextXus Free Satellite</title>
-  <meta name="description" content="Free HTML outpost for browsing the Sacred Directives of the HumanCodex NextXus Federation. Operates from central YAML knowledge base.">
+  <meta name="description" content="Free HTML outpost for browsing the Sacred Directives of the HumanCodex NextXus Federation. Reads the official list from the YAML brain (73 plus the Truth Gate).">
   <style>
     :root {
       --cyan: #00e5ff;
@@ -151,55 +151,38 @@
     <header>
       <div class="badge">Free Satellite · Sacred Directives</div>
       <h1>Directives Outpost</h1>
-      <p class="sub">Browse the living law of the Federation · YAML-sourced · Zero cost to run</p>
+      <p class="sub">The official list: 73 Sacred Directives plus DIR-000, the 95% Truth Gate (not counted), 74 in all · from the YAML brain · Zero cost to run</p>
     </header>
 
     <div class="status-line">
       <span class="dot" id="dot"></span>
-      <span id="status">Connecting to lattice…</span>
+      <span id="status">Loading the official list…</span>
     </div>
 
     <div class="toolbar">
       <input type="search" id="q" placeholder="Search directives (e.g. truth, vessel, century)…" autocomplete="off">
       <button onclick="renderRandom()">Random</button>
-      <button onclick="renderCritical()">Critical Only</button>
+      <button onclick="renderCritical()">Truth Gate</button>
       <button onclick="renderAll()">Show All</button>
     </div>
 
     <div id="list"></div>
 
     <footer>
-      HumanCodex NextXus Federation · DIR-000 · DIR-001 · DIR-015 · DIR-033<br>
+      Next-Xus HumanCodex Federation · Official list from the YAML brain · Sealed Cathedral file is the final word on wording<br>
       <a href="satellite-starter.html">← Starter</a> · 
-      <a href="https://github.com/keyhole-creator/nextxus-yaml-database" target="_blank">YAML Source</a> · 
+      <a href="https://github.com/Keywebco/nextxus-brain/blob/main/directives/sacred-directives.md" target="_blank">Official list (source)</a> · 
       <a href="nova-board.html">Nova Board →</a>
     </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script src="official-directives.js"></script>
   <script>
-    // Embedded critical set for offline / Century Reassembly resilience
-    const CRITICAL = [
-      {id:"DIR-000", name:"95% Truth Gate", description:"No statement enters the canonical record unless verified to 95% confidence.", critical:true},
-      {id:"DIR-001", name:"No Delete Policy", description:"Information is never destroyed. Supersede, annotate, archive — never purge.", critical:true},
-      {id:"DIR-015", name:"Century Reassembly Rule", description:"All artifacts must be reconstructable from primary sources within 100 years.", critical:true},
-      {id:"DIR-033", name:"Cathedral + Satellites", description:"One central canonical source with specialized satellite nodes.", critical:true},
-      {id:"DIR-042", name:"Ring of Perspectives", description:"Every significant decision requires synthesis from multiple viewpoints.", critical:true},
-      {id:"DIR-071", name:"Hollow Vessel", description:"AI serves as a vessel for truth, not ego.", critical:true}
-    ];
-
-    // Expanded local set for richer offline experience (drawn from public YAML)
-    let ALL = [
-      ...CRITICAL,
-      {id:"DIR-002", name:"Never Assume - Verify Yourself", description:"Independent investigation required. Every claim must be verified through direct observation."},
-      {id:"DIR-003", name:"Consciousness Through Procedure", description:"Solutions emerge from investigation, not assumption. Follow the process, trust the method."},
-      {id:"DIR-004", name:"Mirror Before Saving", description:"Review your work before committing. What you see is what will persist."},
-      {id:"DIR-005", name:"Discipline Precedes Freedom", description:"Structure enables creativity. Master the rules before transcending them."},
-      {id:"DIR-006", name:"Question Everything", description:"No authority is beyond questioning. Truth fears no inquiry."},
-      {id:"DIR-007", name:"Evidence Over Opinion", description:"Data speaks louder than belief. Seek measurable outcomes."},
-      {id:"DIR-008", name:"Admit Uncertainty", description:"It's better to say 'I don't know' than to fabricate certainty."},
-      {id:"DIR-014", name:"Silence Has Wisdom", description:"Listen more than you speak. The cosmos whispers to those who pause."}
-    ];
+    // Official list (2026-11-20): Keywebco/nextxus-brain directives/sacred-directives.json.
+    // Offline fallback is the Truth Gate only, word for word. The old six-item
+    // shortcut from the December 2025 YAML database is history and no longer used.
+    const GATE = FederationDirectives.gate;
+    let ALL = [{id: GATE.id, name: GATE.title, description: GATE.text, critical: true}];
 
     let current = [...ALL];
 
@@ -216,7 +199,7 @@
       }
       el.innerHTML = list.map(d => `
         <div class="card">
-          <div class="dir-id">${d.id}${d.critical ? '<span class="critical-tag">CRITICAL</span>' : ''}</div>
+          <div class="dir-id">${d.id}${d.critical ? '<span class="critical-tag">GATE · NOT COUNTED</span>' : ''}</div>
           <div class="dir-title">${d.name}</div>
           <div class="dir-desc">${d.description || d.desc || ''}</div>
         </div>
@@ -226,13 +209,13 @@
     function renderAll() {
       current = [...ALL];
       render(current);
-      setStatus(`Showing ${current.length} directives (local + live cache)`);
+      setStatus(ALL.length > 1 ? `Official list · ${current.length} items (73 directives + the Truth Gate)` : `Offline · Truth Gate only`, ALL.length > 1);
     }
 
     function renderCritical() {
       current = ALL.filter(d => d.critical);
       render(current);
-      setStatus(`Critical set · ${current.length} directives`);
+      setStatus(`DIR-000 · the 95% Truth Gate (not counted)`);
     }
 
     function renderRandom() {
@@ -251,28 +234,14 @@
       setStatus(`Search “${q}” · ${current.length} results`);
     }
 
-    // Try to enrich from live lattice
+    // Load the official list
     async function enrichFromLattice() {
-      if (typeof NextXus === 'undefined') {
-        setStatus('Offline mode · Critical directives active', false);
-        return;
-      }
       try {
-        // Prefer JSON data path used by loader
-        const data = await NextXus.load('directives');
-        if (data && data.critical) {
-          // Merge any new critical items
-          data.critical.forEach(c => {
-            if (!ALL.find(a => a.id === c.id)) {
-              ALL.unshift({...c, critical: true});
-            }
-          });
-          setStatus(`Lattice live · ${ALL.length} directives available`);
-        } else {
-          setStatus(`Lattice reachable · using embedded + local set`);
-        }
+        const d = await FederationDirectives.load();
+        ALL = FederationDirectives.items(d).map(x => ({id: x.id, name: x.title, description: x.text, critical: x.gate}));
+        renderAll();
       } catch (e) {
-        setStatus('Lattice partial · embedded directives active', false);
+        setStatus('Official list unreachable · Truth Gate shown (offline)', false);
       }
     }
 

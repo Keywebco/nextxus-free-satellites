@@ -183,7 +183,7 @@
 
       <div class="card">
         <h2>Federation Pulse</h2>
-        <div class="row"><span class="label">Critical Directives</span><span class="val ok" id="crit-count">6</span></div>
+        <div class="row"><span class="label">Official Directives</span><span class="val ok" id="crit-count">73 + gate</span></div>
         <div class="row"><span class="label">Cathedral model</span><span class="val ok">Active</span></div>
         <div class="row"><span class="label">Horizon</span><span class="val">2226</span></div>
       </div>
@@ -202,7 +202,7 @@
       <div id="log"></div>
       <div class="actions">
         <button onclick="pingLattice()">Ping Lattice</button>
-        <button onclick="refreshCritical()">Refresh Critical Set</button>
+        <button onclick="refreshCritical()">Refresh Official List</button>
         <button onclick="clearLog()">Clear Log</button>
         <a class="btn" href="directives-outpost.html">Directives Outpost</a>
         <a class="btn" href="satellite-starter.html">Starter</a>
@@ -216,6 +216,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/gh/keyhole-creator/nextxus-yaml-database@main/loader.js"></script>
+  <script src="official-directives.js"></script>
   <script>
     const logEl = document.getElementById('log');
 
@@ -243,17 +244,15 @@
       }
       try {
         const start = performance.now();
-        const data = await NextXus.load('directives');
+        const data = await FederationDirectives.load();
         const ms = Math.round(performance.now() - start);
         if (data) {
-          log(`Lattice OK · directives reachable · ${ms} ms`, 'ok');
+          log(`Official directives list reachable (YAML brain) · ${ms} ms`, 'ok');
           setStatus(`Nova online · lattice healthy · ${ms} ms`);
           document.getElementById('health').innerHTML = '92 <small>/ 100</small>';
           document.getElementById('source').textContent = 'GitHub / jsDelivr';
           document.getElementById('ver').textContent = NextXus.version || '2.2';
-          if (data.critical) {
-            document.getElementById('crit-count').textContent = data.critical.length || 6;
-          }
+          document.getElementById('crit-count').textContent = `${data.directives.length} + gate`;
         } else {
           log('Lattice responded but no directives payload', 'warn');
           setStatus('Partial lattice contact', false);
@@ -268,15 +267,13 @@
     }
 
     function refreshCritical() {
-      log('Refreshing critical directive set from embedded + lattice');
-      if (typeof NextXus !== 'undefined' && NextXus.directives) {
-        const keys = Object.keys(NextXus.directives);
-        document.getElementById('crit-count').textContent = keys.length;
-        log(`Critical set size: ${keys.length}`, 'ok');
-      } else {
-        document.getElementById('crit-count').textContent = '6';
-        log('Using embedded critical set (6)', 'ok');
-      }
+      log('Refreshing the official directives list (YAML brain)');
+      FederationDirectives.load().then(d => {
+        document.getElementById('crit-count').textContent = `${d.directives.length} + gate`;
+        log(`Official list: ${d.directives.length} directives plus the Truth Gate (74 in all)`, 'ok');
+      }).catch(() => {
+        log('Official list unreachable · Truth Gate only (offline)', 'warn');
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {

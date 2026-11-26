@@ -5,6 +5,9 @@ on:
     - cron: '0 12 * * *'  # Daily at 12:00 UTC
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run-scheduled:
     runs-on: ubuntu-latest
@@ -14,11 +17,11 @@ jobs:
 
       - name: Log daily run
         run: |
+          mkdir -p reports
           echo "# Daily Scheduler Log — $(date -u +%Y-%m-%d)" > reports/daily-$(date -u +%Y-%m-%d).md
           echo "" >> reports/daily-$(date -u +%Y-%m-%d).md
           echo "Scheduler ran. Review scheduled_operations.yaml for the full list of intended actions." >> reports/daily-$(date -u +%Y-%m-%d).md
           echo "Outputs are drafts. Nothing publishes without review." >> reports/daily-$(date -u +%Y-%m-%d).md
-          mkdir -p reports
           git config user.name "Federation Scheduler"
           git config user.email "scheduler@nextxus.local"
           git add reports/

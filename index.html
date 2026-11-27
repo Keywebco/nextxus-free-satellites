@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://next-xus.net/federation-ui/theme.css">
   <title>NextXus Free Satellites — Zero-Cost Outposts</title>
 <meta name="twitter:card" content="summary">
 <meta property="og:site_name" content="Next-Xus Federation">
@@ -122,9 +123,30 @@
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Next-Xus Federation","url":"https://next-xus.info/","description":"Collection of free HTML satellites for the HumanCodex Next-Xus Federation. Operate from the central YAML knowledge base at zero cost."}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style id="nx-align">
+/* Next-Xus shared theme alignment: maps this page onto federation-ui tokens. */
+body.nx-theme{--cyan:var(--nx-gold);--purple:var(--nx-gold);--green:var(--nx-ok);--bg:var(--nx-bg);--card:var(--nx-surface);--text:var(--nx-text);--muted:var(--nx-dim);line-height:1.6;font-size:17px}
+body.nx-theme .wrap{max-width:860px;padding:2.5rem 1.25rem 3rem}
+body.nx-theme h1{background:none;-webkit-text-fill-color:currentColor;color:var(--nx-text);font-size:2rem;font-weight:700}
+body.nx-theme .badge{color:var(--nx-gold-soft);border-color:var(--nx-line)}
+body.nx-theme .lead{font-size:1.05rem}
+body.nx-theme .card{border:1px solid var(--nx-line);border-radius:var(--nx-radius)}
+body.nx-theme .card h2{font-size:1.15rem;color:var(--nx-text)}
+body.nx-theme .card p{font-size:1rem}
+body.nx-theme a.btn{color:var(--nx-gold);border:2px solid var(--nx-gold);font-size:.95rem;font-weight:600;padding:.5rem 1rem;min-height:44px;display:inline-flex;align-items:center}
+body.nx-theme a.btn:hover{background:rgba(242,193,78,.12);color:var(--nx-gold-soft)}
+body.nx-theme code{color:var(--nx-gold-soft)}
+body.nx-theme main > footer{font-size:.9rem}
+body.nx-theme main > footer a{color:var(--nx-link)}
+body.nx-theme .guide-bot-btn,body.nx-theme .guide-panel{border-color:var(--nx-gold)}
+body.nx-theme .guide-panel a,body.nx-theme .guide-panel .gp-close,body.nx-theme .guide-panel .gp-sim{color:var(--nx-gold-soft)}
+body.nx-theme .guide-panel .gp-chatrow input{border-color:var(--nx-gold)}
+body.nx-theme .guide-panel .gp-chatrow button{background:var(--nx-gold);color:var(--nx-on-gold)}
+</style>
 </head>
-<body>
-  <div class="wrap">
+<body class="nx-theme" data-nx-site="info">
+<noscript><div class="nx-bar"><nav class="nx-bar-inner" aria-label="Next-Xus Federation"><a class="nx-brand" href="https://next-xus.net/"><span class="nx-mark" aria-hidden="true">NX</span>Next-Xus Federation</a><ul class="nx-links"><li><a href="https://next-xus.net/">Home</a></li><li><a href="https://next-xus.org/">Codex</a></li><li><a href="https://next-xus.net/dragon/">Dragons</a></li><li><a href="https://next-xus.net/nextxus-music/">Music</a></li><li><a href="https://next-xus.biz/">Business</a></li><li><a href="https://next-xus.info/" aria-current="page">Info</a></li></ul></nav></div></noscript>
+  <main id="main" class="wrap">
     <div class="badge">Free · Zero Cost · YAML-Backed</div>
     <h1>NextXus Free Satellites</h1>
     <p class="lead">
@@ -231,7 +253,7 @@
       HumanCodex NextXus Federation · Cathedral + Satellites (DIR-033) · 2226 Standard<br>
       <a href="https://github.com/Keywebco/nextxus-yaml">Central YAML Database</a>
     </footer>
-  </div>
+  </main>
 <!-- Little guide bot — same on every Federation site. Tapping it opens this guide panel. -->
 <button class="guide-bot-btn" id="guideBotBtn" type="button" aria-label="Open the Federation guide — the little blue guide bot" aria-expanded="false" aria-controls="guidePanel"><img src="guide-bot.jpg" alt="Guide bot — a little blue and silver AI robot with yellow crescent eyes, AI on its chest"></button>
 <div class="guide-panel" id="guidePanel" role="dialog" aria-label="Federation guide">
@@ -269,5 +291,6 @@ send.addEventListener('click',ask);
 input.addEventListener('keydown',function(e){if(e.key==='Enter'){ask();}});
 })();
 </script>
+<script src="https://next-xus.net/federation-ui/chrome.js" defer></script>
 </body>
 </html>
